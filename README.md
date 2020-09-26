@@ -1,10 +1,10 @@
 # LAIG 2020/2021
 
 ## Group T0xG0y
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201801010 | ...                |
-| Jane Doe         | 201801011 | ...                |
+| Name             | Number    | E-Mail               |
+| ---------------- | --------- | ------------------   |
+| Rui Pinto        | 201806441 | up201806441@fe.up.pt |                |
+| Tiago Gomes      | 201806658 | up201806658@fe.up.pt |                  |
 
 ----
 
@@ -26,4 +26,3 @@
 
 ### [TP3 - ...](TP3)
 - (items briefly describing main strong points)
-
