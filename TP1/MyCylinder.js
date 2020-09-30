@@ -1,78 +1,73 @@
+/**
+ * MyCylinder
+ * @constructor
+ * @param Scene
+ * 
+ */
 class MyCylinder extends CGFobject {
-    constructor(scene, nDivs, bottomRaddius, topRaddius, height, slices, stacks) {
+    constructor(scene, base_r, top_r, height, slices, stacks) {
         super(scene);
-
-        this.nDivs = nDivs;
-
-        this.bottomRaddius = bottomRaddius;
-        this.topRaddius = topRaddius;
+        
+        this.base_r = base_r;
+        this.top_r = top_r;
         this.height = height;
         this.slices = slices;
         this.stacks = stacks;
-
+        this.s_length = 1;
+		this.t_length = 1;
         this.initBuffers();
     }
 
     initBuffers() {
-
-        // Generate Vertices & Normals
         this.vertices = [];
-        this.normals = [];
-        var angle = 0;
-        
-        for(var i = 0; i < this.nDivs; i++) {
-            this.normals.push(Math.cos(angle), 0, Math.sin(angle));
-            this.normals.push(Math.cos(angle), 1, Math.sin(angle));
-            this.vertices.push(Math.cos(angle), 0, Math.sin(angle)); // Bottom 
-            this.vertices.push(Math.cos(angle), 1, Math.sin(angle)); // Tops
-            angle += ((360 / this.nDivs) * Math.PI) / 180; // Converting to radians
-        }
-
-       
-        // Generate Indices -- Per face (non-including the last-one)
         this.indices = [];
-        for (var i = 0; (i + 3) < this.nDivs * 2; i += 2) {
-            // 1st Triangle
-            this.indices.push(i, i + 1, i + 2);
-
-            // 2nd Triangle
-            this.indices.push(i + 3, i + 2, i + 1);
-        }
-
-        // Generate indices -- Per face (last one)
-        var aux = this.indices[this.indices.length - 3 ];
-
-        this.indices.push(aux, 1, aux - 1);
-        this.indices.push(aux - 1, 1, 0);
-
-        // -- Repeat 1st line of vertices. Useful for texture
-        this.vertices.push(1, 0, 0);
-        this.vertices.push(1, 1, 0);
-        this.normals.push(1, 0, 0);
-        this.normals.push(1, 1, 0);
-
-        var bottom = aux + 1;
-        var top = aux + 2;
-
-        this.indices.push(aux, top, aux - 1);
-        this.indices.push(aux - 1, top, bottom);
-
-        // Generate texCoords
-
+        this.normals = [];
         this.texCoords = [];
-         
-        var x = 1;
-        var toDecrement = 1 / this.nDivs;
-        for(var i = 0; i < this.nDivs; i++) {
-            this.texCoords.push(x, 1);
-            this.texCoords.push(x, 0);
-            x -= toDecrement;
-        }
-        
-        this.texCoords.push(0, 1);
-        this.texCoords.push(0, 0); 
+        this.originalTexCoords = [];
 
+        var deltaAng = 2*Math.PI/this.slices;
+        var deltaStack = this.height/this.stacks;
+        var deltaRad = (this.top_r-this.base_r)/this.stacks;
+
+        for(let i=0; i<=this.slices; i++) {
+            for(let j=0; j<=this.stacks; j++) {
+                this.vertices.push(
+                    Math.cos(deltaAng*i)*(this.base_r+deltaRad*j),
+                    Math.sin(deltaAng*i)*(this.base_r+deltaRad*j),
+                    j*deltaStack
+                );
+
+				this.originalTexCoords.push(i*1/this.slices, 1 - (j*1/this.stacks));
+
+                this.normals.push(Math.cos(deltaAng*i), Math.sin(deltaAng*i), 0);
+            }
+        }
+
+		for(let i=0; i<this.slices; i++) {
+			for(let j=0; j<this.stacks; j++) {
+                this.indices.push(i*(this.stacks+1)+j, (i+1)*(this.stacks+1)+j, (i+1)*(this.stacks+1)+j+1);
+                this.indices.push(i*(this.stacks+1)+j+1, i*(this.stacks+1)+j, (i+1)*(this.stacks+1)+j+1);
+            }
+		}	
+
+        this.texCoords = this.originalTexCoords.slice();
         this.primitiveType = this.scene.gl.TRIANGLES;
-		this.initGLBuffers();
+		this.initGLBuffers();	
     }
+
+    /**
+	 * @method updateTexCoords
+	 * Updates the list of texture coordinates of the cylinder
+	 * @param s - S_lenght of the texture
+	 * @param t - T_lenght of the textures
+	 */
+	updateTexCoords(s,t) {
+		if(s == this.s_length && t == this.t_length)
+            return;
+		for(let i = 0; i < this.texCoords.length; i += 2){
+			this.texCoords[i] = this.originalTexCoords[i] / s ;
+			this.texCoords[i+1] = this.originalTexCoords[i+1] / t ;
+		}
+		this.updateTexCoordsGLBuffers();
+	}
 }
