@@ -244,8 +244,173 @@ class MySceneGraph {
      * Parses the <views> block.
      * @param {view block element} viewsNode
      */
-    parseViews(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+    parseViews(viewsNode) { // Result allocated in this.cameras
+        var children = viewsNode.children;
+        var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+        
+        let perspectiveIndexes = [];
+        let orthogonalIndexes = [];
+
+        let index = 0, vIndex = 0, lastIndex = 0;
+
+        while(true) {
+            vIndex = nodeNames.indexOf("perspective", lastIndex);
+            if(vIndex != -1) {
+                perspectiveIndexes[index] = vIndex;
+                lastIndex = vIndex;
+            }
+            else
+                break;
+            index++;
+        } 
+
+        index = 0;
+        vIndex = 0;
+        lastIndex = 0;
+
+        while(true) {
+            vIndex = nodeNames.indexOf("ortho", lastIndex);
+            if(vIndex != -1) {
+                orthogonalIndexes[index] = vIndex;
+                lastIndex = vIndex;
+            }
+            else
+                break;
+            index++;
+        } 
+
+        if(perspectiveIndexes.length == -1)
+            return "No Perspective Cameras defined for scene.";
+        if(orthogonalIndexes.length == -1)
+            return "No Orthogonal Cameras defined for scene.";
+
+        this.cameras = [];
+
+        // Perspective cameras
+
+        for (index = 0; index < perspectiveIndexes.length; index++) {
+            let camera = children[perspectiveIndexes[index]];
+            
+            let id = this.reader.getString(camera, 'id');
+            let near = this.reader.getFloat(camera, 'near');
+            let far = this.reader.getFloat(camera, 'far');
+            let angle = this.reader.getFloat(camera, 'angle');
+
+            if (id == null || near == null || far == null || angle == null)
+                return "No id | near | far | angle defined in <perspective> tag!";
+            
+            // Ainda é preciso trabalhar no "position" e no "target".
+            
+            let props = camera.children;
+            for (var i = 0; i < props.length; i++)
+                nodeNames.push(props[i].nodeName);
+            
+            // From - <perspective>    
+
+            let fromIndex = nodeNames.indexOf("from");
+            let x_from = 30, y_from = 15, z_from = 30;
+
+            if(fromIndex == -1)
+                this.onXMLMinorError("no <from> tag defined for scene; assuming 'x = 30, y = 15, z = 30'");
+
+            x_from = this.reader.getFloat(props[fromIndex], 'x');
+            y_from = this.reader.getFloat(props[fromIndex], 'y');
+            z_from = this.reader.getFloat(props[fromIndex], 'z');
+            
+            if(x_from == null || y_from == null || z_from == null)
+                return 'No x | y | z coordinate found on <from> tag!';
+
+            // To - <perspective>
+
+            let toIndex = nodeNames.indexOf("to");
+            let x_to = 0, y_to = -2, z_to = 0;
+
+            if(toIndex == -1)
+                this.onXMLMinorError("no <to> tag defined for scene; assuming 'x = 0, y = -2, z = 0'");
+
+            x_to = this.reader.getFloat(props[toIndex], 'x');
+            y_to = this.reader.getFloat(props[toIndex], 'y');
+            z_to = this.reader.getFloat(props[toIndex], 'z');
+            
+            if(x_to == null || y_to == null || z_to == null)
+                return 'No x | y | z coordinate found on <to> tag!';
+            
+            this.cameras[id] = new CGFcamera(angle, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to));
+        }
+
+        // Orthogonal cameras
+
+        for (index = 0; index < orthogonalIndexes.length; index++) {
+            let camera = children[orthogonalIndexes[index]];
+            
+            let id = this.reader.getString(camera, 'id');
+            let near = this.reader.getFloat(camera, 'near');
+            let far = this.reader.getFloat(camera, 'far');
+            let left = this.reader.getFloat(camera, 'left');
+            let right = this.reader.getFloat(camera, 'right');
+            let top = this.reader.getFloat(camera, 'top');
+            let bottom = this.reader.getFloat(camera, 'bottom');
+
+            if (id == null || near == null || far == null || left == null || right == null || top == null || bottom == null)
+                return "No id | near | far | left | right | top | bottom defined in <perspective> tag!";
+                        
+            let props = camera.children;
+            for (var i = 0; i < props.length; i++)
+                nodeNames.push(props[i].nodeName);
+            
+            // From - <ortho>    
+
+            let fromIndex = nodeNames.indexOf("from");
+            let x_from = 5, y_from = 0, z_from = 10;
+
+            if(fromIndex == -1)
+                this.onXMLMinorError("no <from> tag defined for scene; assuming 'x = 5, y = 0, z = 10'");
+
+            x_from = this.reader.getFloat(props[fromIndex], 'x');
+            y_from = this.reader.getFloat(props[fromIndex], 'y');
+            z_from = this.reader.getFloat(props[fromIndex], 'z');
+            
+            if(x_from == null || y_from == null || z_from == null)
+                return 'No x | y | z coordinate found on <from> tag!';
+
+            // To - <ortho>
+
+            let toIndex = nodeNames.indexOf("to");
+            let x_to = 5, y_to = 0, z_to = 0;
+
+            if(toIndex == -1)
+                this.onXMLMinorError("no <to> tag defined for scene; assuming 'x = 5, y = 0, z = 0'");
+
+            x_to = this.reader.getFloat(props[toIndex], 'x');
+            y_to = this.reader.getFloat(props[toIndex], 'y');
+            z_to = this.reader.getFloat(props[toIndex], 'z');
+            
+            if(x_to == null || y_to == null || z_to == null)
+                return 'No x | y | z coordinate found on <to> tag!';
+            
+            // Up - <ortho>
+
+            let upIndex = nodeNames.indexOf("up");
+            let x_up = 0, y_up = 1, z_up = 0;
+
+            if(upIndex == -1)
+                this.onXMLMinorError("no <up> tag defined for scene; assuming 'x = 0, y = 1, z = 0'");
+
+            x_to = this.reader.getFloat(props[upIndex], 'x');
+            y_to = this.reader.getFloat(props[upIndex], 'y');
+            z_to = this.reader.getFloat(props[upIndex], 'z');
+            
+            if(x_to == null || y_to == null || z_to == null)
+                return 'No x | y | z coordinate found on <to> tag!';
+            
+            this.cameras[id] = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to), vec3.fromValues(x_up, y_up, z_up));
+        }
+
+        this.log("Parsed Views");
+
         return null;
     }
 
@@ -564,7 +729,7 @@ class MySceneGraph {
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
-    displayScene() {
+    displayScene() { // Recursive - Initial call, descendants...
         
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
