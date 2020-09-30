@@ -260,7 +260,7 @@ class MySceneGraph {
             vIndex = nodeNames.indexOf("perspective", lastIndex);
             if(vIndex != -1) {
                 perspectiveIndexes[index] = vIndex;
-                lastIndex = vIndex;
+                lastIndex = vIndex + 1;
             }
             else
                 break;
@@ -275,7 +275,7 @@ class MySceneGraph {
             vIndex = nodeNames.indexOf("ortho", lastIndex);
             if(vIndex != -1) {
                 orthogonalIndexes[index] = vIndex;
-                lastIndex = vIndex;
+                lastIndex = vIndex + 1;
             }
             else
                 break;
@@ -305,23 +305,24 @@ class MySceneGraph {
             // Ainda é preciso trabalhar no "position" e no "target".
             
             let props = camera.children;
-            for (var i = 0; i < props.length; i++)
+            nodeNames = [];
+            for (var i = 0; i < props.length; i++) 
                 nodeNames.push(props[i].nodeName);
             
             // From - <perspective>    
-
             let fromIndex = nodeNames.indexOf("from");
             let x_from = 30, y_from = 15, z_from = 30;
 
             if(fromIndex == -1)
                 this.onXMLMinorError("no <from> tag defined for scene; assuming 'x = 30, y = 15, z = 30'");
+            else {
+                x_from = this.reader.getFloat(props[fromIndex], 'x');
+                y_from = this.reader.getFloat(props[fromIndex], 'y');
+                z_from = this.reader.getFloat(props[fromIndex], 'z');
 
-            x_from = this.reader.getFloat(props[fromIndex], 'x');
-            y_from = this.reader.getFloat(props[fromIndex], 'y');
-            z_from = this.reader.getFloat(props[fromIndex], 'z');
-            
-            if(x_from == null || y_from == null || z_from == null)
-                return 'No x | y | z coordinate found on <from> tag!';
+                if(x_from == null || y_from == null || z_from == null)
+                    return 'No x | y | z coordinate found on <from> tag!';
+            }
 
             // To - <perspective>
 
@@ -330,13 +331,14 @@ class MySceneGraph {
 
             if(toIndex == -1)
                 this.onXMLMinorError("no <to> tag defined for scene; assuming 'x = 0, y = -2, z = 0'");
+            else {
+                x_to = this.reader.getFloat(props[toIndex], 'x');
+                y_to = this.reader.getFloat(props[toIndex], 'y');
+                z_to = this.reader.getFloat(props[toIndex], 'z');
 
-            x_to = this.reader.getFloat(props[toIndex], 'x');
-            y_to = this.reader.getFloat(props[toIndex], 'y');
-            z_to = this.reader.getFloat(props[toIndex], 'z');
-            
-            if(x_to == null || y_to == null || z_to == null)
-                return 'No x | y | z coordinate found on <to> tag!';
+                if(x_to == null || y_to == null || z_to == null)
+                    return 'No x | y | z coordinate found on <to> tag!';
+            }
             
             this.cameras[id] = new CGFcamera(angle, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to));
         }
@@ -358,6 +360,7 @@ class MySceneGraph {
                 return "No id | near | far | left | right | top | bottom defined in <perspective> tag!";
                         
             let props = camera.children;
+            nodeNames = [];
             for (var i = 0; i < props.length; i++)
                 nodeNames.push(props[i].nodeName);
             
@@ -368,13 +371,14 @@ class MySceneGraph {
 
             if(fromIndex == -1)
                 this.onXMLMinorError("no <from> tag defined for scene; assuming 'x = 5, y = 0, z = 10'");
+            else {
+                x_from = this.reader.getFloat(props[fromIndex], 'x');
+                y_from = this.reader.getFloat(props[fromIndex], 'y');
+                z_from = this.reader.getFloat(props[fromIndex], 'z');
 
-            x_from = this.reader.getFloat(props[fromIndex], 'x');
-            y_from = this.reader.getFloat(props[fromIndex], 'y');
-            z_from = this.reader.getFloat(props[fromIndex], 'z');
-            
-            if(x_from == null || y_from == null || z_from == null)
-                return 'No x | y | z coordinate found on <from> tag!';
+                if(x_from == null || y_from == null || z_from == null)
+                    return 'No x | y | z coordinate found on <from> tag!';
+            }
 
             // To - <ortho>
 
@@ -383,13 +387,14 @@ class MySceneGraph {
 
             if(toIndex == -1)
                 this.onXMLMinorError("no <to> tag defined for scene; assuming 'x = 5, y = 0, z = 0'");
+            else {
+                x_to = this.reader.getFloat(props[toIndex], 'x');
+                y_to = this.reader.getFloat(props[toIndex], 'y');
+                z_to = this.reader.getFloat(props[toIndex], 'z');
 
-            x_to = this.reader.getFloat(props[toIndex], 'x');
-            y_to = this.reader.getFloat(props[toIndex], 'y');
-            z_to = this.reader.getFloat(props[toIndex], 'z');
-            
-            if(x_to == null || y_to == null || z_to == null)
-                return 'No x | y | z coordinate found on <to> tag!';
+                if(x_to == null || y_to == null || z_to == null)
+                    return 'No x | y | z coordinate found on <to> tag!';
+            }
             
             // Up - <ortho>
 
@@ -398,18 +403,19 @@ class MySceneGraph {
 
             if(upIndex == -1)
                 this.onXMLMinorError("no <up> tag defined for scene; assuming 'x = 0, y = 1, z = 0'");
+            else {
+                x_to = this.reader.getFloat(props[upIndex], 'x');
+                y_to = this.reader.getFloat(props[upIndex], 'y');
+                z_to = this.reader.getFloat(props[upIndex], 'z');
 
-            x_to = this.reader.getFloat(props[upIndex], 'x');
-            y_to = this.reader.getFloat(props[upIndex], 'y');
-            z_to = this.reader.getFloat(props[upIndex], 'z');
-            
-            if(x_to == null || y_to == null || z_to == null)
-                return 'No x | y | z coordinate found on <to> tag!';
+                if(x_to == null || y_to == null || z_to == null)
+                    return 'No x | y | z coordinate found on <to> tag!';
+            }
             
             this.cameras[id] = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to), vec3.fromValues(x_up, y_up, z_up));
         }
-
-        this.log("Parsed Views");
+        // console.log(this.cameras);
+        this.log("Parsed Views.");
 
         return null;
     }
@@ -419,7 +425,6 @@ class MySceneGraph {
      * @param {illumination block element} illuminationsNode
      */
     parseIllumination(illuminationsNode) {
-
         var children = illuminationsNode.children;
 
         this.ambient = [];
@@ -433,18 +438,29 @@ class MySceneGraph {
         var ambientIndex = nodeNames.indexOf("ambient");
         var backgroundIndex = nodeNames.indexOf("background");
 
-        var color = this.parseColor(children[ambientIndex], "ambient");
-        if (!Array.isArray(color))
-            return color;
-        else
-            this.ambient = color;
+        if(ambientIndex == -1) {
+            this.onXMLMinorError("<ambient> tag not set, assuming 'r = 0.2, g = 0.2, b = 0.2, a = 1.0'");
+            this.ambient = [0.2, 0.2, 0.2, 1.0];
+        }
+        else {
+            var color = this.parseColor(children[ambientIndex], "ambient");
+            if (!Array.isArray(color))
+                return color;
+            else
+                this.ambient = color;
+        }
 
-        color = this.parseColor(children[backgroundIndex], "background");
-        if (!Array.isArray(color))
-            return color;
-        else
-            this.background = color;
-
+        if(backgroundIndex == -1) {
+            this.onXMLMinorError("<background> tag not set, assuming 'r = 0.0, g = 0.0, b = 0.0, a = 1.0'");
+            this.background = [0.0, 0.0, 0.0, 1.0];
+        }
+        else {
+            color = this.parseColor(children[backgroundIndex], "background");
+            if (!Array.isArray(color))
+                return color;
+            else 
+                this.background = color;
+        }
         this.log("Parsed Illumination.");
 
         return null;
@@ -722,7 +738,7 @@ class MySceneGraph {
             return "unable to parse A component of the " + messageError;
 
         color.push(...[r, g, b, a]);
-
+        
         return color;
     }
 
