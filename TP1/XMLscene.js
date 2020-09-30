@@ -129,9 +129,9 @@ class XMLscene extends CGFscene {
         // ------------------ test desplay ------------------
         //this.rectangle.display();
         //this.sphere.display();
-        //this.cylinder.display();
+        this.cylinder.display();
         //this.triangle.display();
-        this.circle.display();
+        //this.circle.display();
         // --------------------------------------------------
 
         if (this.sceneInited) {

@@ -15,6 +15,9 @@ class MyCylinder extends CGFobject {
         this.stacks = stacks;
         this.s_length = 1;
 		this.t_length = 1;
+
+        this.circle_base = new MyCircle(scene, slices, base_r);
+        this.circle_top = new MyCircle(scene, slices, top_r);
         this.initBuffers();
     }
 
@@ -48,11 +51,12 @@ class MyCylinder extends CGFobject {
                 this.indices.push(i*(this.stacks+1)+j, (i+1)*(this.stacks+1)+j, (i+1)*(this.stacks+1)+j+1);
                 this.indices.push(i*(this.stacks+1)+j+1, i*(this.stacks+1)+j, (i+1)*(this.stacks+1)+j+1);
             }
-		}	
+        }
 
         this.texCoords = this.originalTexCoords.slice();
         this.primitiveType = this.scene.gl.TRIANGLES;
-		this.initGLBuffers();	
+        this.initGLBuffers();	
+
     }
 
     /**
