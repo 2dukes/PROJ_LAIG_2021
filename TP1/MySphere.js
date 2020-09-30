@@ -1,86 +1,75 @@
+/**
+ * MySphere
+ * @constructor
+ * @param Scene
+ */
 class MySphere extends CGFobject {
-    /**
-     * @method constructor
-     * @param  {CGFscene} scene - MyScene object
-     * @param  {integer} slices - number of slices around Y axis
-     * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
-     */
-    constructor(scene, slices, stacks) {
-      super(scene);
-      this.latDivs = stacks * 2;
-      this.longDivs = slices;
-  
-      this.initBuffers();
-    }
-  
-    /**
-     * @method initBuffers
-     * Initializes the sphere buffers
-     */
-    initBuffers() {
-      this.vertices = [];
-      this.indices = [];
-      this.normals = [];
-      this.texCoords = [];
-  
-      var phi = 0;
-      var theta = 0;
-      var phiInc = Math.PI / this.latDivs;
-      var thetaInc = (2 * Math.PI) / this.longDivs;
-      var latVertices = this.longDivs + 1;
-      var textureMapLong = 0;
-      var textureMapLat = 0;
-      var textureMapLongPart = 1 / this.longDivs;
-      var textureMapLatPart = 1 / this.latDivs;
-  
-      // build an all-around stack at a time, starting on "north pole" and proceeding "south"
-      for (let latitude = 0; latitude <= this.latDivs; latitude++) {
-        var sinPhi = Math.sin(phi);
-        var cosPhi = Math.cos(phi);
-  
-        // in each stack, build all the slices around, starting on longitude 0
-        theta = 0;
-        textureMapLong = 0;
-        for (let longitude = 0; longitude <= this.longDivs; longitude++) {
-          //--- Vertices coordinates
-          var x = Math.cos(theta) * sinPhi;
-          var y = cosPhi;
-          var z = Math.sin(-theta) * sinPhi;
-          this.vertices.push(x, y, z);
-  
-          //--- Indices
-          if (latitude < this.latDivs && longitude < this.longDivs) {
-            var current = latitude * latVertices + longitude;
-            var next = current + latVertices;
-            // pushing two triangles using indices from this round (current, current+1)
-            // and the ones directly south (next, next+1)
-            // (i.e. one full round of slices ahead)
-            
-            this.indices.push( current + 1, current, next);
-            this.indices.push( current + 1, next, next +1);
-          }
-  
-          //--- Normals
-          // at each vertex, the direction of the normal is equal to 
-          // the vector from the center of the sphere to the vertex.
-          // in a sphere of radius equal to one, the vector length is one.
-          // therefore, the value of the normal is equal to the position vectro
-          this.normals.push(x, y, z);
-          theta += thetaInc;
-  
-          //--- Texture Coordinates
-          // To be done... 
-          // May need some additional code also in the beginning of the function.
-          this.texCoords.push(textureMapLong, textureMapLat);
-          textureMapLong += textureMapLongPart;
-  
-          
-        }
-        phi += phiInc;
-        textureMapLat += textureMapLatPart;
-      }
-  
-      this.primitiveType = this.scene.gl.TRIANGLES;
-      this.initGLBuffers();
-    }
+  constructor(scene, radius, slices, stacks) {
+    super(scene);
+
+    this.slices = slices;
+    this.stacks = stacks;
+    this.radius = radius;
+    this.s_length = 1;
+    this.t_length = 1;
+
+    this.initBuffers();
   }
+
+  initBuffers() {
+    this.vertices = [];
+    this.normals = [];
+    this.indices = [];
+    this.texCoords = [];
+    this.originalTexCoords = [];
+
+    var ang_slices =(2 * Math.PI) / this.slices;
+    var ang_stacks = Math.PI / this.stacks;
+
+    for (var i = 0; i <= this.stacks; i++) {
+    	for (var j = 0; j <= this.slices; j++) {
+        	this.vertices.push(
+				this.radius * Math.cos(ang_slices * j) * Math.sin(ang_stacks * i),
+				this.radius * Math.sin(ang_slices * j) * Math.sin(ang_stacks * i),
+				this.radius * Math.cos(ang_stacks * i) );
+            
+        	this.normals.push(
+				Math.cos(ang_slices * j) * Math.sin(ang_stacks * i),
+				Math.sin(ang_slices * j) * Math.sin(ang_stacks * i),
+				Math.cos(ang_stacks * i) );
+            
+        	this.originalTexCoords.push(
+				j / this.slices,
+				1 - (i / this.stacks) );
+      	}
+    }
+
+    for (var i = 0; i < this.stacks; i++) {
+    	for (var j = 0; j < this.slices; j++) {
+			this.indices.push(i * (this.slices + 1) + j, (i + 1) * (this.slices + 1) + j, (i + 1) * (this.slices + 1) + j + 1);
+			this.indices.push(i * (this.slices + 1) + j, (i + 1) * (this.slices + 1) + j + 1, i * (this.slices + 1) + j + 1);
+        }
+    }
+
+	this.texCoords = this.originalTexCoords.slice();
+	this.primitiveType = this.scene.gl.TRIANGLES;
+	this.initGLBuffers();
+
+  }  
+
+/**
+ * @method updateTexCoords
+ * Updates the list of texture coordinates of the sphere
+ * @param s - S_lenght of the texture
+ * @param t - T_lenght of the textures
+ */
+	updateTexCoords(s,t) {
+		if(s == this.s_length && t == this.t_length)
+			return;
+		for(let i = 0; i < this.texCoords.length; i += 2) {
+			this.texCoords[i] = this.originalTexCoords[i] / s ;
+			this.texCoords[i+1] = this.originalTexCoords[i+1] / t ;
+		}
+		this.updateTexCoordsGLBuffers();
+	}
+}

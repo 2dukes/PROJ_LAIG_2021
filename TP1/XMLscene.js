@@ -40,8 +40,9 @@ class XMLscene extends CGFscene {
 
         // ------------------ test desplay ------------------
         this.rectangle = new MyRectangle(this, 1, 2, 3, 4);
-        this.sphere = new MySphere(this, 10, 10);
+        this.sphere = new MySphere(this, 1, 10, 10);
         this.cylinder = new MyCylinder(this, 10);
+        this.triangle = new MyTriangle(this);
         // --------------------------------------------------
 
     }
@@ -125,9 +126,10 @@ class XMLscene extends CGFscene {
         }
 
         // ------------------ test desplay ------------------
-        this.rectangle.display();
-        //this.sphere.display();
-        this.cylinder.display();
+        //this.rectangle.display();
+        this.sphere.display();
+        //this.cylinder.display();
+        //this.triangle.display();
         // --------------------------------------------------
 
         if (this.sceneInited) {
