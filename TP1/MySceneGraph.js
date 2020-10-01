@@ -439,8 +439,8 @@ class MySceneGraph {
         var backgroundIndex = nodeNames.indexOf("background");
 
         if(ambientIndex == -1) {
-            this.onXMLMinorError("<ambient> tag not set, assuming 'r = 0.2, g = 0.2, b = 0.2, a = 1.0'");
-            this.ambient = [0.2, 0.2, 0.2, 1.0];
+            this.onXMLMinorError("<ambient> tag not set, assuming 'r = 1.0, g = 0.2, b = 0.2, a = 1.0'");
+            this.ambient = [1.0, 0.2, 0.2, 1.0];
         }
         else {
             var color = this.parseColor(children[ambientIndex], "ambient");
@@ -565,12 +565,16 @@ class MySceneGraph {
         for (let index = 0; index < nodeNames.length; index++) {
             let texture = children[index];
             
-            let id = this.reader.getString(texture, 'id');
+            let textureId = this.reader.getString(texture, 'id');
             let path = this.reader.getString(texture, 'path');
-            if(id == null || path == null)
+            if(textureId == null || path == null)
                 return "No id | path defined in <texture> tag!";
-
-            this.textures[id] = new CGFtexture(this.scene, path);
+            
+            // Checks for repeated IDs.
+            if (this.textures[textureId] != null)
+                return "ID must be unique for each texture (conflict: ID = " + textureId + ")";
+            
+            this.textures[textureId] = new CGFtexture(this.scene, path);
         }
         // console.log(this.textures);
 
@@ -589,6 +593,14 @@ class MySceneGraph {
 
         var grandChildren = [];
         var nodeNames = [];
+        
+        var attributeNames = [];
+        var attributeTypes = [];
+        var colorArray = [];
+
+        attributeNames.push(...["shininess", "ambient", "diffuse", "specular", "emissive"]);
+        attributeTypes.push(...["float", "color", "color", "color", "color"]);
+        colorArray = [{ }, { }, { }, { }]; // [ambientColor, diffuseColor, specularColor, emissiveColor]
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
@@ -605,13 +617,51 @@ class MySceneGraph {
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
-                return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+                return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
-            //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            // Continue here
+            grandChildren = children[i].children;
+            nodeNames = [];
+            for (var j = 0; j < grandChildren.length; j++) {
+                nodeNames.push(grandChildren[j].nodeName);
+            }
+            
+            let sValue;
+
+            for (var j = 0; j < attributeNames.length; j++) {
+                var attributeIndex = nodeNames.indexOf(attributeNames[j]);
+
+                if (attributeIndex != -1) {
+                    if (attributeTypes[j] == "float") {
+                        sValue = this.reader.getFloat(grandChildren[attributeIndex], 'value') || 0.5;
+                        if (sValue == null)
+                            this.onXMLMinorError("Undefined float in 'value' field. Assuming <shininess value='0.5' />");
+                    }
+                    else { // j - 1 is always > 0, because the first computed element is shininess.
+                        var aux = this.parseColor(grandChildren[attributeIndex], attributeNames[j] + " texture for ID" + materialID);
+                        if (typeof aux === 'string')
+                            return aux;
+
+                        colorArray[j - 1].red = aux[0];
+                        colorArray[j - 1].green = aux[1];
+                        colorArray[j - 1].blue = aux[2];
+                        colorArray[j - 1].alpha = aux[3];
+                    }
+                }
+                else
+                    return "material " + attributeNames[i] + " undefined for ID = " + materialID;
+            }
+
+            this.materials[materialID] = new CGFappearance(this.scene);
+            this.materials[materialID].setAmbient(colorArray[0].red, colorArray[0].green, colorArray[0].blue, colorArray[0].alpha); // Ambient RGB
+            this.materials[materialID].setDiffuse(colorArray[1].red, colorArray[1].green, colorArray[1].blue, colorArray[1].alpha); // Diffuse RGB
+            this.materials[materialID].setSpecular(colorArray[2].red, colorArray[2].green, colorArray[2].blue, colorArray[2].alpha); // Specular RGB
+            this.materials[materialID].setEmission(colorArray[3].red, colorArray[3].green, colorArray[3].blue, colorArray[3].alpha); // Emissive RGB
+            this.materials[materialID].setShininess(sValue); 
         }
 
-        //this.log("Parsed materials");
+        // console.log(this.materials);
+        this.log("Parsed materials");
         return null;
     }
 
