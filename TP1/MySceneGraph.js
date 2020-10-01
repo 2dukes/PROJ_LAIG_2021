@@ -534,6 +534,7 @@ class MySceneGraph {
                     return "light " + attributeNames[i] + " undefined for ID = " + lightId;
             }
             this.lights[lightId] = global;
+
             numLights++;
         }
 
@@ -553,7 +554,27 @@ class MySceneGraph {
     parseTextures(texturesNode) {
 
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
+        var children = texturesNode.children;
+        var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        this.textures = [];
+
+        for (let index = 0; index < nodeNames.length; index++) {
+            let texture = children[index];
+            
+            let id = this.reader.getString(texture, 'id');
+            let path = this.reader.getString(texture, 'path');
+            if(id == null || path == null)
+                return "No id | path defined in <texture> tag!";
+
+            this.textures[id] = new CGFtexture(this.scene, path);
+        }
+        // console.log(this.textures);
+
+        this.log("Parsed textures");
         return null;
     }
 
