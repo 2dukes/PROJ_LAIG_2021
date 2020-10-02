@@ -85,12 +85,40 @@
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
-        <material id="defaultMaterial2">
-            <shininess value="1.0" />
-            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+        <material id="donutMaterial">
+            <shininess value="0.4" />
+            <ambient r="0.1" g="0.4" b="0.1" a="1.0" />
+            <diffuse r="0.2" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.13" g="0.33" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="wallsMaterial">
+            <shininess value="0.5" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.13" g="0.1" b="0.1" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="quadroMaterial">
+            <shininess value="0.75" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.6" g="0.3" b="0.2" a="1.0" />
+            <specular r="0.1" g="0.33" b="0.3" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="chaoMaterial">
+            <shininess value="0.7" />
+            <ambient r="0.1" g="0.4" b="0.1" a="1.0" />
+            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.13" g="0.33" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="arvore_natalMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.84" g="0.72" b="0.4" a="1.0" />
+            <diffuse r="0.2" g="0.3" b="0.4" a="1.0" />
+            <specular r="0.13" g="0.33" b="0.0" a="1.0" />
+            <emissive r="1.0" g="0.7" b="0.8" a="1.0" />
         </material>
 
         <!-- PERGUNTAR À PROF -->
@@ -102,7 +130,9 @@
             <!-- next two lines are mandatory -->
             <material id="defaultMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="null" /><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
 
             <transformations>
 
@@ -115,7 +145,6 @@
                 <noderef id="paredes" />
                 <noderef id="quadro" />
                 <noderef id="chao" />
-                <noderef id="luzes" />                                              <!-- PERGUNTAR À PROF -->
                 <noderef id="arvore_natal" />
                 <noderef id="presentes" />
                 <!-- "ss" is the identifier of a node or of leaf; -->
@@ -130,7 +159,7 @@
 
         <node id="quadro">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
-            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+            <material id="quadroMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
             <texture id="text_quadro"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="2.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
@@ -153,7 +182,7 @@
 
         <!-- DONUT -->
         <node id="donut">
-            <material id="null" />
+            <material id="donutMaterial" />
 
             <texture id="text_donut">
                 <amplification afs="2.0" aft="1.0" />
@@ -170,9 +199,13 @@
 
         <!-- Paredes -->
         <node id="paredes">
-            <material id="null" />
+            <material id="wallsMaterial" />
 
             <texture id="clear" />
+
+            <transformations>
+
+            </transformations>
 
             <descendants>
                 <noderef id="parede1" />
@@ -216,7 +249,7 @@
 
         <!-- Chao -->
         <node id="chao">
-            <material id="null" />
+            <material id="chaoMaterial" />
 
             <texture id="text_chao">
                 <amplification afs="10.0" aft="10.0" />
@@ -233,9 +266,13 @@
 
         <!-- Presentes -->
         <node id="presentes">
-            <material id="null" />
+            <material id="arvore_natalMaterial" />
 
             <texture id="clear" />
+
+            <transformations>
+
+            </transformations>
 
             <descendants>
                 <noderef id="presente1" />
@@ -281,6 +318,10 @@
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
+
+            <transformations>
+
+            </transformations>
 
             <descendants>
                 <noderef id="facecubo_tras" />
@@ -399,9 +440,13 @@
 
         <!-- Christmas Tree -->
         <node id="arvore_natal">
-            <material id="null" />
+            <material id="arvore_natalMaterial" />
 
             <texture id="clear" />
+
+            <transformations>
+
+            </transformations>
 
             <descendants>
                 <noderef id="bolas" />
@@ -417,6 +462,10 @@
             <texture id="text_bola_pinheiro">
                 <amplification afs="0.25" aft="0.25" />
             </texture>
+
+            <transformations>
+
+            </transformations>
 
             <descendants>
                 <noderef id="bola1" />
