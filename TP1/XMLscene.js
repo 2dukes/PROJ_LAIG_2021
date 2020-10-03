@@ -39,6 +39,14 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance=new CGFappearance(this);
 
+        // ------------------ test desplay ------------------
+        this.rectangle = new MyRectangle(this, 1, 2, 3, 4);
+        this.sphere = new MySphere(this, 1, 10, 10);
+        this.cylinder = new MyCylinder(this, 1, 2, 3, 10, 10);
+        this.triangle = new MyTriangle(this);
+        this.circle = new MyCircle(this, 50, 2);
+        // --------------------------------------------------
+
     }
 
     /**
@@ -118,6 +126,14 @@ class XMLscene extends CGFscene {
             this.lights[i].setVisible(true);
             this.lights[i].enable();
         }
+
+        // ------------------ test desplay ------------------
+        //this.rectangle.display();
+        //this.sphere.display();
+        this.cylinder.display();
+        //this.triangle.display();
+        //this.circle.display();
+        // --------------------------------------------------
 
         if (this.sceneInited) {
             // Draw axis
