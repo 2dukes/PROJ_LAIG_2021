@@ -244,8 +244,179 @@ class MySceneGraph {
      * Parses the <views> block.
      * @param {view block element} viewsNode
      */
-    parseViews(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+    parseViews(viewsNode) { // Result allocated in this.cameras
+        var children = viewsNode.children;
+        var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+        
+        let perspectiveIndexes = [];
+        let orthogonalIndexes = [];
+
+        let index = 0, vIndex = 0, lastIndex = 0;
+
+        while(true) {
+            vIndex = nodeNames.indexOf("perspective", lastIndex);
+            if(vIndex != -1) {
+                perspectiveIndexes[index] = vIndex;
+                lastIndex = vIndex + 1;
+            }
+            else
+                break;
+            index++;
+        } 
+
+        index = 0;
+        vIndex = 0;
+        lastIndex = 0;
+
+        while(true) {
+            vIndex = nodeNames.indexOf("ortho", lastIndex);
+            if(vIndex != -1) {
+                orthogonalIndexes[index] = vIndex;
+                lastIndex = vIndex + 1;
+            }
+            else
+                break;
+            index++;
+        } 
+
+        if(perspectiveIndexes.length == -1)
+            return "No Perspective Cameras defined for scene.";
+        if(orthogonalIndexes.length == -1)
+            return "No Orthogonal Cameras defined for scene.";
+
+        this.cameras = [];
+
+        // Perspective cameras
+
+        for (index = 0; index < perspectiveIndexes.length; index++) {
+            let camera = children[perspectiveIndexes[index]];
+            
+            let id = this.reader.getString(camera, 'id');
+            let near = this.reader.getFloat(camera, 'near');
+            let far = this.reader.getFloat(camera, 'far');
+            let angle = this.reader.getFloat(camera, 'angle');
+
+            if (id == null || near == null || far == null || angle == null)
+                return "No id | near | far | angle defined in <perspective> tag!";
+            
+            // Ainda é preciso trabalhar no "position" e no "target".
+            
+            let props = camera.children;
+            nodeNames = [];
+            for (var i = 0; i < props.length; i++) 
+                nodeNames.push(props[i].nodeName);
+            
+            // From - <perspective>    
+            let fromIndex = nodeNames.indexOf("from");
+            let x_from = 30, y_from = 15, z_from = 30;
+
+            if(fromIndex == -1)
+                this.onXMLMinorError("no <from> tag defined for scene; assuming 'x = 30, y = 15, z = 30'");
+            else {
+                x_from = this.reader.getFloat(props[fromIndex], 'x');
+                y_from = this.reader.getFloat(props[fromIndex], 'y');
+                z_from = this.reader.getFloat(props[fromIndex], 'z');
+
+                if(x_from == null || y_from == null || z_from == null)
+                    return 'No x | y | z coordinate found on <from> tag!';
+            }
+
+            // To - <perspective>
+
+            let toIndex = nodeNames.indexOf("to");
+            let x_to = 0, y_to = -2, z_to = 0;
+
+            if(toIndex == -1)
+                this.onXMLMinorError("no <to> tag defined for scene; assuming 'x = 0, y = -2, z = 0'");
+            else {
+                x_to = this.reader.getFloat(props[toIndex], 'x');
+                y_to = this.reader.getFloat(props[toIndex], 'y');
+                z_to = this.reader.getFloat(props[toIndex], 'z');
+
+                if(x_to == null || y_to == null || z_to == null)
+                    return 'No x | y | z coordinate found on <to> tag!';
+            }
+            
+            this.cameras[id] = new CGFcamera(angle, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to));
+        }
+
+        // Orthogonal cameras
+
+        for (index = 0; index < orthogonalIndexes.length; index++) {
+            let camera = children[orthogonalIndexes[index]];
+            
+            let id = this.reader.getString(camera, 'id');
+            let near = this.reader.getFloat(camera, 'near');
+            let far = this.reader.getFloat(camera, 'far');
+            let left = this.reader.getFloat(camera, 'left');
+            let right = this.reader.getFloat(camera, 'right');
+            let top = this.reader.getFloat(camera, 'top');
+            let bottom = this.reader.getFloat(camera, 'bottom');
+
+            if (id == null || near == null || far == null || left == null || right == null || top == null || bottom == null)
+                return "No id | near | far | left | right | top | bottom defined in <perspective> tag!";
+                        
+            let props = camera.children;
+            nodeNames = [];
+            for (var i = 0; i < props.length; i++)
+                nodeNames.push(props[i].nodeName);
+            
+            // From - <ortho>    
+
+            let fromIndex = nodeNames.indexOf("from");
+            let x_from = 5, y_from = 0, z_from = 10;
+
+            if(fromIndex == -1)
+                this.onXMLMinorError("no <from> tag defined for scene; assuming 'x = 5, y = 0, z = 10'");
+            else {
+                x_from = this.reader.getFloat(props[fromIndex], 'x');
+                y_from = this.reader.getFloat(props[fromIndex], 'y');
+                z_from = this.reader.getFloat(props[fromIndex], 'z');
+
+                if(x_from == null || y_from == null || z_from == null)
+                    return 'No x | y | z coordinate found on <from> tag!';
+            }
+
+            // To - <ortho>
+
+            let toIndex = nodeNames.indexOf("to");
+            let x_to = 5, y_to = 0, z_to = 0;
+
+            if(toIndex == -1)
+                this.onXMLMinorError("no <to> tag defined for scene; assuming 'x = 5, y = 0, z = 0'");
+            else {
+                x_to = this.reader.getFloat(props[toIndex], 'x');
+                y_to = this.reader.getFloat(props[toIndex], 'y');
+                z_to = this.reader.getFloat(props[toIndex], 'z');
+
+                if(x_to == null || y_to == null || z_to == null)
+                    return 'No x | y | z coordinate found on <to> tag!';
+            }
+            
+            // Up - <ortho>
+
+            let upIndex = nodeNames.indexOf("up");
+            let x_up = 0, y_up = 1, z_up = 0;
+
+            if(upIndex == -1)
+                this.onXMLMinorError("no <up> tag defined for scene; assuming 'x = 0, y = 1, z = 0'");
+            else {
+                x_to = this.reader.getFloat(props[upIndex], 'x');
+                y_to = this.reader.getFloat(props[upIndex], 'y');
+                z_to = this.reader.getFloat(props[upIndex], 'z');
+
+                if(x_to == null || y_to == null || z_to == null)
+                    return 'No x | y | z coordinate found on <to> tag!';
+            }
+            
+            this.cameras[id] = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to), vec3.fromValues(x_up, y_up, z_up));
+        }
+        // console.log(this.cameras);
+        this.log("Parsed Views.");
+
         return null;
     }
 
@@ -254,7 +425,6 @@ class MySceneGraph {
      * @param {illumination block element} illuminationsNode
      */
     parseIllumination(illuminationsNode) {
-
         var children = illuminationsNode.children;
 
         this.ambient = [];
@@ -268,18 +438,29 @@ class MySceneGraph {
         var ambientIndex = nodeNames.indexOf("ambient");
         var backgroundIndex = nodeNames.indexOf("background");
 
-        var color = this.parseColor(children[ambientIndex], "ambient");
-        if (!Array.isArray(color))
-            return color;
-        else
-            this.ambient = color;
+        if(ambientIndex == -1) {
+            this.onXMLMinorError("<ambient> tag not set, assuming 'r = 1.0, g = 0.2, b = 0.2, a = 1.0'");
+            this.ambient = [1.0, 0.2, 0.2, 1.0];
+        }
+        else {
+            var color = this.parseColor(children[ambientIndex], "ambient");
+            if (!Array.isArray(color))
+                return color;
+            else
+                this.ambient = color;
+        }
 
-        color = this.parseColor(children[backgroundIndex], "background");
-        if (!Array.isArray(color))
-            return color;
-        else
-            this.background = color;
-
+        if(backgroundIndex == -1) {
+            this.onXMLMinorError("<background> tag not set, assuming 'r = 0.0, g = 0.0, b = 0.0, a = 1.0'");
+            this.background = [0.0, 0.0, 0.0, 1.0];
+        }
+        else {
+            color = this.parseColor(children[backgroundIndex], "background");
+            if (!Array.isArray(color))
+                return color;
+            else 
+                this.background = color;
+        }
         this.log("Parsed Illumination.");
 
         return null;
@@ -353,6 +534,7 @@ class MySceneGraph {
                     return "light " + attributeNames[i] + " undefined for ID = " + lightId;
             }
             this.lights[lightId] = global;
+
             numLights++;
         }
 
@@ -372,7 +554,31 @@ class MySceneGraph {
     parseTextures(texturesNode) {
 
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
+        var children = texturesNode.children;
+        var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        this.textures = [];
+
+        for (let index = 0; index < nodeNames.length; index++) {
+            let texture = children[index];
+            
+            let textureId = this.reader.getString(texture, 'id');
+            let path = this.reader.getString(texture, 'path');
+            if(textureId == null || path == null)
+                return "No id | path defined in <texture> tag!";
+            
+            // Checks for repeated IDs.
+            if (this.textures[textureId] != null)
+                return "ID must be unique for each texture (conflict: ID = " + textureId + ")";
+            
+            this.textures[textureId] = new CGFtexture(this.scene, path);
+        }
+        // console.log(this.textures);
+
+        this.log("Parsed textures");
         return null;
     }
 
@@ -387,6 +593,14 @@ class MySceneGraph {
 
         var grandChildren = [];
         var nodeNames = [];
+        
+        var attributeNames = [];
+        var attributeTypes = [];
+        var colorArray = [];
+
+        attributeNames.push(...["shininess", "ambient", "diffuse", "specular", "emissive"]);
+        attributeTypes.push(...["float", "color", "color", "color", "color"]);
+        colorArray = [{ }, { }, { }, { }]; // [ambientColor, diffuseColor, specularColor, emissiveColor]
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
@@ -403,13 +617,51 @@ class MySceneGraph {
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
-                return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+                return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
-            //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            // Continue here
+            grandChildren = children[i].children;
+            nodeNames = [];
+            for (var j = 0; j < grandChildren.length; j++) {
+                nodeNames.push(grandChildren[j].nodeName);
+            }
+            
+            let sValue;
+
+            for (var j = 0; j < attributeNames.length; j++) {
+                var attributeIndex = nodeNames.indexOf(attributeNames[j]);
+
+                if (attributeIndex != -1) {
+                    if (attributeTypes[j] == "float") {
+                        sValue = this.reader.getFloat(grandChildren[attributeIndex], 'value') || 0.5;
+                        if (sValue == null)
+                            this.onXMLMinorError("Undefined float in 'value' field. Assuming <shininess value='0.5' />");
+                    }
+                    else { // j - 1 is always > 0, because the first computed element is shininess.
+                        var aux = this.parseColor(grandChildren[attributeIndex], attributeNames[j] + " texture for ID" + materialID);
+                        if (typeof aux === 'string')
+                            return aux;
+
+                        colorArray[j - 1].red = aux[0];
+                        colorArray[j - 1].green = aux[1];
+                        colorArray[j - 1].blue = aux[2];
+                        colorArray[j - 1].alpha = aux[3];
+                    }
+                }
+                else
+                    return "material " + attributeNames[i] + " undefined for ID = " + materialID;
+            }
+
+            this.materials[materialID] = new CGFappearance(this.scene);
+            this.materials[materialID].setAmbient(colorArray[0].red, colorArray[0].green, colorArray[0].blue, colorArray[0].alpha); // Ambient RGB
+            this.materials[materialID].setDiffuse(colorArray[1].red, colorArray[1].green, colorArray[1].blue, colorArray[1].alpha); // Diffuse RGB
+            this.materials[materialID].setSpecular(colorArray[2].red, colorArray[2].green, colorArray[2].blue, colorArray[2].alpha); // Specular RGB
+            this.materials[materialID].setEmission(colorArray[3].red, colorArray[3].green, colorArray[3].blue, colorArray[3].alpha); // Emissive RGB
+            this.materials[materialID].setShininess(sValue); 
         }
 
-        //this.log("Parsed materials");
+        // console.log(this.materials);
+        this.log("Parsed materials");
         return null;
     }
 
@@ -557,14 +809,14 @@ class MySceneGraph {
             return "unable to parse A component of the " + messageError;
 
         color.push(...[r, g, b, a]);
-
+        
         return color;
     }
 
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
-    displayScene() {
+    displayScene() { // Recursive - Initial call, descendants...
         
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
