@@ -1,11 +1,11 @@
 # LAIG 2020/2021 - TP1
 
-## Group: T0xG0y
+## Group: T01G06
 
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201801010 | ...                |
-| Jane Doe         | 201801011 | ...                |
+| Rui Pinto         | 201806441 | up201806441@fe.up.pt                |
+| Tiago Gomes         | 201806658 | up201806658@fe.up.pt                |
 
 ----
 ## Project information
