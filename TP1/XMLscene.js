@@ -154,8 +154,8 @@ class XMLscene extends CGFscene {
             this.axis.display();
             //this.rectangle.display();
             //this.sphere.display();
-            //this.cylinder.display();
-            this.triangle.display();
+            this.cylinder.display();
+            //this.triangle.display();
             //this.circle.display();
             // --------------------------------------------------
         }
