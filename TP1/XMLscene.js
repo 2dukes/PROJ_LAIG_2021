@@ -43,7 +43,7 @@ class XMLscene extends CGFscene {
         this.rectangle = new MyRectangle(this, 1, 2, 3, 4);
         this.sphere = new MySphere(this, 1, 10, 10);
         this.cylinder = new MyCylinder(this, 1, 2, 3, 10, 10);
-        this.triangle = new MyTriangle(this);
+        this.triangle = new MyTriangle(this, 1, 0, 0, 1);
         this.circle = new MyCircle(this, 50, 2);
         // --------------------------------------------------
 
@@ -127,14 +127,6 @@ class XMLscene extends CGFscene {
             this.lights[i].enable();
         }
 
-        // ------------------ test desplay ------------------
-        //this.rectangle.display();
-        //this.sphere.display();
-        this.cylinder.display();
-        //this.triangle.display();
-        //this.circle.display();
-        // --------------------------------------------------
-
         if (this.sceneInited) {
             // Draw axis
             this.axis.display();
@@ -142,17 +134,30 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
 
             // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+            //this.graph.displayScene();
+
+
+            //this.cylinder.display();
         }
         else
         {
             // Show some "loading" visuals
-            this.defaultAppearance.apply();
-
+            //this.defaultAppearance.apply();
+            /*
             this.rotate(-this.loadingProgress/10.0,0,0,1);
             
             this.loadingProgressObject.display();
-            this.loadingProgress++;
+            this.loadingProgress++;*/
+
+
+            // ------------------ test desplay ------------------
+            this.axis.display();
+            //this.rectangle.display();
+            //this.sphere.display();
+            //this.cylinder.display();
+            this.triangle.display();
+            //this.circle.display();
+            // --------------------------------------------------
         }
 
         this.popMatrix();
