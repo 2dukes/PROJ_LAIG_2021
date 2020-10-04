@@ -1,9 +1,8 @@
 class MyNode {
-    constructor(id, material, texture, transformations, descendants) {
-        this.id = id;
-        this.material = material;
-        this.texture = texture;
-        this.transformations = transformations;
+    constructor(material, texture, transformations, descendants) {
+        this.materialID = material;
+        this.textureID = texture;
+        this.transformationMatrix = transformations;
         this.descendants = descendants;
     }
 }
