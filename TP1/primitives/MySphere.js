@@ -10,8 +10,6 @@ class MySphere extends CGFobject {
     this.slices = slices;
     this.stacks = stacks;
     this.radius = radius;
-    this.s_length = 1;
-    this.t_length = 1;
 
     this.initBuffers();
   }
@@ -57,14 +55,8 @@ class MySphere extends CGFobject {
 
   }  
 
-/**
- * @method updateTexCoords
- * Updates the list of texture coordinates of the sphere
- * @param s - S_lenght of the texture
- * @param t - T_lenght of the textures
- */
 	updateTexCoords(s,t) {
-		if(s == this.s_length && t == this.t_length)
+		if(s == 1 && t == 1)
 			return;
 		for(let i = 0; i < this.texCoords.length; i += 2) {
 			this.texCoords[i] = this.originalTexCoords[i] / s ;
