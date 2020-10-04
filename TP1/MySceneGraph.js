@@ -707,25 +707,191 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
-            this.onXMLMinorError("To do: Parse nodes.");
+            
             // Transformations
+            // let transformations = []; // [ { transformation: "Scale", matrix: [1.0, 0.0, 0.5] }, ...]
+            
+            grandgrandChildren = grandChildren[transformationsIndex].children;
+            let transMatrix = mat4.create(); // Creates a new Identity matrix.
 
-            // Material
+            for (let k = 0; k < grandgrandChildren.length; k++) {
+                if(grandgrandChildren[k].nodeName == "translation") {
+                    var aux = this.parseCoordinates3D(grandgrandChildren[k], "Translation");
+                    if(typeof aux === "string") {
+                        this.onXMLMinorError(aux + "The transformation won't be considered.");
+                        continue;
+                    }
+                    
+                    mat4.translate(transMatrix, transMatrix, vec3.fromValues(aux[0], aux[1], aux[2]));
+                    // transformations.push({ transformation: "translation", matrix: aux});
+                } else if(grandgrandChildren[k].nodeName == "scale") {
+                    var aux = this.parseScalingCoordinates(grandgrandChildren[k], "Scale");
+                    if(typeof aux === "string") {
+                        this.onXMLMinorError(aux + "The transformation won't be considered.");
+                        continue;
+                    }
+                    
+                    mat4.scale(transMatrix, transMatrix, vec3.fromValues(aux[0], aux[1], aux[2]));
+                    // transformations.push({ transformation: "scale", matrix: aux});
+                } else if(grandgrandChildren[k].nodeName == "rotation") {
+                    let rotationAxis = this.reader.getString(grandgrandChildren[k], "axis");
+                    let rotationAngle = this.reader.getFloat(grandgrandChildren[k], "angle");
+                    if(rotationAxis == null || rotationAngle == null) {
+                        this.onXMLMinorError("Undefined rotation axis | angle. The transformation won't be considered.");
+                        continue;
+                    }
+                    
+                    let axisVec = vec3.fromValues(rotationAxis == 'x', rotationAxis == 'y', rotationAxis == 'z'); 
+                    mat4.rotate(transMatrix, transMatrix, DEGREE_TO_RAD * rotationAngle, axisVec);  
+                    // transformations.push({ transformation: "rotation", matrix: [DEGREE_TO_RAD * rotationAngle, rotationAxis == "x", rotationAxis == "y", rotationAxis == "z"]}); // this.rotate(Math.PI / 2, 0, 0, 1);
+                }                
+            }
+            console.log(transMatrix);
+            // console.log(transformations);
 
-            // Texture
+            // Material - Name | NULL
+            let materialID = this.reader.getString(grandChildren[materialIndex], 'id'); 
+            if(materialID == null) 
+                return "no ID defined for materialID";
+            else if(this.materials[materialID] == null && materialID != "null")
+                return "Material with ID: " + materialID + " not defined!";
+
+            console.log(materialID);
+
+            // Texture - Name | NULL | Clear
+            let textureID = this.reader.getString(grandChildren[textureIndex], 'id');
+            let afs = -1.0, aft = -1.0; // Negative values initialized for "clear" case => No texture => No amplification.
+            if(textureID == null)
+                return "no ID defined for textureID";
+            else if(this.textures[textureID] == null && !(textureID == "null" || textureID == "clear"))
+                return "Texture with ID: " + textureID + " not defined!";
+            else if(textureID != "clear") {
+                grandgrandChildren = grandChildren[textureIndex].children;
+                if(grandgrandChildren.length > 1) 
+                    this.onXMLMinorError('Found more than one tag inside <texture>');
+                
+                let amplificationIndex = 0;
+                afs = this.reader.getFloat(grandgrandChildren[amplificationIndex], "afs") || 1.0;
+                aft = this.reader.getFloat(grandgrandChildren[amplificationIndex], "aft") || 1.0;
+
+                if(afs == null || aft == null)
+                    this.onXMLMinorError("No afs | aft defined. Assuming afs = 1.0, aft = 1.0");
+                
+            } 
+            
+            console.log(textureID, "afs=" + afs, "aft=" + aft);
 
             // Descendants
+            let descendants = [];
+            grandgrandChildren = grandChildren[descendantsIndex].children; 
+            for (let j = 0; j < grandgrandChildren.length; j++) {
+                let nodeName = grandgrandChildren[j].nodeName;
+                if(nodeName == "leaf") { // <leaf>
+                    continue; // TEMPORARY - ONLY BECAUSE SOME PRIMITIVES AREN'T COMPLETE
+
+                    let type = this.reader.getString(grandgrandChildren[j], 'type');
+                    let leaf;
+
+                    if(type == "rectangle") {
+                        let x1 = this.reader.getFloat(grandgrandChildren[j], 'x1');
+                        let y1 = this.reader.getFloat(grandgrandChildren[j], 'y1');
+                        let x2 = this.reader.getFloat(grandgrandChildren[j], 'x2');
+                        let y2 = this.reader.getFloat(grandgrandChildren[j], 'y2');
+
+                        leaf = new MyRectangle(this.scene, x1, y1, x2, y2);
+                    }
+                    else if(type == "triangle") {
+                        let x1 = this.reader.getFloat(grandgrandChildren[j], 'x1');
+                        let y1 = this.reader.getFloat(grandgrandChildren[j], 'y1');
+                        let x2 = this.reader.getFloat(grandgrandChildren[j], 'x2');
+                        let y2 = this.reader.getFloat(grandgrandChildren[j], 'y2');
+
+                        leaf = new MyTriangle(this.scene, x1, x2, y1, y2);
+                    }
+                    else if(type == "cylinder") {
+                        let height = this.reader.getFloat(grandgrandChildren[j], 'height');
+                        let topRadius = this.reader.getFloat(grandgrandChildren[j], 'topRadius');
+                        let bottomRadius = this.reader.getFloat(grandgrandChildren[j], 'bottomRadius');
+                        let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks');
+                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
+
+                        leaf = new MyCylinder(this.scene, bottomRadius, topRadius, height, slices, stacks);
+                    }
+                    else if(type == "sphere") {
+                        let radius = this.reader.getFloat(grandgrandChildren[j], 'radius');
+                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
+                        let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks');
+
+                        leaf = new MyCylinder(this.scene, radius, slices, stacks);
+                    }
+                    else if(type == 'torus') {
+                        let inner = this.reader.getFloat(grandgrandChildren[j], 'inner');
+                        let outer = this.reader.getFloat(grandgrandChildren[j], 'outer');
+                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
+                        let loops = this.reader.getFloat(grandgrandChildren[j], 'loops');
+
+                        leaf = new MyCylinder(this.scene, inner, outer, slices, loops); // This class is still in development! Arguments order may change!
+                    }
+                    descendants.push(leaf);
+                } else {
+                    let noderefID = this.reader.getString(grandgrandChildren[j], 'id'); // <noderef>
+                    descendants.push(noderefID);
+                }
+
+                // if(this.nodes[noderefID] == null)
+                //     return "Node with ID: " + noderefID + " not defined!"; 
+            }
+
+            // Commented lines can be only done at the end of the parsing of the XML file.
+            console.log(descendants);
+            this.nodes[nodeID] = new MyNode(materialID, { textureID: textureID, afs: afs, aft: aft }, transMatrix, descendants);
         }
+
+        // Check for Undefined nodes
+        this.nodes.forEach(node => {
+            node.descendants.forEach(descendant => {
+                if(this.nodes[descendant] == null && typeof descendant == "string") // Only compares noderef nodes
+                    return "Caught unreferenced node " + descendant;
+            });
+        });
+        
+        return null;
     }
 
-
-    parseBoolean(node, name, messageError){
+    parseBoolean(node, name, messageError) {
         var boolVal = true;
         boolVal = this.reader.getBoolean(node, name);
         if (!(boolVal != null && !isNaN(boolVal) && (boolVal == true || boolVal == false)))
             this.onXMLMinorError("unable to parse value component " + messageError + "; assuming 'value = 1'");
 
         return boolVal || 1;
+    }
+    /**
+     * Parse the coordinates from a node with ID = id
+     * @param {block element} node
+     * @param {message to be displayed in case of error} messageError
+     */
+    parseScalingCoordinates(node, messageError) {
+        var position = [];
+
+        // x
+        var x = this.reader.getFloat(node, 'sx');
+        if (!(x != null && !isNaN(x)))
+            return "unable to parse sx-coordinate of the " + messageError;
+
+        // y
+        var y = this.reader.getFloat(node, 'sy');
+        if (!(y != null && !isNaN(y)))
+            return "unable to parse sy-coordinate of the " + messageError;
+
+        // z
+        var z = this.reader.getFloat(node, 'sz');
+        if (!(z != null && !isNaN(z)))
+            return "unable to parse sz-coordinate of the " + messageError;
+
+        position.push(...[x, y, z]);
+
+        return position;
     }
     /**
      * Parse the coordinates from a node with ID = id
