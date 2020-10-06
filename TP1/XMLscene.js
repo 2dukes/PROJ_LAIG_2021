@@ -135,30 +135,26 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
 
             // Displays the scene (MySceneGraph function).
-            //this.graph.displayScene();
-
-
-            //this.cylinder.display();
+            this.graph.displayScene();
         }
         else
         {
             // Show some "loading" visuals
-            //this.defaultAppearance.apply();
-            /*
+            this.defaultAppearance.apply();
+            
             this.rotate(-this.loadingProgress/10.0,0,0,1);
             
             this.loadingProgressObject.display();
-            this.loadingProgress++;*/
+            this.loadingProgress++;
 
 
             // ------------------ test desplay ------------------
-            this.axis.display();
             //this.rectangle.display();
             //this.sphere.display();
             //this.cylinder.display();
             //this.triangle.display();
             //this.circle.display();
-            this.torus.display();
+            //this.torus.display();
             // --------------------------------------------------
         }
 
