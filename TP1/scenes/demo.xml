@@ -189,11 +189,11 @@
             </texture>
 
             <transformations>
-                <translation x="4.0" y="1.0" z="1.0" />
+                <translation x="2.5" y="1.5" z="0.0" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.05" outer="0.5" slices="16" loops="48" /> 
+                <leaf type="torus" inner="0.15" outer="0.3" slices="16" loops="48" /> 
             </descendants>
         </node>
 
@@ -237,7 +237,7 @@
             </texture>
 
             <transformations>
-                <translation x="5.0" y="1.0" z="0.0" />
+                <translation x="5.0" y="0.0" z="0.0" />
                 <scale sx="1.0" sy="3.0" sz="5.0" />
                 <rotation axis="y" angle="-90" />
             </transformations>
@@ -256,7 +256,9 @@
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="90" />
+                <scale sx="5.0" sy="1.0" sz="5.0" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="z" angle ="-90" />
             </transformations>
 
             <descendants>
@@ -304,7 +306,7 @@
             </texture>
 
             <transformations>
-                <translation x="6.0" y="0.0" z="7.0" />
+                <translation x="3.0" y="0.0" z="3.0" />
             </transformations>
 
             <descendants>
@@ -320,7 +322,7 @@
             </texture>
 
             <transformations>
-
+                <scale sx="0.4" sy="0.4" sz="0.4" />
             </transformations>
 
             <descendants>
@@ -412,8 +414,9 @@
             </texture>
 
             <transformations>
-                <translation x="-0.5" y="0.5" z="0.5" />
-                <rotation axis="x" angle="90" />
+                <translation x="-0.5" y="1.0" z="0.5" />
+                <rotation axis="x" angle="-90" />
+
             </transformations>
 
             <descendants>
@@ -429,8 +432,8 @@
             </texture>
 
             <transformations>
-                <translation x="-0.5" y="-0.5" z="-0.5" />
-                <rotation axis="x" angle="-90" />
+                <translation x="-0.5" y="0.0" z="-0.5" />
+                <rotation axis="x" angle="90" />
             </transformations>
 
             <descendants>
