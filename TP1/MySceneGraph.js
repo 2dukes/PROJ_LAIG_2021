@@ -721,7 +721,7 @@ class MySceneGraph {
                         this.onXMLMinorError(aux + "The transformation won't be considered.");
                         continue;
                     }
-                    
+
                     mat4.translate(transMatrix, transMatrix, vec3.fromValues(aux[0], aux[1], aux[2]));
                     // transformations.push({ transformation: "translation", matrix: aux});
                 } else if(grandgrandChildren[k].nodeName == "scale") {
@@ -787,7 +787,7 @@ class MySceneGraph {
             for (let j = 0; j < grandgrandChildren.length; j++) {
                 let nodeName = grandgrandChildren[j].nodeName;
                 if(nodeName == "leaf") { // <leaf>
-                    continue; // TEMPORARY - ONLY BECAUSE SOME PRIMITIVES AREN'T COMPLETE
+                    // continue; // TEMPORARY - ONLY BECAUSE SOME PRIMITIVES AREN'T COMPLETE
 
                     let type = this.reader.getString(grandgrandChildren[j], 'type');
                     let leaf;
@@ -822,7 +822,7 @@ class MySceneGraph {
                         let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
                         let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks');
 
-                        leaf = new MyCylinder(this.scene, radius, slices, stacks);
+                        leaf = new MySphere(this.scene, radius, slices, stacks);
                     }
                     else if(type == 'torus') {
                         let inner = this.reader.getFloat(grandgrandChildren[j], 'inner');
@@ -987,5 +987,26 @@ class MySceneGraph {
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
         
         //this.nodes[this.idRoot].display()
+        let identity = mat4.create();
+        this.processNode(this.idRoot, null, null, identity);
+    }
+
+    processNode(idRoot, parentMaterial, parentTexture, parentMatrix) {
+        // Apply materials and textures
+        
+        this.scene.pushMatrix();
+        if(parentMatrix != null)
+            this.scene.multMatrix(parentMatrix);
+        
+        let descendants = this.nodes[idRoot].descendants;
+        for (let i = 0; i < descendants.length; i++) {
+            if(typeof descendants[i] == 'string') { // noderef
+                this.processNode(descendants[i], this.nodes[descendants[i]].materialID, this.nodes[descendants[i]].textureID, this.nodes[descendants[i]].transformationMatrix);
+            }
+            else  // leaf / primitive
+                descendants[i].display();
+        }
+        this.scene.popMatrix();
+
     }
 }

@@ -189,11 +189,11 @@
             </texture>
 
             <transformations>
-                <translation x="4.0" y="1.0" z="0.0" />
+                <translation x="4.0" y="1.0" z="1.0" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="1.0" outer="1.0" slices="16" loops="48" />
+                <leaf type="torus" inner="0.05" outer="0.5" slices="16" loops="48" /> 
             </descendants>
         </node>
 
@@ -481,7 +481,7 @@
             </texture>
 
             <transformations>
-                <translation x="5.1" y="0.75" z="5.1" />
+                <translation x="-1.1" y="0.75" z="-5.1" />
             </transformations>
 
             <descendants>
