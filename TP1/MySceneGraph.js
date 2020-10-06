@@ -830,7 +830,7 @@ class MySceneGraph {
                         let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
                         let loops = this.reader.getFloat(grandgrandChildren[j], 'loops');
 
-                        leaf = new MyCylinder(this.scene, inner, outer, slices, loops); // This class is still in development! Arguments order may change!
+                        leaf = new MyTorus(this.scene, outer, inner, slices, loops); 
                     }
                     descendants.push(leaf);
                 } else {
