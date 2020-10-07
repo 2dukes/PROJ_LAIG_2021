@@ -248,6 +248,10 @@ class MySceneGraph {
         var children = viewsNode.children;
         var nodeNames = [];
 
+        this.defaultCamera = this.reader.getString(viewsNode, 'default');
+        if(this.defaultCamera == null) 
+            this.onXMLMinorError("Assuming new CGFcamera(0.1, 0.5, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0))");
+
         for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
         
@@ -415,6 +419,9 @@ class MySceneGraph {
             this.cameras[id] = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to), vec3.fromValues(x_up, y_up, z_up));
         }
         // console.log(this.cameras);
+        if(this.cameras[this.defaultCamera] == null) 
+            return "Default camera doesn't match any of the existing cameras...";
+        
         this.log("Parsed Views.");
 
         return null;
@@ -746,7 +753,7 @@ class MySceneGraph {
                     // transformations.push({ transformation: "rotation", matrix: [DEGREE_TO_RAD * rotationAngle, rotationAxis == "x", rotationAxis == "y", rotationAxis == "z"]}); // this.rotate(Math.PI / 2, 0, 0, 1);
                 }                
             }
-            console.log(transMatrix);
+            // console.log(transMatrix);
             // console.log(transformations);
 
             // Material - Name | NULL
@@ -756,7 +763,7 @@ class MySceneGraph {
             else if(this.materials[materialID] == null && materialID != "null")
                 return "Material with ID: " + materialID + " not defined!";
 
-            console.log(materialID);
+            // console.log(materialID);
 
             // Texture - Name | NULL | Clear
             let textureID = this.reader.getString(grandChildren[textureIndex], 'id');
@@ -779,7 +786,7 @@ class MySceneGraph {
                 
             } 
             
-            console.log(textureID, "afs=" + afs, "aft=" + aft);
+            // console.log(textureID, "afs=" + afs, "aft=" + aft);
 
             // Descendants
             let descendants = [];
@@ -843,7 +850,7 @@ class MySceneGraph {
             }
 
             // Commented lines can be only done at the end of the parsing of the XML file.
-            console.log(descendants);
+            // console.log(descendants);
             this.nodes[nodeID] = new MyNode(materialID, { textureID: textureID, afs: afs, aft: aft }, transMatrix, descendants);
         }
 

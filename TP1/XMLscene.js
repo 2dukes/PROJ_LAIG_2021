@@ -54,7 +54,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.1, 0.5, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -89,10 +89,27 @@ class XMLscene extends CGFscene {
         }
     }
 
+    updateCamera() {
+        // console.log(this.selectedCamera);
+        // console.log(this.graph.cameras);
+
+        let index = 0, x;
+        for(x in this.graph.cameras) {
+            if(index == this.selectedCamera) {
+                this.camera = this.graph.cameras[x];
+                this.interface.setActiveCamera(this.camera);
+                break;
+            }
+            else
+                index++;
+        }
+        
+    }
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+
         this.axis = new CGFaxis(this, this.graph.referenceLength);
 
         this.gl.clearColor(...this.graph.background);
@@ -102,6 +119,28 @@ class XMLscene extends CGFscene {
         this.initLights();
 
         this.sceneInited = true;
+
+        // Gui SetUp -> Cameras
+
+        // console.log(this.graph.cameras);
+        // console.log(len);
+
+        this.selectedCamera = 0;
+        this.cameraIds = { };
+        let index = 0, x;
+        for (x in this.graph.cameras) {
+            // console.log(x);
+            if(x == this.graph.defaultCamera)
+                this.selectedCamera = index;
+
+            this.cameraIds[x] = index;
+            index++;
+        }
+        
+        // console.log(this.cameraIds);
+        this.gui.add(this, 'selectedCamera', this.cameraIds).name('Camera').onChange(this.updateCamera.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
+        this.updateCamera();
+         
     }
 
     /**
