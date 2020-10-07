@@ -368,6 +368,10 @@
                 <noderef id="presente2" />
                 <noderef id="presente3" />
                 <noderef id="presente4" />
+                <noderef id="presente5" />
+                <noderef id="presente6" />
+                <noderef id="presente7" />
+                <noderef id="presente8" />
             </descendants>
         </node>
 
@@ -379,7 +383,7 @@
             </texture>
 
             <transformations>
-                <translation x="1.0" y="0.0" z="2.0" />
+                <translation x="4.0" y="0.0" z="6.0" />
             </transformations>
 
             <descendants>
@@ -395,7 +399,7 @@
             </texture>
 
             <transformations>
-                <translation x="3.0" y="0.0" z="3.0" />
+                <translation x="6.0" y="0.0" z="6.0" />
             </transformations>
 
             <descendants>
@@ -411,7 +415,7 @@
             </texture>
 
             <transformations>
-                <translation x="4.0" y="0.0" z="2.0" />
+                <translation x="4.0" y="0.0" z="4.0" />
             </transformations>
 
             <descendants>
@@ -427,7 +431,75 @@
             </texture>
 
             <transformations>
-                <translation x="6.0" y="0.0" z="2.0" />
+                <translation x="6.0" y="0.0" z="4.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pyramid" />
+            </descendants>
+        </node>
+
+        <node id="presente5">
+            <material id="null"/>
+
+            <texture id="text_presente">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.0" y="0.0" z="3.0" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="presente6">
+            <material id="null"/>
+
+            <texture id="text_presente">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.0" y="0.0" z="7.0" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="presente7">
+            <material id="null"/>
+
+            <texture id="text_presente">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="7.0" y="0.0" z="5.0" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pyramid" />
+            </descendants>
+        </node>
+
+        <node id="presente8">
+            <material id="null"/>
+
+            <texture id="text_presente">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3.0" y="0.0" z="5.0" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
             </transformations>
 
             <descendants>
@@ -443,7 +515,7 @@
             </texture>
 
             <transformations>
-                <scale sx="0.4" sy="0.4" sz="0.4" />
+                <scale sx="0.35" sy="0.35" sz="0.35" />
             </transformations>
 
             <descendants>
