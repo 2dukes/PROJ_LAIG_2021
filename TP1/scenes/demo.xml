@@ -189,11 +189,11 @@
             </texture>
 
             <transformations>
-                <translation x="2.5" y="1.5" z="0.0" />
+                <translation x="5.0" y="1.5" z="0.0" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.15" outer="0.3" slices="16" loops="48" /> 
+                <leaf type="torus" inner="0.15" outer="0.4" slices="16" loops="48" /> 
             </descendants>
         </node>
 
@@ -217,11 +217,11 @@
             <material id="null" />
 
             <texture id="text_parede">
-                <amplification afs="5.0" aft="3.0" />
+                <amplification afs="10.0" aft="3.0" />
             </texture>
 
             <transformations>
-                <scale sx="5.0" sy="3.0" sz="1.0" />
+                <scale sx="10.0" sy="3.0" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -233,12 +233,12 @@
             <material id="null" />
 
             <texture id="text_parede">
-                <amplification afs="5.0" aft="3.0" />
+                <amplification afs="10.0" aft="3.0" />
             </texture>
 
             <transformations>
-                <translation x="5.0" y="0.0" z="0.0" />
-                <scale sx="1.0" sy="3.0" sz="5.0" />
+                <translation x="10.0" y="0.0" z="0.0" />
+                <scale sx="1.0" sy="3.0" sz="10.0" />
                 <rotation axis="y" angle="-90" />
             </transformations>
 
@@ -256,7 +256,7 @@
             </texture>
 
             <transformations>
-                <scale sx="5.0" sy="1.0" sz="5.0" />
+                <scale sx="10.0" sy="1.0" sz="10.0" />
                 <rotation axis="x" angle="-90" />
                 <rotation axis="z" angle ="-90" />
             </transformations>
@@ -517,7 +517,7 @@
             </texture>
 
             <transformations>
-                <translation x="5.0" y="0.0" z="5.0" />
+                <translation x="2.5" y="0.5" z="2.5" />
                 <rotation axis="x" angle="90" />
             </transformations>
 
