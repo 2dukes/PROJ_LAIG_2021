@@ -8,8 +8,8 @@
     </initials>
     <views default="defaultCamera">
         <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="defaultCamera" near="0.5" far="400" angle="0.4">
-            <from x="15" y="15" z="15" />
+        <perspective id="defaultCamera" near="0.3" far="300" angle="0.7">
+            <from x="15" y="10" z="15" />
             <to x="0" y="0" z="0" />
         </perspective>
         <ortho id="demoOrtho" near="10" far="100" left="-1" right="0.2" top="0.2" bottom="-0.2">
