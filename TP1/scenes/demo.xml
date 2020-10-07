@@ -366,6 +366,8 @@
             <descendants>
                 <noderef id="presente1" />
                 <noderef id="presente2" />
+                <noderef id="presente3" />
+                <noderef id="presente4" />
             </descendants>
         </node>
 
@@ -398,6 +400,38 @@
 
             <descendants>
                 <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="presente3">
+            <material id="null"/>
+
+            <texture id="text_presente">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4.0" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pyramid" />
+            </descendants>
+        </node>
+
+        <node id="presente4">
+            <material id="null"/>
+
+            <texture id="text_presente">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="6.0" y="0.0" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pyramid" />
             </descendants>
         </node>
         
@@ -528,6 +562,114 @@
             </descendants>
         </node>
 
+        <node id="pyramid">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="0.4" sy="0.4" sz="0.4" />
+            </transformations>
+
+            <descendants>
+                <noderef id="facepyramid_baixo" />
+                <noderef id="facepyramid_esquerda" />
+                <noderef id="facepyramid_direita" />
+                <noderef id="facepyramid_tras" />
+                <noderef id="facepyramid_frente" />
+            </descendants>
+        </node>
+
+        <node id="facepyramid_baixo">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-1.0" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="facepyramid_esquerda">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-1.0" />
+                <rotation axis="z" angle="-30" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" />
+            </descendants>
+        </node>
+
+        <node id="facepyramid_direita">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.0" y="0.0" z="0.0" />
+                <rotation axis="z" angle="30" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" />
+            </descendants>
+        </node>
+
+        <node id="facepyramid_tras">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.0" y="0.0" z="-1.0" />
+                <rotation axis="x" angle="30" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" />
+            </descendants>
+        </node>
+
+        <node id="facepyramid_frente">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="-30" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" />
+            </descendants>
+        </node>
+
         <!-- Christmas Tree -->
         <node id="arvore_natal">
             <material id="arvore_natalMaterial" />
@@ -625,11 +767,11 @@
                 <!-- TRANSLAÇÃO -->
             </transformations>
 
-            <descendants>
+            <descendants>   <!-- 
                 <noderef id="facecopa_base" />
                 <noderef id="facecopa_tras" />
                 <noderef id="facecopa_esquerda" />
-                <noderef id="facecopa_direita" />
+                <noderef id="facecopa_direita" />   -->
             </descendants>
         </node>
 
