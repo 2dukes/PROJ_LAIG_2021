@@ -66,7 +66,8 @@
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="text_pinheiro" path="./scenes/images/pinheiro.jpg" />
         <texture id="text_tronco" path="./scenes/images/tronco.jpg" />
-        <texture id="text_quadro" path="./scenes/images/quadro.jpg" />
+        <texture id="text_quadro1" path="./scenes/images/quadro1.jpg" />
+        <texture id="text_quadro2" path="./scenes/images/quadro2.jpg" />
         <texture id="text_donut" path="./scenes/images/donut.jpg" />
         <texture id="text_chao" path="./scenes/images/chao.jpg" />
         <texture id="text_parede" path="./scenes/images/parede.jpg" />
@@ -184,7 +185,7 @@
 
             <material id="null" />
 
-            <texture id="text_quadro">
+            <texture id="text_quadro1">
                 <amplification afs="2.0" aft="1.0" />
             </texture>
 
@@ -203,7 +204,7 @@
 
             <material id="null" />
 
-            <texture id="text_quadro">
+            <texture id="text_quadro2">
                 <amplification afs="2.0" aft="1.0" />
             </texture>
 
