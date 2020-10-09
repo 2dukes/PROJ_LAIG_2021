@@ -550,6 +550,8 @@ class MySceneGraph {
         else if (numLights > 8)
             this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
 
+        // console.log(this.lights);
+
         this.log("Parsed lights");
         return null;
     }
@@ -866,12 +868,12 @@ class MySceneGraph {
     }
 
     parseBoolean(node, name, messageError) {
-        var boolVal = true;
-        boolVal = this.reader.getBoolean(node, name);
-        if (!(boolVal != null && !isNaN(boolVal) && (boolVal == true || boolVal == false)))
+        let boolVal = this.reader.getBoolean(node, name);
+        if (!(boolVal != null && !isNaN(boolVal) && (boolVal == true || boolVal == false))) {
             this.onXMLMinorError("unable to parse value component " + messageError + "; assuming 'value = 1'");
-
-        return boolVal || 1;
+            boolVal = true;
+        }
+        return boolVal;
     }
     /**
      * Parse the coordinates from a node with ID = id
