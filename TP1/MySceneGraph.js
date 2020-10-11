@@ -419,9 +419,11 @@ class MySceneGraph {
             this.cameras[id] = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to), vec3.fromValues(x_up, y_up, z_up));
         }
         // console.log(this.cameras);
-        if(this.cameras[this.defaultCamera] == null) 
-            return "Default camera doesn't match any of the existing cameras...";
-        
+        if(this.cameras[this.defaultCamera] == null) {
+            this.onXMLMinorError("Default camera doesn't match any of the existing cameras...");
+            this.onXMLMinorError("Assuming new CGFcamera(0.75, 0.75, 550, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0))");
+        }
+
         this.log("Parsed Views.");
 
         return null;
@@ -611,7 +613,9 @@ class MySceneGraph {
         attributeTypes.push(...["float", "color", "color", "color", "color"]);
         colorArray = [{ }, { }, { }, { }]; // [ambientColor, diffuseColor, specularColor, emissiveColor]
 
-        // Any number of materials.
+        if(children.length < 1) // At least 1 material must be defined
+            return "at least one material must be defined";
+        
         for (var i = 0; i < children.length; i++) {
 
             if (children[i].nodeName != "material") {
@@ -714,85 +718,105 @@ class MySceneGraph {
             var transformationsIndex = nodeNames.indexOf("transformations");
             var materialIndex = nodeNames.indexOf("material");
             var textureIndex = nodeNames.indexOf("texture");
+            
             var descendantsIndex = nodeNames.indexOf("descendants");
-
+            if(descendantsIndex == -1)
+                return "<descendants> TAG not defined for node " + nodeID;
             
             // Transformations
             // let transformations = []; // [ { transformation: "Scale", matrix: [1.0, 0.0, 0.5] }, ...]
             
-            grandgrandChildren = grandChildren[transformationsIndex].children;
             let transMatrix = mat4.create(); // Creates a new Identity matrix.
+            if(transformationsIndex == -1)
+                this.onXMLMinorError("<transformations> TAG not defined for node " + nodeID);
+            else 
+            {
+                grandgrandChildren = grandChildren[transformationsIndex].children;
+                
+                for (let k = 0; k < grandgrandChildren.length; k++) {
+                    if(grandgrandChildren[k].nodeName == "translation") {
+                        var aux = this.parseCoordinates3D(grandgrandChildren[k], "Translation");
+                        if(typeof aux === "string") {
+                            this.onXMLMinorError(aux + "The transformation won't be considered.");
+                            continue;
+                        }
 
-            for (let k = 0; k < grandgrandChildren.length; k++) {
-                if(grandgrandChildren[k].nodeName == "translation") {
-                    var aux = this.parseCoordinates3D(grandgrandChildren[k], "Translation");
-                    if(typeof aux === "string") {
-                        this.onXMLMinorError(aux + "The transformation won't be considered.");
-                        continue;
-                    }
-
-                    mat4.translate(transMatrix, transMatrix, vec3.fromValues(aux[0], aux[1], aux[2]));
-                    // transformations.push({ transformation: "translation", matrix: aux});
-                } else if(grandgrandChildren[k].nodeName == "scale") {
-                    var aux = this.parseScalingCoordinates(grandgrandChildren[k], "Scale");
-                    if(typeof aux === "string") {
-                        this.onXMLMinorError(aux + "The transformation won't be considered.");
-                        continue;
-                    }
-                    
-                    mat4.scale(transMatrix, transMatrix, vec3.fromValues(aux[0], aux[1], aux[2]));
-                    // transformations.push({ transformation: "scale", matrix: aux});
-                } else if(grandgrandChildren[k].nodeName == "rotation") {
-                    let rotationAxis = this.reader.getString(grandgrandChildren[k], "axis");
-                    let rotationAngle = this.reader.getFloat(grandgrandChildren[k], "angle");
-                    if(rotationAxis == null || rotationAngle == null) {
-                        this.onXMLMinorError("Undefined rotation axis | angle. The transformation won't be considered.");
-                        continue;
-                    }
-                    
-                    let axisVec = vec3.fromValues(rotationAxis == 'x', rotationAxis == 'y', rotationAxis == 'z'); 
-                    mat4.rotate(transMatrix, transMatrix, DEGREE_TO_RAD * rotationAngle, axisVec);  
-                    // transformations.push({ transformation: "rotation", matrix: [DEGREE_TO_RAD * rotationAngle, rotationAxis == "x", rotationAxis == "y", rotationAxis == "z"]}); // this.rotate(Math.PI / 2, 0, 0, 1);
-                }                
+                        mat4.translate(transMatrix, transMatrix, vec3.fromValues(aux[0], aux[1], aux[2]));
+                        // transformations.push({ transformation: "translation", matrix: aux});
+                    } else if(grandgrandChildren[k].nodeName == "scale") {
+                        var aux = this.parseScalingCoordinates(grandgrandChildren[k], "Scale");
+                        if(typeof aux === "string") {
+                            this.onXMLMinorError(aux + "The transformation won't be considered.");
+                            continue;
+                        }
+                        
+                        mat4.scale(transMatrix, transMatrix, vec3.fromValues(aux[0], aux[1], aux[2]));
+                        // transformations.push({ transformation: "scale", matrix: aux});
+                    } else if(grandgrandChildren[k].nodeName == "rotation") {
+                        let rotationAxis = this.reader.getString(grandgrandChildren[k], "axis");
+                        let rotationAngle = this.reader.getFloat(grandgrandChildren[k], "angle");
+                        if(rotationAxis == null || rotationAngle == null) {
+                            this.onXMLMinorError("Undefined rotation axis | angle. The transformation won't be considered.");
+                            continue;
+                        }
+                        
+                        let axisVec = vec3.fromValues(rotationAxis == 'x', rotationAxis == 'y', rotationAxis == 'z'); 
+                        mat4.rotate(transMatrix, transMatrix, DEGREE_TO_RAD * rotationAngle, axisVec);  
+                        // transformations.push({ transformation: "rotation", matrix: [DEGREE_TO_RAD * rotationAngle, rotationAxis == "x", rotationAxis == "y", rotationAxis == "z"]}); // this.rotate(Math.PI / 2, 0, 0, 1);
+                    }                
+                }
+                // console.log(transMatrix);
+                // console.log(transformations);
             }
-            // console.log(transMatrix);
-            // console.log(transformations);
+            
 
             // Material - Name | NULL
-            let materialID = this.reader.getString(grandChildren[materialIndex], 'id'); 
-            if(materialID == null) 
-                return "no ID defined for materialID";
-            else if(this.materials[materialID] == null && materialID != "null")
-                return "Material with ID: " + materialID + " not defined!";
+            let materialID = "null";
+            if(materialIndex == -1)
+                this.onXMLMinorError("<material> TAG not defined for node " + nodeID);
+            else {
+                materialID = this.reader.getString(grandChildren[materialIndex], 'id'); 
+                if(materialID == null) 
+                    this.onXMLMinorError("no ID defined for materialID for node " + nodeID);
+                else if(this.materials[materialID] == null && materialID != "null")
+                    this.onXMLMinorError("Material with ID: " + materialID + " not defined for node " + nodeID);
+            }
 
             // console.log(materialID);
 
             // Texture - Name | NULL | Clear
-            let textureID = this.reader.getString(grandChildren[textureIndex], 'id');
-            let afs = -1.0, aft = -1.0; // Negative values initialized for "clear" case => No texture => No amplification.
-            if(textureID == null)
-                return "no ID defined for textureID";
-            else if(this.textures[textureID] == null && !(textureID == "null" || textureID == "clear"))
-                return "Texture with ID: " + textureID + " not defined!";
-            else if(textureID != "clear") {
-                grandgrandChildren = grandChildren[textureIndex].children;
-                if(grandgrandChildren.length > 1) 
-                    this.onXMLMinorError('Found more than one tag inside <texture>');
-                
-                let amplificationIndex = 0;
-                afs = this.reader.getFloat(grandgrandChildren[amplificationIndex], "afs") || 1.0;
-                aft = this.reader.getFloat(grandgrandChildren[amplificationIndex], "aft") || 1.0;
+            let textureID = "clear", afs = -1.0, aft = -1.0; // Negative values initialized for "clear" case => No texture => No amplification.
+            if(textureIndex == -1) 
+                this.onXMLMinorError("<texture> TAG not defined for node " + nodeID);
+            else {
+                textureID = this.reader.getString(grandChildren[textureIndex], 'id');
+                if(textureID == null)
+                    this.onXMLMinorError("no ID defined for textureID for node " + nodeID);
+                else if(this.textures[textureID] == null && !(textureID == "null" || textureID == "clear"))
+                    this.onXMLMinorError("Texture with ID: " + textureID + " not defined for node " + nodeID);
+                else if(textureID != "clear") {
+                    grandgrandChildren = grandChildren[textureIndex].children;
+                    if(grandgrandChildren.length > 1) 
+                        this.onXMLMinorError('Found more than one tag inside <texture>');
+                    
+                    let amplificationIndex = 0;
+                    afs = this.reader.getFloat(grandgrandChildren[amplificationIndex], "afs") || 1.0;
+                    aft = this.reader.getFloat(grandgrandChildren[amplificationIndex], "aft") || 1.0;
 
-                if(afs == null || aft == null)
-                    this.onXMLMinorError("No afs | aft defined. Assuming afs = 1.0, aft = 1.0");
-                
-            } 
+                    if(afs == null || aft == null)
+                        this.onXMLMinorError("No afs | aft defined for node + " + nodeID + ". Assuming afs = 1.0, aft = 1.0");                    
+                } 
+            }
+            
             
             // console.log(textureID, "afs=" + afs, "aft=" + aft);
 
             // Descendants
             let descendants = [];
             grandgrandChildren = grandChildren[descendantsIndex].children; 
+            if(grandgrandChildren.length < 1)
+                return "At least one node or leaf must be present in <descendents> TAG for node " + nodeID; 
+            
             for (let j = 0; j < grandgrandChildren.length; j++) {
                 let nodeName = grandgrandChildren[j].nodeName;
                 if(nodeName == "leaf") { // <leaf>
@@ -857,12 +881,17 @@ class MySceneGraph {
         }
 
         // Check for Undefined nodes
-        this.nodes.forEach(node => {
-            node.descendants.forEach(descendant => {
+        let node;
+        for(node in this.nodes) {
+            let descendants = this.nodes[node].descendants, descendant;
+            for(descendant of descendants) {
                 if(this.nodes[descendant] == null && typeof descendant == "string") // Only compares noderef nodes
                     return "Caught unreferenced node " + descendant;
-            });
-        });
+            }
+        }
+
+        if(this.nodes[this.idRoot] == null) // Special case because it's not in descendants property of any node.
+            return "Root Node (" + this.idRoot + ") not defined!";
         
         return null;
     }

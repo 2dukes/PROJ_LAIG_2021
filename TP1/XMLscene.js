@@ -40,12 +40,12 @@ class XMLscene extends CGFscene {
         this.defaultAppearance=new CGFappearance(this);
 
         // ------------------ test desplay ------------------
-        this.rectangle = new MyRectangle(this, 1, 2, 3, 4);
-        this.sphere = new MySphere(this, 1, 10, 10);
-        this.cylinder = new MyCylinder(this, 1, 2, 3, 10, 10);
-        this.triangle = new MyTriangle(this, 1, 0, 0, 1);
-        this.circle = new MyCircle(this, 50, 2);
-        this.torus = new MyTorus(this, 1, 0.3, 50, 50);
+        //this.rectangle = new MyRectangle(this, 1, 2, 3, 4);
+        //this.sphere = new MySphere(this, 1, 10, 10);
+        //this.cylinder = new MyCylinder(this, 1, 2, 3, 10, 10);
+        //this.triangle = new MyTriangle(this, 1, 0, 0, 1);
+        //this.circle = new MyCircle(this, 50, 2);
+        //this.torus = new MyTorus(this, 1, 0.3, 50, 50);
         // --------------------------------------------------
 
     }
@@ -54,7 +54,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.1, 0.5, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.75, 0.75, 550, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -135,19 +135,23 @@ class XMLscene extends CGFscene {
         this.selectedCamera = 0;
         this.cameraIds = { };
         let index = 0, x;
+        let setCamera = false;
         for (x in this.graph.cameras) {
             // console.log(x);
-            if(x == this.graph.defaultCamera)
+            if(x == this.graph.defaultCamera) {
+                setCamera = true;
                 this.selectedCamera = index;
+            }
 
             this.cameraIds[x] = index;
             index++;
         }
         
         // console.log(this.cameraIds);
-        this.gui.add(this, 'selectedCamera', this.cameraIds).name('Camera').onChange(this.updateCamera.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
-        this.updateCamera();
-         
+        if(setCamera) {
+            this.gui.add(this, 'selectedCamera', this.cameraIds).name('Camera').onChange(this.updateCamera.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
+            this.updateCamera();
+        }        
 
         // Gui SetUp -> Lights - Done in initLights().
         
