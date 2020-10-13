@@ -39,15 +39,6 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance=new CGFappearance(this);
 
-        // ------------------ test desplay ------------------
-        //this.rectangle = new MyRectangle(this, 1, 2, 3, 4);
-        //this.sphere = new MySphere(this, 1, 10, 10);
-        //this.cylinder = new MyCylinder(this, 1, 2, 3, 10, 10);
-        //this.triangle = new MyTriangle(this, 1, 0, 0, 1);
-        //this.circle = new MyCircle(this, 50, 2);
-        //this.torus = new MyTorus(this, 1, 0.3, 50, 50);
-        // --------------------------------------------------
-
     }
 
     /**
@@ -97,8 +88,6 @@ class XMLscene extends CGFscene {
     }
 
     updateCamera() {
-        // console.log(this.selectedCamera);
-        // console.log(this.graph.cameras);
 
         let index = 0, x;
         for(x in this.graph.cameras) {
@@ -129,15 +118,11 @@ class XMLscene extends CGFscene {
 
         // Gui SetUp -> Cameras
 
-        // console.log(this.graph.cameras);
-        // console.log(len);
-
         this.selectedCamera = 0;
         this.cameraIds = { };
         let index = 0, x;
         let setCamera = false;
         for (x in this.graph.cameras) {
-            // console.log(x);
             if(x == this.graph.defaultCamera) {
                 setCamera = true;
                 this.selectedCamera = index;
@@ -177,8 +162,6 @@ class XMLscene extends CGFscene {
         this.pushMatrix();
 
         for (var i = 0; i < this.numLights; i++) {
-            // this.lights[i].setVisible(true);
-            // this.lights[i].enable();
             this.lights[i].update();
         }
 
@@ -200,16 +183,6 @@ class XMLscene extends CGFscene {
             
             this.loadingProgressObject.display();
             this.loadingProgress++;
-
-
-            // ------------------ test desplay ------------------
-            //this.rectangle.display();
-            //this.sphere.display();
-            //this.cylinder.display();
-            //this.triangle.display();
-            //this.circle.display();
-            //this.torus.display();
-            // --------------------------------------------------
         }
 
         this.popMatrix();
