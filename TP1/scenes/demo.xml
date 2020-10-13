@@ -82,9 +82,9 @@
          requires a distinct "id". At least one material should be present. -->
         <material id="defaultMaterial">
             <shininess value="1.0" />
-            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
         <material id="donutMaterial">
@@ -109,16 +109,16 @@
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
         <material id="chaoMaterial">
-            <shininess value="0.7" />
-            <ambient r="0.1" g="0.4" b="0.1" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.13" g="0.33" b="0.0" a="1.0" />
+            <shininess value="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
         <material id="arvore_natalMaterial">
             <shininess value="1.0" />
-            <ambient r="0.84" g="0.72" b="0.4" a="1.0" />
-            <diffuse r="0.2" g="0.3" b="0.4" a="1.0" />
+            <ambient r="0.0" g="0.0" b="1.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.1" a="1.0" />
             <specular r="0.13" g="0.33" b="0.0" a="1.0" />
             <emissive r="1.0" g="0.7" b="0.8" a="1.0" />
         </material>
@@ -132,7 +132,7 @@
             <!-- next two lines are mandatory -->
             <material id="defaultMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -338,7 +338,7 @@
 
         <!-- Chao -->
         <node id="chao">
-            <material id="chaoMaterial" />
+            <material id="null" />
 
             <texture id="text_chao">
                 <amplification afs="10.0" aft="10.0" />

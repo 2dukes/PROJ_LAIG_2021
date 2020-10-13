@@ -1026,25 +1026,47 @@ class MySceneGraph {
         
         //this.nodes[this.idRoot].display()
         let identity = mat4.create();
-        this.processNode(this.idRoot, null, null, identity);
+        //                                                                                                                    "null"
+        this.processNode(this.idRoot, this.materials[this.nodes[this.idRoot].materialID], this.nodes[this.idRoot].textureID.textureID, identity);
+           
     }
 
     processNode(idRoot, parentMaterial, parentTexture, parentMatrix) {
         // Apply materials and textures
-        
         this.scene.pushMatrix();
         if(parentMatrix != null)
-            this.scene.multMatrix(parentMatrix);
+            this.scene.multMatrix(parentMatrix); 
+
+        if(parentMaterial != null)
+            parentMaterial.apply();
         
         let descendants = this.nodes[idRoot].descendants;
         for (let i = 0; i < descendants.length; i++) {
             if(typeof descendants[i] == 'string') { // noderef
-                this.processNode(descendants[i], this.nodes[descendants[i]].materialID, this.nodes[descendants[i]].textureID, this.nodes[descendants[i]].transformationMatrix);
+                
+                if(this.nodes[idRoot].textureID.textureID == "clear")
+                    parentTexture = "clear";
+
+                let textureSend = "clear";
+
+                if(this.nodes[descendants[i]].textureID.textureID == "null")
+                    textureSend = parentTexture;
+                else if(this.nodes[descendants[i]].textureID.textureID != "null" && this.nodes[descendants[i]].textureID.textureID != "clear") 
+                    textureSend = this.nodes[descendants[i]].textureID.textureID;                
+                
+                
+                parentMaterial.setTexture(this.textures[textureSend]);
+                parentMaterial.setTextureWrap('REPEAT', 'REPEAT');
+                
+                if(this.materials[this.nodes[descendants[i]].materialID] == null) 
+                    this.processNode(descendants[i], parentMaterial, textureSend, this.nodes[descendants[i]].transformationMatrix);
+                else 
+                    this.processNode(descendants[i], this.materials[this.nodes[descendants[i]].materialID], textureSend, this.nodes[descendants[i]].transformationMatrix);
+                
             }
             else  // leaf / primitive
                 descendants[i].display();
         }
         this.scene.popMatrix();
-
     }
 }
