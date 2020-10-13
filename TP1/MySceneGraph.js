@@ -1036,9 +1036,6 @@ class MySceneGraph {
         this.scene.pushMatrix();
         if(parentMatrix != null)
             this.scene.multMatrix(parentMatrix); 
-
-        if(parentMaterial != null)
-            parentMaterial.apply();
         
         let descendants = this.nodes[idRoot].descendants;
         for (let i = 0; i < descendants.length; i++) {
@@ -1055,17 +1052,20 @@ class MySceneGraph {
                     textureSend = this.nodes[descendants[i]].textureID.textureID;                
                 
                 
-                parentMaterial.setTexture(this.textures[textureSend]);
-                parentMaterial.setTextureWrap('REPEAT', 'REPEAT');
                 
+
                 if(this.materials[this.nodes[descendants[i]].materialID] == null) 
                     this.processNode(descendants[i], parentMaterial, textureSend, this.nodes[descendants[i]].transformationMatrix);
                 else 
                     this.processNode(descendants[i], this.materials[this.nodes[descendants[i]].materialID], textureSend, this.nodes[descendants[i]].transformationMatrix);
                 
             }
-            else  // leaf / primitive
+            else {  // leaf / primitive 
+                parentMaterial.setTexture(this.textures[parentTexture]);
+                parentMaterial.setTextureWrap('REPEAT', 'REPEAT');
+                parentMaterial.apply();
                 descendants[i].display();
+            }
         }
         this.scene.popMatrix();
     }

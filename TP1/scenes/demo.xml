@@ -338,7 +338,7 @@
 
         <!-- Chao -->
         <node id="chao">
-            <material id="null" />
+            <material id="chaoMaterial" />
 
             <texture id="text_chao">
                 <amplification afs="10.0" aft="10.0" />
