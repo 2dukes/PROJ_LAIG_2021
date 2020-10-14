@@ -808,8 +808,6 @@ class MySceneGraph {
                 } 
             }
             
-            
-            // console.log(textureID, "afs=" + afs, "aft=" + aft);
 
             // Descendants
             let descendants = [];
@@ -1026,9 +1024,9 @@ class MySceneGraph {
         
         //this.nodes[this.idRoot].display()
         let identity = mat4.create();
-        //                                                                                                                    "null"
-        this.processNode(this.idRoot, this.materials[this.nodes[this.idRoot].materialID], this.nodes[this.idRoot].textureID.textureID, identity);
-           
+        
+        this.processNode(this.idRoot, this.materials[this.nodes[this.idRoot].materialID], this.nodes[this.idRoot].textureID, identity);
+        
     }
 
     processNode(idRoot, parentMaterial, parentTexture, parentMatrix) {
@@ -1061,6 +1059,7 @@ class MySceneGraph {
                 
             }
             else {  // leaf / primitive 
+                descendants[i].updateTexCoords(this.nodes[idRoot].textureID.afs, this.nodes[idRoot].textureID.aft);
                 parentMaterial.setTexture(this.textures[parentTexture]);
                 parentMaterial.setTextureWrap('REPEAT', 'REPEAT');
                 parentMaterial.apply();

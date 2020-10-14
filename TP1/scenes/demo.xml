@@ -190,7 +190,7 @@
             <material id="null" />
 
             <texture id="text_quadro1">
-                <amplification afs="2.0" aft="1.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -209,7 +209,7 @@
             <material id="null" />
 
             <texture id="text_quadro2">
-                <amplification afs="2.0" aft="1.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -228,7 +228,7 @@
             <material id="donutMaterial" />
 
             <texture id="clear">
-                <amplification afs="2.0" aft="1.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -310,7 +310,7 @@
             <material id="null" />
 
             <texture id="text_parede">
-                <amplification afs="10.0" aft="3.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -326,7 +326,7 @@
             <material id="null" />
 
             <texture id="text_parede">
-                <amplification afs="10.0" aft="3.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -345,7 +345,7 @@
             <material id="chaoMaterial" />
 
             <texture id="text_chao">
-                <amplification afs="10.0" aft="10.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>

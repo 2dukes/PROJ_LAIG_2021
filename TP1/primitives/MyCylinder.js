@@ -34,4 +34,8 @@ class MyCylinder extends CGFobject {
         this.scene.popMatrix();
     }
 
+    updateTexCoords(s, t) {
+    
+    }
+
 }
