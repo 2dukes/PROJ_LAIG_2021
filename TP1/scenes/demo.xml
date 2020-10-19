@@ -168,7 +168,7 @@
             <material id="quadroMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
             <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
-                <amplification afs="2.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
             <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
