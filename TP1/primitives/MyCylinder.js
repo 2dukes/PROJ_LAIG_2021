@@ -23,18 +23,20 @@ class MyCylinder extends CGFobject {
         
         this.cylinderRaw.display();
 
+        // desenhar a tampa de baixo
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI, 1, 0, 0);
         this.circle_base.display();
         this.scene.popMatrix();
 
+        // desenhar a base de cima
         this.scene.pushMatrix();
         this.scene.translate(0, 0, this.height);
         this.circle_top.display();
         this.scene.popMatrix();
     }
 
-    updateTexCoords(s, t) {
+    updateTexCoords(afs, aft) {
     
     }
 

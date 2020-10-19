@@ -49,7 +49,7 @@ class MyTriangle extends CGFobject {
 		this.initGLBuffers();
     }
 
-    updateTexCoords(s, t) {
+    updateTexCoords(afs, aft) {
 
         // distance calculation between vertices
 		var a = Math.sqrt(Math.pow(this.x2 - this.x1, 2) + Math.pow(this.y2 - this.y1, 2) + Math.pow(this.z2 - this.z1, 2));
@@ -61,8 +61,8 @@ class MyTriangle extends CGFobject {
 
         // UV texture mapping calculation
         var T1 = [0, 0];
-        var T2 = [a / s, 0];
-        var T3 = [c * Math.cos(alpha) / s, c* Math.sin(alpha) / t];
+        var T2 = [a / afs, 0];
+        var T3 = [c * Math.cos(alpha) / afs, c* Math.sin(alpha) / aft];
 
 		this.texCoords = [
 			T1[0], T1[1],

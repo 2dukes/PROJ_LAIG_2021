@@ -55,13 +55,7 @@ class MyCylinderRaw extends CGFobject {
 
     }
 
-	updateTexCoords(s,t) {
-		if(s == 1 && t == 1)
-            return;
-		for(let i = 0; i < this.texCoords.length; i += 2){
-			this.texCoords[i] = this.originalTexCoords[i] / s ;
-			this.texCoords[i+1] = this.originalTexCoords[i+1] / t ;
-		}
-		this.updateTexCoordsGLBuffers();
-	}
+	updateTexCoords(afs, aft) {
+    
+    }
 }
