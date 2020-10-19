@@ -246,7 +246,7 @@
             <material id="null" />
 
             <texture id="text_donut">
-                <amplification afs="2.0" aft="1.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -262,7 +262,7 @@
             <material id="null" />
 
             <texture id="text_donut">
-                <amplification afs="2.0" aft="1.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -278,7 +278,7 @@
             <material id="null" />
 
             <texture id="text_donut">
-                <amplification afs="2.0" aft="1.0" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -771,7 +771,7 @@
             <material id="null" />
 
             <texture id="text_bola_pinheiro">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -798,7 +798,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -814,7 +814,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -830,7 +830,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -846,7 +846,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -862,7 +862,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -878,7 +878,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -894,7 +894,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -910,7 +910,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -926,7 +926,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -942,7 +942,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -958,7 +958,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -974,7 +974,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.25" aft="0.25" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -991,7 +991,7 @@
             <material id="null" />
 
             <texture id="text_tronco">
-                <amplification afs="0.2" aft="0.5" />
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
