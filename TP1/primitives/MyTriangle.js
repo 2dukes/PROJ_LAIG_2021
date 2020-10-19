@@ -49,21 +49,25 @@ class MyTriangle extends CGFobject {
 		this.initGLBuffers();
     }
 
-    updateTexCoords(s,t) {
+    updateTexCoords(s, t) {
 
-		var a = Math.sqrt(Math.pow(this.x1 - this.x3, 2) + Math.pow(this.y1 - this.y3, 2) + Math.pow(this.z1 - this.z3, 2));
-		var b = Math.sqrt(Math.pow(this.x2 - this.x3, 2) + Math.pow(this.y2 - this.y3, 2) + Math.pow(this.z2 - this.z3, 2));
-		var c = Math.sqrt(Math.pow(this.x3 - this.x2, 2) + Math.pow(this.y3 - this.y2, 2) + Math.pow(this.z3 - this.z2, 2));
+        // distance calculation between vertices
+		var a = Math.sqrt(Math.pow(this.x2 - this.x1, 2) + Math.pow(this.y2 - this.y1, 2) + Math.pow(this.z2 - this.z1, 2));
+		var b = Math.sqrt(Math.pow(this.x3 - this.x2, 2) + Math.pow(this.y3 - this.y2, 2) + Math.pow(this.z3 - this.z2, 2));
+		var c = Math.sqrt(Math.pow(this.x1 - this.x3, 2) + Math.pow(this.y1 - this.y3, 2) + Math.pow(this.z1 - this.z3, 2));
 
-		var beta = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2)) / (2 * a * c));
+        // calculation of the angle between the sides 'a' and 'c'
+		var alpha = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2)) / (2 * a * c));
 
-		var x0 = c - a * Math.cos(beta);
-		var y0 = t - a * Math.sin(beta);
+        // UV texture mapping calculation
+        var T1 = [0, 0];
+        var T2 = [a / s, 0];
+        var T3 = [c * Math.cos(alpha) / s, c* Math.sin(alpha) / t];
 
 		this.texCoords = [
-			0, 1,
-			c / s, 1,
-			x0 / s, y0 / t
+			T1[0], T1[1],
+			T2[0], T2[1],
+			T3[0], T3[1]
 		];
 
 		this.updateTexCoordsGLBuffers();

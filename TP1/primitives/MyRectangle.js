@@ -62,8 +62,8 @@ class MyRectangle extends CGFobject {
 
 	updateTexCoords(s, t) {
 
-		let maxS = this.x1 > this.x2 ? ((this.x1 - this.x2) / s) : ((this.x2 - this.x1) / s);
-		let maxT = this.y1 > this.y2 ? 1 / ((this.y1 - this.y2) / t) : ((this.y2 - this.y1) / t);
+		var maxS = this.x1 > this.x2 ? ((this.x1 - this.x2) / s) : ((this.x2 - this.x1) / s);
+		var maxT = this.y1 > this.y2 ? 1 / ((this.y1 - this.y2) / t) : ((this.y2 - this.y1) / t);
 
 		this.texCoords = [
 			0, maxT,
