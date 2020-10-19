@@ -785,7 +785,7 @@ class MySceneGraph {
             // console.log(materialID);
 
             // Texture - Name | NULL | Clear
-            let textureID = "clear", afs = -1.0, aft = -1.0; // Negative values initialized for "clear" case => No texture => No amplification.
+            let textureID = "clear", afs = 1.0, aft = 1.0;
             if(textureIndex == -1) 
                 this.onXMLMinorError("<texture> TAG not defined for node " + nodeID);
             else {
