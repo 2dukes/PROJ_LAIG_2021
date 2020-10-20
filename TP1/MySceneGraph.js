@@ -671,6 +671,9 @@ class MySceneGraph {
             this.materials[materialID].setSpecular(colorArray[2].red, colorArray[2].green, colorArray[2].blue, colorArray[2].alpha); // Specular RGB
             this.materials[materialID].setEmission(colorArray[3].red, colorArray[3].green, colorArray[3].blue, colorArray[3].alpha); // Emissive RGB
             this.materials[materialID].setShininess(sValue); 
+            
+            if(i == 0) // Used in case the root node doesn't have any material. So this one will be the default one applied.
+                this.firstMaterial = materialID;
         }
 
         // console.log(this.materials);
@@ -818,51 +821,66 @@ class MySceneGraph {
             for (let j = 0; j < grandgrandChildren.length; j++) {
                 let nodeName = grandgrandChildren[j].nodeName;
                 if(nodeName == "leaf") { // <leaf>
-                    // continue; // TEMPORARY - ONLY BECAUSE SOME PRIMITIVES AREN'T COMPLETE
-
                     let type = this.reader.getString(grandgrandChildren[j], 'type');
                     let leaf;
 
                     if(type == "rectangle") {
-                        let x1 = this.reader.getFloat(grandgrandChildren[j], 'x1');
-                        let y1 = this.reader.getFloat(grandgrandChildren[j], 'y1');
-                        let x2 = this.reader.getFloat(grandgrandChildren[j], 'x2');
-                        let y2 = this.reader.getFloat(grandgrandChildren[j], 'y2');
+                        let x1 = this.reader.getFloat(grandgrandChildren[j], 'x1') || 0;
+                        let y1 = this.reader.getFloat(grandgrandChildren[j], 'y1') || 0;
+                        let x2 = this.reader.getFloat(grandgrandChildren[j], 'x2') || 1;
+                        let y2 = this.reader.getFloat(grandgrandChildren[j], 'y2') || 1;
+                        if(x1 == null || y1 == null || x2 == null || y2 == null)
+                            this.onXMLMinorError("Error in Rectangle's coordinates for node + " + nodeID + ". Assuming x1 = 0; y1 = 0; x2 = 1; y2 = 1.");                    
 
                         leaf = new MyRectangle(this.scene, x1, y1, x2, y2);
                     }
                     else if(type == "triangle") {
-                        let x1 = this.reader.getFloat(grandgrandChildren[j], 'x1');
-                        let y1 = this.reader.getFloat(grandgrandChildren[j], 'y1');
-                        let x2 = this.reader.getFloat(grandgrandChildren[j], 'x2');
-                        let y2 = this.reader.getFloat(grandgrandChildren[j], 'y2');
+                        let x1 = this.reader.getFloat(grandgrandChildren[j], 'x1') || 0;
+                        let y1 = this.reader.getFloat(grandgrandChildren[j], 'y1') || 0;
+                        let x2 = this.reader.getFloat(grandgrandChildren[j], 'x2') || 1;
+                        let y2 = this.reader.getFloat(grandgrandChildren[j], 'y2') || 1;
+                        let x3 = this.reader.getFloat(grandgrandChildren[j], 'x3') || 0;
+                        let y3 = this.reader.getFloat(grandgrandChildren[j], 'y3') || 0;
+                        if(x1 == null || y1 == null || x2 == null || y2 == null || x3 == null || y3 == null)
+                            this.onXMLMinorError("Error in Triangle's coordinates for node + " + nodeID + ". Assuming x1 = 0; y1 = 0; x2 = 1; y2 = 1; x3 = 0; y3 = 0");  
 
-                        leaf = new MyTriangle(this.scene, x1, x2, y1, y2);
+                        leaf = new MyTriangle(this.scene, x1, x2, x3, y1, y2, y3);
                     }
                     else if(type == "cylinder") {
-                        let height = this.reader.getFloat(grandgrandChildren[j], 'height');
-                        let topRadius = this.reader.getFloat(grandgrandChildren[j], 'topRadius');
-                        let bottomRadius = this.reader.getFloat(grandgrandChildren[j], 'bottomRadius');
-                        let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks');
-                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
+                        let height = this.reader.getFloat(grandgrandChildren[j], 'height') || 1.0;
+                        let topRadius = this.reader.getFloat(grandgrandChildren[j], 'topRadius') || 0.1;
+                        let bottomRadius = this.reader.getFloat(grandgrandChildren[j], 'bottomRadius') || 0.05;
+                        let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks') || 5;
+                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices') || 5;
+                        if(height == null || topRadius == null || bottomRadius == null || stacks == null || slices == null)
+                            this.onXMLMinorError("Error in Cylinder's coordinates for node + " + nodeID + ". Assuming height = 1.0; topRadius = 0.1; bottomRadius = 0.05; stacks = 5; slices = 5.");  
 
                         leaf = new MyCylinder(this.scene, bottomRadius, topRadius, height, slices, stacks);
                     }
                     else if(type == "sphere") {
-                        let radius = this.reader.getFloat(grandgrandChildren[j], 'radius');
-                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
-                        let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks');
+                        let radius = this.reader.getFloat(grandgrandChildren[j], 'radius') || 3.0;
+                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices') || 5;
+                        let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks') || 5;
+                        if(radius == null || slices == null || stacks == null)
+                            this.onXMLMinorError("Error in Sphere's coordinates for node + " + nodeID + ". Assuming radius = 3.0; slices = 5; stacks = 5.");  
 
                         leaf = new MySphere(this.scene, radius, slices, stacks);
                     }
                     else if(type == 'torus') {
-                        let inner = this.reader.getFloat(grandgrandChildren[j], 'inner');
-                        let outer = this.reader.getFloat(grandgrandChildren[j], 'outer');
-                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
-                        let loops = this.reader.getFloat(grandgrandChildren[j], 'loops');
+                        let inner = this.reader.getFloat(grandgrandChildren[j], 'inner') || 1.0;
+                        let outer = this.reader.getFloat(grandgrandChildren[j], 'outer') || 2.0;
+                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices') || 5;
+                        let loops = this.reader.getFloat(grandgrandChildren[j], 'loops') || 5;
+                        if(inner == null || outer == null || slices == null || loops == null)
+                            this.onXMLMinorError("Error in Torus' coordinates for node + " + nodeID + ". Assuming inner = 1.0; outer = 2.0; slices = 5; stacks = 5.");  
 
                         leaf = new MyTorus(this.scene, outer, inner, slices, loops); 
                     }
+                    else {
+                        this.onXMLMinorError("Unrecognized type of Primitive for node " + nodeID);  
+                        continue;
+                    }
+
                     descendants.push(leaf);
                 } else {
                     let noderefID = this.reader.getString(grandgrandChildren[j], 'id'); // <noderef>
@@ -891,6 +909,11 @@ class MySceneGraph {
         if(this.nodes[this.idRoot] == null) // Special case because it's not in descendants property of any node.
             return "Root Node (" + this.idRoot + ") not defined!";
         
+        if(this.materials[this.nodes[this.idRoot].materialID] == null) { // In case the root node doesn't have any material applied, a default one is selected.
+            this.onXMLMinorError("No material was found regarding the root node (" + this.idRoot + "). " + this.firstMaterial + " was applied!");
+            this.nodes[this.idRoot].materialID = this.firstMaterial;
+        }
+
         return null;
     }
 

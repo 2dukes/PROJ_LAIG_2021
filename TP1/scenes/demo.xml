@@ -12,6 +12,10 @@
             <from x="-8" y="5" z="10" />
             <to x="5" y="0" z="5" />
         </perspective>
+        <perspective id="fromInside" near="0.3" far="300" angle="0.7">
+            <from x="5" y="1" z="1" />
+            <to x="5" y="1" z="5" />
+        </perspective>
         <perspective id="upView" near="0.3" far="300" angle="0.7">
             <from x="0" y="15" z="0" />
             <to x="5" y="0" z="5" />
@@ -34,7 +38,7 @@
         <light id="demoLight">            <!-- light identifier -->
             <enable value="1" />
             <!-- enable/disable -->
-            <position x="10" y="2" z="2" w="1" /><!-- light position; w=1: point light; w=0: directional light -->
+            <position x="1" y="2" z="2" w="1" /><!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
@@ -42,12 +46,12 @@
         <light id="luz_estrela">            <!-- Light that imitates the Christmas Tree top star -->
             <enable value="1" />
             <!-- enable/disable -->
-            <position x="5" y="2.0" z="5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+            <position x="5" y="2.15" z="5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />                   <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="0.0" a="1.0" />             <!-- diffuse component -->
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
         </light>
-        <light id="luz_tronco">            <!-- Light that imitates the Christmas Tree top star -->
+        <light id="presente">            <!-- Light that imitates the Christmas Tree top star -->
             <enable value="1" />
             <!-- enable/disable -->
             <position x="5" y="0.25" z="2" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
@@ -58,8 +62,8 @@
         <light id="luz_quadro">            <!-- Light that imitates the Christmas Tree top star -->
             <enable value="1" />
             <!-- enable/disable -->
-            <position x="1" y="2.1" z="5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="1" g="1" b="0" a="1.0" />                   <!-- ambient component -->
+            <position x="8" y="2.1" z="5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0.25" g="0.25" b="0.25" a="1.0" />                   <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
         </light>
@@ -78,6 +82,7 @@
         <texture id="text_presente" path="./scenes/images/presente.jpg" />
         <texture id="text_bola_pinheiro" path="./scenes/images/bola_pinheiro.jpg" />
         <texture id="text_vaso" path="./scenes/images/vaso.jpg" />
+        <texture id="text_mesa" path="./scenes/images/mesa.jpg" />
     </textures>
 
 
@@ -126,6 +131,13 @@
             <specular r="0.13" g="0.33" b="0.0" a="1.0" />
             <emissive r="1.0" g="0.7" b="0.8" a="1.0" />
         </material>
+        <material id="mesaMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.13" g="0.13" b="0.13" a="1.0" />
+            <emissive r="0.6" g="0.6" b="0.6" a="1.0" />
+        </material>
 
         <!-- PERGUNTAR À PROF -->
     </materials>
@@ -153,6 +165,7 @@
                 <noderef id="chao" />
                 <noderef id="arvore_natal" />
                 <noderef id="presentes" />
+                <noderef id="mesa" />
                 <!-- "ss" is the identifier of a node or of leaf; -->
                 <!-- may be repeated as necessary. It can refer an -->
                 <!-- identifier of another node, before or later defined in the file. -->
@@ -691,7 +704,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" />
+                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" x3="0.0" y3="0.0"/>
             </descendants>
         </node>
 
@@ -709,7 +722,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" />
+                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" x3="0.0" y3="0.0"/>
             </descendants>
         </node>
 
@@ -727,7 +740,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" />
+                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" x3="0.0" y3="0.0"/>
             </descendants>
         </node>
 
@@ -744,7 +757,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" />
+                <leaf type="triangle" x1="1.0" y1="0.0" x2="0.5" y2="1.0" x3="0.0" y3="0.0"/>
             </descendants>
         </node>
 
@@ -1037,6 +1050,176 @@
 
             <descendants>
                 <leaf type="cylinder" height="0.2" topRadius="0.15" bottomRadius="0.2" stacks="10" slices="10"/>
+            </descendants>
+        </node>
+
+        <!-- Mesa -->
+        <node id="mesa">
+            <material id="mesaMaterial" />
+
+            <texture id="text_mesa" />
+
+            <transformations>   
+                <translation x="-0.7" y="0.0" z="1.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pernas" />
+                <noderef id="tampo_mesa" />
+            </descendants>
+        </node>
+
+        <!-- Mesa (Pernas) -->
+        <node id="pernas">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="perna1" />
+                <noderef id="perna2" />
+                <noderef id="perna3" />
+                <noderef id="perna4" />
+            </descendants>
+        </node>
+
+        <!-- Mesa (Perna 1) -->
+        <node id="perna1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.9" y="0.8" z="8.3" />
+                <rotation axis="x" angle="90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.8" topRadius="0.1" bottomRadius="0.1" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Mesa (Perna 2) -->
+        <node id="perna2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.9" y="0.8" z="5.7" />
+                <rotation axis="x" angle="90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.8" topRadius="0.1" bottomRadius="0.1" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Mesa (Perna 3) -->
+        <node id="perna3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2.1" y="0.8" z="8.3" />
+                <rotation axis="x" angle="90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.8" topRadius="0.1" bottomRadius="0.1" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Mesa (Perna 4) -->
+        <node id="perna4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2.1" y="0.8" z="5.7" />
+                <rotation axis="x" angle="90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.8" topRadius="0.1" bottomRadius="0.1" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Mesa (Tampo) -->
+        <node id="tampo_mesa">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+
+            </transformations>
+
+            <descendants>
+                <noderef id="tampo_mesa_cima" />
+                <noderef id="tampo_mesa_baixo" />
+            </descendants>
+        </node>
+
+        <!-- Mesa (Tampo Parde de cima) -->
+        <node id="tampo_mesa_cima">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <translation x="0.8" y="0.8" z="8.4" />
+                
+                <rotation axis="x" angle="-90" />
+                <scale sx="1.4" sy="2.8" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <!-- Mesa (Tampo Parde de baixo) -->
+        <node id="tampo_mesa_baixo">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.8" y="0.8" z="5.6" />
+                
+                <rotation axis="x" angle="90" />
+                <scale sx="1.4" sy="2.8" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
             </descendants>
         </node>
 

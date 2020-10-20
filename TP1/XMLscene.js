@@ -57,6 +57,7 @@ class XMLscene extends CGFscene {
         // Reads the lights from the scene graph.
 
         let lights = this.gui.addFolder('Lights');
+        lights.open();
 
         for (var key in this.graph.lights) {
             if (i >= 8)

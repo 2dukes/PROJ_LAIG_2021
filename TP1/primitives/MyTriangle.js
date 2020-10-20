@@ -4,15 +4,15 @@
  * @param scene - Reference to MyScene object
  */
 class MyTriangle extends CGFobject {
-    constructor(scene, x1, x2, y1, y2) {
+    constructor(scene, x1, x2, x3, y1, y2, y3) {
         super(scene);
 
         this.x1 = x1;
         this.x2 = x2;
-        this.x3 = 0;
+        this.x3 = x3;
         this.y1 = y1;
         this.y2 = y2;
-        this.y3 = 0;
+        this.y3 = y3;
         this.z1 = 0;
         this.z2 = 0;
         this.z3 = 0;
@@ -60,9 +60,9 @@ class MyTriangle extends CGFobject {
 		var alpha = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) + Math.pow(c, 2)) / (2 * a * c));
 
         // UV texture mapping calculation
-        var T1 = [0, 0];
-        var T2 = [a / afs, 0];
-        var T3 = [c * Math.cos(alpha) / afs, c* Math.sin(alpha) / aft];
+        var T1 = [0, 1];
+        var T2 = [a / afs, 1];
+        var T3 = [c * Math.cos(alpha) / afs, 1- (c* Math.sin(alpha) / aft)];
 
 		this.texCoords = [
 			T1[0], T1[1],
