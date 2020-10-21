@@ -85,6 +85,9 @@
         <texture id="text_mesa" path="./scenes/images/mesa.jpg" />
         <texture id="text_tv" path="./scenes/images/tv.jpg" />
         <texture id="text_screen_tv" path="./scenes/images/screen_tv.jpg" />
+        <texture id="text_sofa1" path="./scenes/images/sofa1.jpg" />
+        <texture id="text_sofa2" path="./scenes/images/sofa2.jpg" />
+        <texture id="text_sofa_leg" path="./scenes/images/sofa_leg.jpg" />
     </textures>
 
 
@@ -154,8 +157,13 @@
             <specular r="0.13" g="0.13" b="0.13" a="1.0" />
             <emissive r="1.0" g="1.0" b="1.0" a="1.0" />
         </material>
-
-        <!-- PERGUNTAR À PROF -->
+        <material id="sofaMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.13" g="0.13" b="0.13" a="1.0" />
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
+        </material>
     </materials>
 
     <nodes>
@@ -182,6 +190,7 @@
                 <noderef id="arvore_natal" />
                 <noderef id="presentes" />
                 <noderef id="mesa" />
+                <noderef id="sofas" />
                 <!-- "ss" is the identifier of a node or of leaf; -->
                 <!-- may be repeated as necessary. It can refer an -->
                 <!-- identifier of another node, before or later defined in the file. -->
@@ -1335,6 +1344,273 @@
 
             <descendants>
                 <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <!-- Sofás -->
+        <node id="sofas">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="sofa1" />
+                <noderef id="sofa2" />
+            </descendants>
+        </node>
+
+
+        <!-- Sofá 1 -->
+        <node id="sofa1">
+            <material id="sofaMaterial" />
+
+            <texture id="text_sofa1" />
+
+            <transformations>
+                <translation x="1.7" y="0.0" z="2.0" />
+                <scale sx="1.5" sy="1.2" sz="1.2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="base_baixo_sofa" />
+                <noderef id="apoio_esquerda" />
+                <noderef id="apoio_direita" />
+                <noderef id="escosto_sofa" />
+                <noderef id="almofada_esquerda" />
+                <noderef id="almofada_direita" />
+                <noderef id="sofa_pernas" />
+            </descendants>
+        </node>
+
+        <!-- Sofá 2 -->
+        <node id="sofa2">
+            <material id="sofaMaterial" />
+
+            <texture id="text_sofa2" />
+
+            <transformations>
+                <translation x="7.7" y="0.0" z="8.5" />
+                <scale sx="1.5" sy="1.2" sz="1.2" />
+                <rotation axis="y" angle="225" />
+            </transformations>
+
+            <descendants>
+                <noderef id="base_baixo_sofa" />
+                <noderef id="apoio_esquerda" />
+                <noderef id="apoio_direita" />
+                <noderef id="escosto_sofa" />
+                <noderef id="almofada_esquerda" />
+                <noderef id="almofada_direita" />
+                <noderef id="sofa_pernas" />
+            </descendants>
+        </node>
+
+        <!-- Sofá (Base de baixo)-->
+        <node id="base_baixo_sofa">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.1" z="0.0" />
+                <scale sx="5.0" sy="0.5" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Sofá (Apoio da esquerda)-->
+        <node id="apoio_esquerda">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.95" y="0.1" z="0.0" />
+                <scale sx="0.5" sy="2.0" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Sofá (Apoio da direita)-->
+        <node id="apoio_direita">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.95" y="0.1" z="0.0" />
+                <scale sx="0.5" sy="2.0" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Sofá (Encosto)-->
+        <node id="escosto_sofa">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.6" z="-0.35" />
+                <rotation axis="x" angle="90" />
+                <scale sx="5.0" sy="0.5" sz="2.8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Sofá (Almofada da esquerda)-->
+        <node id="almofada_esquerda">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.43" y="0.28" z="0.0" />
+                <scale sx="2.5" sy="0.65" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Sofá (Almofada da direita)-->
+        <node id="almofada_direita">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.43" y="0.28" z="0.0" />
+                <scale sx="2.5" sy="0.65" sz="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <!-- Sofá (Pernas)-->
+        <node id="sofa_pernas">
+            <material id="null" />
+
+            <texture id="text_sofa_leg">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="perna1_sofa" />
+                <noderef id="perna2_sofa" />
+                <noderef id="perna3_sofa" />
+                <noderef id="perna4_sofa" />
+            </descendants>
+        </node>
+        
+        <!-- Sofá (Perna 1)-->
+        <node id="perna1_sofa">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-1.0" y="0.0" z="-0.3" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.15" topRadius="0.05" bottomRadius="0.05" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Sofá (Perna 2)-->
+        <node id="perna2_sofa">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.0" y="0.0" z="-0.3" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.15" topRadius="0.05" bottomRadius="0.05" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Sofá (Perna 3)-->
+        <node id="perna3_sofa">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-1.0" y="0.0" z="0.3" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.15" topRadius="0.05" bottomRadius="0.05" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Sofá (Perna 4)-->
+        <node id="perna4_sofa">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.0" y="0.0" z="0.3" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.15" topRadius="0.05" bottomRadius="0.05" stacks="4" slices="4"/>
             </descendants>
         </node>
 
