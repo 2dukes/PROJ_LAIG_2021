@@ -12,9 +12,9 @@
 
 - (items describing main strong points)
 - Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
+  - The scene depicts a room with a Christmas atmosphere. It consists of decorations on the walls, as well as a Christmas tree with the appropriate ornaments (balls and gifts). It also has a table with a TV, and two sofas. Each object has an assigned material or texture.
+  - ./scenes/LAIG_TP1_XML_T1_G06_v04.xml
 ----
 ## Issues/Problems
 
-- (items describing unimplemented features, bugs, problems, etc.)
+- Everything was implemented.
