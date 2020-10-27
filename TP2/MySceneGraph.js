@@ -8,6 +8,7 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var NODES_INDEX = 6;
+var ANIMATIONS_INDEX = 7;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -196,6 +197,19 @@ class MySceneGraph {
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
         }
+
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return "tag <animations> missing";
+        else {
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
         this.log("all parsed");
     }
 
@@ -1036,6 +1050,137 @@ class MySceneGraph {
         color.push(...[r, g, b, a]);
         
         return color;
+    }
+
+    /**
+     * Parses the <animations> node.
+     * @param {animations block element} animationsNode
+     */
+    parseAnimations(animationsNode) {
+        var children = animationsNode.children;
+
+        this.animations = [];
+
+        var grandChildren = [];
+        var grandgrandChildren = [];
+        var nodeNames = [];
+
+
+        for (var i = 0; i < children.length; i++) {
+
+            if (children[i].nodeName != "animation") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            // Get id of the current animation.
+            var animationID = this.reader.getString(children[i], 'id');
+            if (animationID == null) // Assumir ID default (Depois)
+                return "no ID defined for animation"; 
+
+            // Checks for repeated IDs.
+            if (this.animations[animationID] != null)
+                return "ID must be unique for each animation (conflict: ID = " + animationID + ")";
+            
+            grandChildren = children[i].children;
+
+            nodeNames = [];
+            for (var j = 0; j < grandChildren.length; j++) {
+                nodeNames.push(grandChildren[j].nodeName);
+            }
+            
+            var keyframeIndex = nodeNames.indexOf("keyframe");
+            if(keyframeIndex == -1) { // Podemos simplesmente ignorar a animação inteira e dar continue. e dar um warning?
+                this.onXMLMinorError("No <keyframe> TAG defined for animation: " + animationID + ". Animation ignored.");
+                continue;
+            }
+
+            let addKeyFrame;
+
+            for (var j = 0; j < grandChildren.length; j++) {
+                addKeyFrame = true;
+
+                // All vec3
+                let translation, rotation, scaling;
+                let instant;
+                let rotationX, rotationY, rotationZ;
+
+                if (grandChildren[j].nodeName == 'keyframe') {
+                    instant = this.reader.getFloat(grandChildren[j], "instant");
+
+                    grandgrandChildren = grandChildren[j].children; 
+                    
+                    if(grandgrandChildren[0].nodeName == "translation") {
+                        var aux = this.parseCoordinates3D(grandgrandChildren[0], "Translation");
+                        if(typeof aux === "string") {
+                            this.onXMLMinorError(aux + "(Translation) -> The keyframe won't be considered.");
+                            addKeyFrame = false;
+                            continue;
+                        }
+                        
+                        translation = vec3.fromValues(aux[0], aux[1], aux[2]);
+                    } 
+                    else if(grandgrandChildren[1].nodeName == "rotation") {
+                        let rotationAxis = this.reader.getString(grandgrandChildren[1], "axis");
+                        let rotationAngle = this.reader.getFloat(grandgrandChildren[1], "angle");
+                        if(rotationAxis == null || rotationAngle == null) {
+                            this.onXMLMinorError("Undefined rotation (X) axis | angle. The keyframe won't be considered.");
+                            addKeyFrame = false;
+                            continue;
+                        }
+                        if (rotationAxis != 'x') {
+                            this.onXMLMinorError("(Rotation: the axis needs to be x) -> The keyframe won't be considered.");
+                            addKeyFrame = false;
+                            continue;
+                        }
+                        rotationX = rotationAngle;
+                    }
+                    else if(grandgrandChildren[2].nodeName == "rotation") {
+                        let rotationAxis = this.reader.getString(grandgrandChildren[2], "axis");
+                        let rotationAngle = this.reader.getFloat(grandgrandChildren[2], "angle");
+                        if(rotationAxis == null || rotationAngle == null) {
+                            this.onXMLMinorError("Undefined rotation (Y) axis | angle. The keyframe won't be considered.");
+                            continue;
+                        }
+                        if (rotationAxis != 'y') {
+                            this.onXMLMinorError("(Rotation: the axis needs to be y) -> The keyframe won't be considered.");
+                            addKeyFrame = false;
+                            continue;
+                        }
+                        rotationY = rotationAngle;
+                    } 
+                    else if(grandgrandChildren[3].nodeName == "rotation") {
+                        let rotationAxis = this.reader.getString(grandgrandChildren[3], "axis");
+                        let rotationAngle = this.reader.getFloat(grandgrandChildren[3], "angle");
+                        if(rotationAxis == null || rotationAngle == null) {
+                            this.onXMLMinorError("Undefined rotation (Z) axis | angle. The keyframe won't be considered.");
+                            continue;
+                        }
+                        if (rotationAxis != 'z') {
+                            this.onXMLMinorError("(Rotation: the axis needs to be z) -> The keyframe won't be considered.");
+                            addKeyFrame = false;
+                            continue;
+                        }
+                        rotationZ = rotationAngle;
+                    } 
+                    else if(grandgrandChildren[4].nodeName == "scale") {
+                        var aux = this.parseScalingCoordinates(grandgrandChildren[4], "Scale");
+                        if(typeof aux === "string") {
+                            this.onXMLMinorError(aux + "(Scaling) -> The keyframe won't be considered.");
+                            addKeyFrame = false;
+                            continue;
+                        }
+                        scaling =  vec3.fromValues(aux[0], aux[1], aux[2]);
+                    }
+                    rotation = vec3.fromValues(rotationX, rotationY, rotationZ);   
+                }
+                this.animations.push(new Transformation(instant, translation, rotation, scaling));
+            }               
+        }
+ 
+        // console.log(this.animations);
+        this.log("Parsed animations");
+        return null;
     }
 
     /**
