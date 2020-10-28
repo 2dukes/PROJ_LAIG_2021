@@ -31,7 +31,8 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.setUpdatePeriod(100);
+
+        this.lastTime = new Date().getTime();
 
         this.loadingProgressObject=new MyRectangle(this, -1, -0.1, 1, 0.1);
         
@@ -141,6 +142,24 @@ class XMLscene extends CGFscene {
 
         // Gui SetUp -> Lights - Done in initLights().
         
+        this.setUpdatePeriod(100);
+    }
+
+    /**
+     * Update function for each Period of Time
+     */
+    update(currentTime) {
+        let timeInterval = currentTime - this.lastTime;
+        this.lastTime = currentTime;
+
+        let timeInSeconds = timeInterval / 1000;
+        // console.log(timeInSeconds);
+        
+        for(let keyframeAnimation of this.animations) {
+            keyframeAnimation.update(timeInSeconds);
+            // console.log(keyframeAnimation);
+        }
+        // console.log(this.animations);
     }
 
     /**
