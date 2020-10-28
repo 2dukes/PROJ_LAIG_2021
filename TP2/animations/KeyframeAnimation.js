@@ -1,5 +1,6 @@
 class KeyFrameAnimation extends Animation {
-    constructor(keyFrameList) { // Array de keyframes (instante, transformations) -> Transformations
+    constructor(scene, keyFrameList, animationID) { // Array de keyframes (instante, transformations) -> Transformations
+        super(scene, animationID);
         this.keyFrames = keyFrameList;
         this.currentKeyFrame = 0;
     }

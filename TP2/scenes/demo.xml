@@ -166,6 +166,42 @@
         </material>
     </materials>
 
+    <animations>
+        <animation id="firstAnimation">
+            <keyframe instant="5.0">
+                <translation x="2.0" y="2.0" z="2.0" />
+                <rotation axis="x" angle="10.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="120.0" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
+            </keyframe>
+            <keyframe instant="10.0">
+                <translation x="5.0" y="2.0" z="2.0" />
+                <rotation axis="x" angle="10.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="280.0" />
+                <scale sx="2.0" sy="2.0" sz="2.0" />
+            </keyframe>
+        </animation>
+
+        <animation id="secondAnimation">
+            <keyframe instant="2.0">
+                <translation x="1.0" y="5.0" z="2.0" />
+                <rotation axis="x" angle="50.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="100.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant="10.0">
+                <translation x="5.0" y="2.0" z="2.0" />
+                <rotation axis="x" angle="10.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="20.0" />
+                <scale sx="1.2" sy="1.2" sz="1.2" />
+            </keyframe>
+        </animation>
+    </animations>
+
     <nodes>
         <!-- Root -->
         <node id="quarto">            <!-- defines one intermediate node; may be repeated as necessary -->
@@ -213,6 +249,8 @@
             <transformations>
 
             </transformations>
+
+            <animationref id="firstAnimation" />
 
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
@@ -290,6 +328,8 @@
             <transformations>
                 <translation x="2.0" y="1.5" z="0.2" />
             </transformations>
+
+            <animationref id="secondAnimation" />
 
             <descendants>
                 <leaf type="torus" inner="0.15" outer="0.4" slices="16" loops="48" /> 
@@ -1082,7 +1122,9 @@
         <node id="mesa">
             <material id="mesaMaterial" />
 
-            <texture id="text_mesa" />
+            <texture id="text_mesa">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
 
             <transformations>   
                 <!-- 
@@ -1351,7 +1393,9 @@
         <node id="sofas">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
 
             <transformations>
                 
@@ -1368,7 +1412,9 @@
         <node id="sofa1">
             <material id="sofaMaterial" />
 
-            <texture id="text_sofa1" />
+            <texture id="text_sofa1">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
 
             <transformations>
                 <translation x="1.7" y="0.0" z="2.0" />
@@ -1390,7 +1436,9 @@
         <node id="sofa2">
             <material id="sofaMaterial" />
 
-            <texture id="text_sofa2" />
+            <texture id="text_sofa2">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
 
             <transformations>
                 <translation x="7.7" y="0.0" z="8.5" />

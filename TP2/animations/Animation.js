@@ -1,8 +1,8 @@
 class Animation {
-    constructor(scene, elapsedTime, animationID) {
+    constructor(scene, animationID) {
         this.scene = scene;
         
-        this.elapsedTime = elapsedTime;
+        this.elapsedTime = 0;
         this.animationEnded = false;
         this.currentState = mat4.create();
         this.animationID = animationID;

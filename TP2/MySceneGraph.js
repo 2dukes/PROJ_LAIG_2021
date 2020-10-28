@@ -7,8 +7,8 @@ var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
-var NODES_INDEX = 6;
-var ANIMATIONS_INDEX = 7;
+var NODES_INDEX = 7;
+var ANIMATIONS_INDEX = 6;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -26,6 +26,7 @@ class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         scene.graph = this;
+        scene.animations = [];
 
         this.nodes = [];
 
@@ -186,6 +187,18 @@ class MySceneGraph {
                 return error;
         }
 
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1) // When there are no animations, then NODES_INDEX passes to 6 (last).
+            NODES_INDEX = 6;
+        else {
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
         // <nodes>
         if ((index = nodeNames.indexOf("nodes")) == -1)
             return "tag <nodes> missing";
@@ -195,18 +208,6 @@ class MySceneGraph {
 
             //Parse nodes block
             if ((error = this.parseNodes(nodes[index])) != null)
-                return error;
-        }
-
-        // <animations>
-        if ((index = nodeNames.indexOf("animations")) == -1)
-            return "tag <animations> missing";
-        else {
-            if (index != ANIMATIONS_INDEX)
-                this.onXMLMinorError("tag <animations> out of order");
-
-            //Parse animations block
-            if ((error = this.parseAnimations(nodes[index])) != null)
                 return error;
         }
 
@@ -740,6 +741,19 @@ class MySceneGraph {
             if(descendantsIndex == -1)
                 return "<descendants> TAG not defined for node " + nodeID;
             
+            var animationRefIndex = nodeNames.indexOf("animationref");
+            if(NODES_INDEX == 6) // No <animations> TAG
+                animationRefIndex = -1;
+            else if(NODES_INDEX == 6 && animationRefIndex != -1) { // No <animations> TAG but <animationref> declared.
+                animationRefIndex = -1;
+                this.onXMLMinorError("<animationref> declared in node " + nodeID + " when no <animations> TAG was declared.");
+            } 
+            else if(animationRefIndex != -1 && animationRefIndex != transformationsIndex + 1) {
+                this.onXMLMinorError("<animationref> should be right after <transformations> for " + nodeID);
+                animationRefIndex = -1;
+            } 
+            
+
             // Transformations
             // let transformations = []; // [ { transformation: "Scale", matrix: [1.0, 0.0, 0.5] }, ...]
             
@@ -786,6 +800,26 @@ class MySceneGraph {
                 // console.log(transformations);
             }
             
+            // Animations - animationref
+
+            let nodeAnimation = null;
+            if(animationRefIndex != -1) {
+                let animationID = this.reader.getString(grandChildren[animationRefIndex], 'id');
+                let animationExists = false;
+                for(let animation of this.scene.animations) {
+                    if(animation.animationID == animationID) {
+                        nodeAnimation = animation;
+                        animationExists = true;
+                        break;
+                    }
+                }
+
+                if(!animationExists) {
+                    this.onXMLMinorError("Animation " + animationID + " not found. It will be ignored.");
+                    animationID = null;
+                }
+                // console.log(animationID);
+            }
 
             // Material - Name | NULL
             let materialID = "null";
@@ -907,7 +941,7 @@ class MySceneGraph {
 
             // Commented lines can be only done at the end of the parsing of the XML file.
             // console.log(descendants);
-            this.nodes[nodeID] = new MyNode(materialID, { textureID: textureID, afs: afs, aft: aft }, transMatrix, descendants);
+            this.nodes[nodeID] = new MyNode(materialID, { textureID: textureID, afs: afs, aft: aft }, transMatrix, descendants, nodeAnimation);
         }
 
         // Check for Undefined nodes
@@ -927,6 +961,9 @@ class MySceneGraph {
             this.onXMLMinorError("No material was found regarding the root node (" + this.idRoot + "). " + this.firstMaterial + " was applied!");
             this.nodes[this.idRoot].materialID = this.firstMaterial;
         }
+
+        // console.log(this.nodes);
+        // console.log(this.scene.animations);
 
         return null;
     }
@@ -1059,12 +1096,12 @@ class MySceneGraph {
     parseAnimations(animationsNode) {
         var children = animationsNode.children;
 
-        this.animations = [];
-
         var grandChildren = [];
         var grandgrandChildren = [];
         var nodeNames = [];
 
+        let keyFrames = [];
+        let axis = ['x', 'y', 'z'];
 
         for (var i = 0; i < children.length; i++) {
 
@@ -1075,12 +1112,16 @@ class MySceneGraph {
 
             // Get id of the current animation.
             var animationID = this.reader.getString(children[i], 'id');
-            if (animationID == null) // Assumir ID default (Depois)
-                return "no ID defined for animation"; 
+            if (animationID == null) { // Ignorar animação
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
 
             // Checks for repeated IDs.
-            if (this.animations[animationID] != null)
-                return "ID must be unique for each animation (conflict: ID = " + animationID + ")";
+            for(let animation of this.scene.animations) {
+                if(animation.animationID == animationID)
+                    return "ID must be unique for each animation (conflict: ID = " + animationID + ")";
+            }
             
             grandChildren = children[i].children;
 
@@ -1095,7 +1136,10 @@ class MySceneGraph {
                 continue;
             }
 
-            let addKeyFrame;
+            let addKeyFrame, addAnimation = true;
+            keyFrames = [];
+            
+            let numKeyframes = 0;
 
             for (var j = 0; j < grandChildren.length; j++) {
                 addKeyFrame = true;
@@ -1110,75 +1154,65 @@ class MySceneGraph {
 
                     grandgrandChildren = grandChildren[j].children; 
                     
-                    if(grandgrandChildren[0].nodeName == "translation") {
-                        var aux = this.parseCoordinates3D(grandgrandChildren[0], "Translation");
-                        if(typeof aux === "string") {
-                            this.onXMLMinorError(aux + "(Translation) -> The keyframe won't be considered.");
-                            addKeyFrame = false;
-                            continue;
+                    for(let k = 0; k <= 4; k++) {
+                        if(grandgrandChildren[k].nodeName == "translation") {
+                            var aux = this.parseCoordinates3D(grandgrandChildren[k], "Translation");
+                            if(typeof aux === "string") {
+                                this.onXMLMinorError(aux + "(Translation) -> The keyframe won't be considered.");
+                                addKeyFrame = false;
+                                break;
+                            }
+                            
+                            translation = vec3.fromValues(aux[0], aux[1], aux[2]);
+                        } 
+                        else if(grandgrandChildren[k].nodeName == "rotation") {
+                            let rotationAxis = this.reader.getString(grandgrandChildren[k], "axis");
+                            let rotationAngle = this.reader.getFloat(grandgrandChildren[k], "angle");
+                            if(rotationAxis == null || rotationAngle == null) {
+                                this.onXMLMinorError("Undefined rotation (" + axis[k - 1] + ") axis | angle. The keyframe won't be considered.");
+                                addKeyFrame = false;
+                                break;
+                            }
+                            if(rotationAxis == axis[k - 1] && k == 1) 
+                                rotationX = rotationAngle;
+                            else if(rotationAxis == axis[k - 1] && k == 2)
+                                rotationY = rotationAngle;
+                            else if(rotationAxis == axis[k - 1] && k == 3)
+                                rotationZ = rotationAngle;
+                            else {
+                                this.onXMLMinorError("(Rotation: the axis " + axis[k - 1] + " is out of order) -> The keyframe won't be considered.");
+                                addKeyFrame = false;
+                                break;
+                            }
                         }
-                        
-                        translation = vec3.fromValues(aux[0], aux[1], aux[2]);
-                    } 
-                    else if(grandgrandChildren[1].nodeName == "rotation") {
-                        let rotationAxis = this.reader.getString(grandgrandChildren[1], "axis");
-                        let rotationAngle = this.reader.getFloat(grandgrandChildren[1], "angle");
-                        if(rotationAxis == null || rotationAngle == null) {
-                            this.onXMLMinorError("Undefined rotation (X) axis | angle. The keyframe won't be considered.");
-                            addKeyFrame = false;
-                            continue;
+                        else if(grandgrandChildren[k].nodeName == "scale") {
+                            var aux = this.parseScalingCoordinates(grandgrandChildren[k], "Scale");
+                            if(typeof aux === "string") {
+                                this.onXMLMinorError(aux + "(Scaling) -> The keyframe won't be considered.");
+                                addKeyFrame = false;
+                                break;
+                            }
+                            scaling =  vec3.fromValues(aux[0], aux[1], aux[2]);
                         }
-                        if (rotationAxis != 'x') {
-                            this.onXMLMinorError("(Rotation: the axis needs to be x) -> The keyframe won't be considered.");
-                            addKeyFrame = false;
-                            continue;
-                        }
-                        rotationX = rotationAngle;
                     }
-                    else if(grandgrandChildren[2].nodeName == "rotation") {
-                        let rotationAxis = this.reader.getString(grandgrandChildren[2], "axis");
-                        let rotationAngle = this.reader.getFloat(grandgrandChildren[2], "angle");
-                        if(rotationAxis == null || rotationAngle == null) {
-                            this.onXMLMinorError("Undefined rotation (Y) axis | angle. The keyframe won't be considered.");
-                            continue;
-                        }
-                        if (rotationAxis != 'y') {
-                            this.onXMLMinorError("(Rotation: the axis needs to be y) -> The keyframe won't be considered.");
-                            addKeyFrame = false;
-                            continue;
-                        }
-                        rotationY = rotationAngle;
-                    } 
-                    else if(grandgrandChildren[3].nodeName == "rotation") {
-                        let rotationAxis = this.reader.getString(grandgrandChildren[3], "axis");
-                        let rotationAngle = this.reader.getFloat(grandgrandChildren[3], "angle");
-                        if(rotationAxis == null || rotationAngle == null) {
-                            this.onXMLMinorError("Undefined rotation (Z) axis | angle. The keyframe won't be considered.");
-                            continue;
-                        }
-                        if (rotationAxis != 'z') {
-                            this.onXMLMinorError("(Rotation: the axis needs to be z) -> The keyframe won't be considered.");
-                            addKeyFrame = false;
-                            continue;
-                        }
-                        rotationZ = rotationAngle;
-                    } 
-                    else if(grandgrandChildren[4].nodeName == "scale") {
-                        var aux = this.parseScalingCoordinates(grandgrandChildren[4], "Scale");
-                        if(typeof aux === "string") {
-                            this.onXMLMinorError(aux + "(Scaling) -> The keyframe won't be considered.");
-                            addKeyFrame = false;
-                            continue;
-                        }
-                        scaling =  vec3.fromValues(aux[0], aux[1], aux[2]);
+                    if(addKeyFrame) {
+                        rotation = vec3.fromValues(rotationX, rotationY, rotationZ);   
+                        numKeyframes++;
+                        keyFrames.push(new Transformation(instant, translation, rotation, scaling));
                     }
-                    rotation = vec3.fromValues(rotationX, rotationY, rotationZ);   
                 }
-                this.animations.push(new Transformation(instant, translation, rotation, scaling));
-            }               
+                else {
+                    addAnimation = false;
+                    this.onXMLMinorError("Unknown TAG " + grandChildren[j].nodeName + " on <animations>. The animation won't be considered.");
+                    break;
+                }
+                // this.scene.animations.push();
+            }  
+            if(addAnimation && numKeyframes >= 1) 
+                this.scene.animations.push( new KeyFrameAnimation(this.scene, keyFrames, animationID) );              
         }
  
-        // console.log(this.animations);
+        // console.log(this.scene.animations);
         this.log("Parsed animations");
         return null;
     }
