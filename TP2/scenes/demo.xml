@@ -409,8 +409,93 @@
         </animation>
                 
 
-            
+        <animation id="presentPull1">
+            <keyframe instant="0.0">
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
 
+            <keyframe instant="4.0">
+                <translation x="-1.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="11.0">
+                <translation x="-1.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="13.0">
+                <translation x="-0.5" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
+
+        <animation id="presentPull2">
+            <keyframe instant="0.0">
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="2.0">
+                <translation x="0.5" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="0.8" sy="0.5" sz="0.5" />
+            </keyframe>
+        </animation>
+
+        <animation id="shrinkPresent1">
+            <keyframe instant="0.0">
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="2.0">
+                <translation x="0.0" y="0.0" z="1.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="0.8" sy="0.35" sz="0.35" />
+            </keyframe>
+        </animation>
+
+        <animation id="shrinkPresent2">
+            <keyframe instant="0.0">
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="2.0">
+                <translation x="0.0" y="0.0" z="-1.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="0.8" sy="0.35" sz="0.35" />
+            </keyframe>
+        </animation>
 
     </animations>
 
@@ -693,7 +778,7 @@
             </texture>
 
             <transformations>
-                <translation x="6.0" y="0.0" z="6.0" />
+                <translation x="5.5" y="0.0" z="6.0" />
             </transformations>
 
             <descendants>
@@ -725,7 +810,7 @@
             </texture>
 
             <transformations>
-                <translation x="6.0" y="0.0" z="4.0" />
+                <translation x="5.5" y="0.0" z="4.0" />
             </transformations>
 
             <descendants>
@@ -745,6 +830,8 @@
                 <scale sx="1.5" sy="1.5" sz="1.5" />
             </transformations>
 
+            <animationref id="shrinkPresent1" />
+
             <descendants>
                 <noderef id="cube" />
             </descendants>
@@ -761,6 +848,8 @@
                 <translation x="5.0" y="0.0" z="7.0" />
                 <scale sx="1.5" sy="1.5" sz="1.5" />
             </transformations>
+            
+            <animationref id="shrinkPresent2" />
 
             <descendants>
                 <noderef id="cube" />
@@ -779,6 +868,8 @@
                 <scale sx="1.5" sy="1.5" sz="1.5" />
             </transformations>
 
+            <animationref id="presentPull1" />
+
             <descendants>
                 <noderef id="pyramid" />
             </descendants>
@@ -795,6 +886,8 @@
                 <translation x="3.0" y="0.0" z="5.0" />
                 <scale sx="1.5" sy="1.5" sz="1.5" />
             </transformations>
+
+            <animationref id="presentPull2" />
 
             <descendants>
                 <noderef id="pyramid" />
