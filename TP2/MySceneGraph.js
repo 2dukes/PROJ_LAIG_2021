@@ -1241,9 +1241,24 @@ class MySceneGraph {
     processNode(idRoot, parentMaterial, parentTexture, parentMatrix) {
         // Apply materials and textures
         this.scene.pushMatrix();
-        if(parentMatrix != null)
-            this.scene.multMatrix(parentMatrix); 
+
         
+// Apply Parent Matrix
+        if (this.nodes[idRoot].animation == null) {
+            if(parentMatrix != null)
+                this.scene.multMatrix(parentMatrix); 
+        }
+        else { // Apply Animation Matrix
+            // if the animation did not start yet, the object is not displayed
+            if(!this.nodes[idRoot].animation.animationStarted) 
+                return;
+            
+            if(parentMatrix != null)
+                this.scene.multMatrix(parentMatrix);
+            
+            this.nodes[idRoot].animation.apply();
+        }
+  
         let descendants = this.nodes[idRoot].descendants;
         for (let i = 0; i < descendants.length; i++) {
             if(typeof descendants[i] == 'string') { // noderef

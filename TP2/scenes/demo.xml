@@ -168,36 +168,48 @@
 
     <animations>
         <animation id="firstAnimation">
-            <keyframe instant="5.0">
-                <translation x="2.0" y="2.0" z="2.0" />
-                <rotation axis="x" angle="10.0" />
+
+            <keyframe instant="1.0">
+                <translation x="1.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
                 <rotation axis="y" angle="0.0" />
-                <rotation axis="z" angle="120.0" />
-                <scale sx="1.5" sy="1.5" sz="1.5" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1" sy="1" sz="1" />
             </keyframe>
+
             <keyframe instant="10.0">
-                <translation x="5.0" y="2.0" z="2.0" />
-                <rotation axis="x" angle="10.0" />
+                <translation x="5.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
                 <rotation axis="y" angle="0.0" />
-                <rotation axis="z" angle="280.0" />
-                <scale sx="2.0" sy="2.0" sz="2.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1" sy="1" sz="1.0" />
             </keyframe>
+
+            <!-- <keyframe instant="5.0">
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1" sy="1.0" sz="1" />
+            </keyframe> -->
+
+            
         </animation>
 
         <animation id="secondAnimation">
             <keyframe instant="2.0">
-                <translation x="1.0" y="5.0" z="2.0" />
-                <rotation axis="x" angle="50.0" />
+                <translation x="1.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
                 <rotation axis="y" angle="0.0" />
-                <rotation axis="z" angle="100.0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1" sy="1" sz="1" />
             </keyframe>
             <keyframe instant="10.0">
-                <translation x="5.0" y="2.0" z="2.0" />
-                <rotation axis="x" angle="10.0" />
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
                 <rotation axis="y" angle="0.0" />
-                <rotation axis="z" angle="20.0" />
-                <scale sx="1.2" sy="1.2" sz="1.2" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1" sy="1" sz="1" />
             </keyframe>
         </animation>
     </animations>
@@ -250,8 +262,6 @@
 
             </transformations>
 
-            <animationref id="firstAnimation" />
-
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
@@ -272,8 +282,10 @@
             <transformations>
                 <translation x="9.9" y="1.0" z="2.0" />
                 <scale sx="1.0" sy="1.5" sz="2.0" />
-                <rotation axis="y" angle="-90" />
+                <rotation axis="y" angle="-90" /> 
             </transformations>
+            
+            <animationref id="firstAnimation" />
 
             <descendants>
                 <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
@@ -1231,7 +1243,7 @@
                 <translation x="2.1" y="0.8" z="5.7" />
                 <rotation axis="x" angle="90" />
                 <rotation axis="z" angle="45" />
-            </transformations>
+           </transformations>
 
             <descendants>
                 <leaf type="cylinder" height="0.8" topRadius="0.1" bottomRadius="0.1" stacks="4" slices="4"/>
