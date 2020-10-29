@@ -1242,8 +1242,7 @@ class MySceneGraph {
         // Apply materials and textures
         this.scene.pushMatrix();
 
-        
-// Apply Parent Matrix
+        // Apply Parent Matrix
         if (this.nodes[idRoot].animation == null) {
             if(parentMatrix != null)
                 this.scene.multMatrix(parentMatrix); 
@@ -1252,7 +1251,7 @@ class MySceneGraph {
             // if the animation did not start yet, the object is not displayed
             if(!this.nodes[idRoot].animation.animationStarted) 
                 return;
-            
+
             if(parentMatrix != null)
                 this.scene.multMatrix(parentMatrix);
             
