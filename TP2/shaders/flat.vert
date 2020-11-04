@@ -21,32 +21,10 @@ uniform float n;
 
 void main() {
 
-    vTextureCoord = vec2((aTextureCoord[0]+m)/sizeM, (aTextureCoord[1]+n)/sizeN);  
+    // compute the value of texture coordinates in the desired cell
+    vTextureCoord = vec2((aTextureCoord[0] + m) / sizeM, (aTextureCoord[1] + n) / sizeN);  
 
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
 
     coords = vec4(aVertexPosition, 1.0);
 }
-/* 
-float column_begin;
-    float row_begin;
-
-    if(aTextureCoord[0] == 0.0 && aTextureCoord[1] == 0.0) // Vértice superior esquerdo
-        column_begin = columnSize * m;
-        row_begin = rowSize * n;
-        
-    
-    if(aTextureCoord[0] == 1.0 && aTextureCoord[1] == 1.0) // Vértice inferior direito
-        column_begin = columnSize * (m + 1.0);
-        row_begin = rowSize * (n + 1.0);
-    
-    if(aTextureCoord[0] == 1.0 && aTextureCoord[1] == 0.0) // Vértice superior direito
-        column_begin = columnSize * (m + 1.0);
-        row_begin = rowSize * n;
-
-
-    if(aTextureCoord[0] == 0.0 && aTextureCoord[1] == 1.0) // Vértice inferior esquerdo
-        column_begin = columnSize * m;
-        row_begin = rowSize * (n + 1.0);
-
-    vTextureCoord = vec2(column_begin, row_begin);  */

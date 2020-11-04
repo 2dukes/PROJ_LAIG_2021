@@ -6,8 +6,11 @@ class MySpriteAnim {
         this.startCell = startCell;
         this.endCell = endCell;
 
+        // Create the texture of the font sprite
+        this.texture = new CGFtexture(this.scene, 'textures/explosion.png');
+
         // the explosion texture has 4 columns and 4 rows
-        this.spritesheet = new MySpriteSheet(this.scene, './textures/explosion.png', 4, 4);
+        this.spritesheet = new MySpriteSheet(this.scene, this.texture, 4, 4);
         
         // initialize base geometry
         this.rectangle = new MyRectangle(this.scene, 0, 0, 1, 1);
