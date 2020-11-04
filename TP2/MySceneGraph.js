@@ -923,6 +923,15 @@ class MySceneGraph {
 
                         leaf = new MyTorus(this.scene, outer, inner, slices, loops); 
                     }
+                    else if(type == 'spritetext') {
+                        let text = this.reader.getString(grandgrandChildren[j], 'text');
+                        if(text == null) {
+                            this.onXMLMinorError("Error in SpriteText for node + " + nodeID + ". Assuming text = \'abc\'");  
+                            text = "ABC";
+                        }
+
+                        leaf = new MySpriteText(this.scene, text);
+                    }
                     else {
                         this.onXMLMinorError("Unrecognized type of Primitive for node " + nodeID);  
                         continue;

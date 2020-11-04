@@ -21,8 +21,8 @@ uniform float n;
 
 void main() {
 
-    float rowSize = 1 / sizeM;
-    float columnSize = 1 / sizeN;
+    float rowSize = 1.0 / sizeM;
+    float columnSize = 1.0 / sizeN;
 
     vTextureCoord = vec2(columnSize * (m + aTextureCoord[0]), rowSize * (n + aTextureCoord[1]));
 

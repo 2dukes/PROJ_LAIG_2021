@@ -5,20 +5,20 @@ class MySpriteText {
 
         this.rectangles = [];
         for(let i = 0; i < this.text.length; i++) 
-            rectangles[i] = new MyRectangle(this.scene, this.scene, 0, 0, 1, 1);
+            this.rectangles[i] = new MyRectangle(this.scene, 0, 0, 1, 1);
         
         // the font texture has 16 columns and 16 rows
-        this.spritesheet = MySpritesheet(this.scene, '/textures/oolite-font.png', 16, 16);
+        this.spritesheet = new MySpriteSheet(this.scene, '../textures/oolite-font.png', 16, 16);
     }
 
     display() {
         for (let i = 0; i < this.text.length; i++) {
             
             // Get character's sprite position
-            let p = this.getCharacterPosition(text[i]);
+            let p = this.getCharacterPosition(this.text[i]);
 
             // Activate Sprite
-            this.spritesheet.activateCell(p);
+            this.spritesheet.activateCellP(p);
 
             // Making the translation of the base geometry and the corresponding display
             this.scene.pushMatrix();
@@ -35,5 +35,9 @@ class MySpriteText {
     // returns the p value position of the char in the texture
     getCharacterPosition(char) {
         return char.charCodeAt(char);
+    }
+
+    updateTexCoords() {
+        
     }
 }
