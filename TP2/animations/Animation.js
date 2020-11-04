@@ -9,8 +9,8 @@ class Animation {
         this.animationID = animationID;
     }
 
-    update(currentTime) {
-        this.elapsedTime += currentTime;
+    update(timeIncrement) {
+        this.elapsedTime += timeIncrement;
     }
 
     apply() {

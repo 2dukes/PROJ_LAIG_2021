@@ -153,13 +153,10 @@ class XMLscene extends CGFscene {
         this.lastTime = currentTime;
 
         let timeInSeconds = timeInterval / 1000;
-        // console.log(timeInSeconds);
         
         for(let keyframeAnimation of this.animations) {
             keyframeAnimation.update(timeInSeconds);
-            // console.log(keyframeAnimation);
         }
-        // console.log(this.animations);
     }
 
     /**

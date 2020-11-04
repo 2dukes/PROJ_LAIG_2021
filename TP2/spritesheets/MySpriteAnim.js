@@ -6,25 +6,45 @@ class MySpriteAnim {
         this.startCell = startCell;
         this.endCell = endCell;
 
-        // this.spritesheet = MySpriteSheet('/path/to/texture', nColumns, nLines, this.scene); 
+        // the explosion texture has 4 columns and 4 rows
+        this.spritesheet = MySpritesheet(this.scene, '/textures/explosion.png', 4, 4);
+        
+        // initialize base geometry
         this.rectangle = new MyRectangle(this.scene, 0, 0, 1, 1);
 
         // Animation - Related Variables
-        this.currentSprite = 0;
+        this.currentSprite = startCell;
         this.elapsedTime = 0;
-        this.timePerCell = duration / (endCell - startCell);
+        this.timePerCell = duration / (endCell - startCell + 1);
+
+        this.animationEnded = false;
     }
 
-    update(currentTime) {
-        this.elapsedTime += currentTime;
+    update(timeIncrement) {
+        if (this.animationEnded)
+            return;
 
-        // Calculate which sprite cell is active (elapsedTime, duration, timePerCell)
+        this.elapsedTime += timeIncrement;
 
-        // Save Current State and other variables
+        // Calculate which sprite cell is active
+        this.currentSprite = this.elapsedTime / this.timePerCell + this.startCell;
+
+        // check if the animation has ended
+        if (this.currentSprite > this.endCell) {
+            this.animationEnded = true;
+            return;
+        }
     }
     
     display() {
-        // 1. Activate Sprite, using this.currentSprite
-        // 2. Display base geometry
+        if (this.animationEnded)
+            return;
+
+        // activate corresponding sprite
+        this.spritesheet.activateCell(this.currentSprite);
+
+        // display base geometry
+        this.rectangle.display();
+
     }
 }
