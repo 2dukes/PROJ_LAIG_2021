@@ -46,5 +46,7 @@ class MySpriteAnim {
         // display base geometry
         this.rectangle.display();
 
+        // active default shader
+        this.spritesheet.setDefaultShader();
     }
 }

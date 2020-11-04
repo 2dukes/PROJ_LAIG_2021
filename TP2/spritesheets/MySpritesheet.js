@@ -20,14 +20,16 @@ class MySpriteSheet {
         this.textureShader.setUniformsValues({ sizeM: this.sizeN  });
         this.textureShader.setUniformsValues({ m: _m });
         this.textureShader.setUniformsValues({ n: _n });
-
-        this.scene.setActiveShader(this.scene.defaultShader);
     }
 
     activateCellP(p) {
         this.m = p % this.sizeM;
         this.n = Math.floor(p / this.sizeN);
         activateCellMN(m, n);
+    }
+
+    setDefaultShader() {
+        this.scene.setActiveShader(this.scene.defaultShader);
     }
     
 }
