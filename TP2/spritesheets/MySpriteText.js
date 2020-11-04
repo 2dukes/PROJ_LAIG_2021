@@ -12,14 +12,28 @@ class MySpriteText {
     }
 
     display() {
-        // Loop through text characters
-        // 1. Get character's sprite position -> getCharacterPosition(char)
-        // 2. Activate Sprite -> ActivateCellP()
-        // 3. Display base geometry
+        for (let i = 0; i < this.text.length; i++) {
+            
+            // Get character's sprite position
+            let p = this.getCharacterPosition(text[i]);
+
+            // Activate Sprite
+            this.spritesheet.activateCell(p);
+
+            // Making the translation of the base geometry and the corresponding display
+            this.scene.pushMatrix();
+            this.scene.translate(i, 0, 0);
+            this.rectangles[i].display();
+            this.scene.popMatrix();
+
+            // Active default shader
+            this.spritesheet.setDefaultShader();
+        }
 
     }
 
+    // returns the p value position of the char in the texture
     getCharacterPosition(char) {
-        // Depends on chosen texture
+        return char.charCodeAt(char);
     }
 }
