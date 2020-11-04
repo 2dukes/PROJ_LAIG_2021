@@ -6,9 +6,13 @@ class MySpriteText {
         this.rectangles = [];
         for(let i = 0; i < this.text.length; i++) 
             this.rectangles[i] = new MyRectangle(this.scene, 0, 0, 1, 1);
+
+        this.texture = new CGFtexture(this.scene, 'textures/oolite-font.png');
         
         // the font texture has 16 columns and 16 rows
-        this.spritesheet = new MySpriteSheet(this.scene, '../textures/oolite-font.png', 16, 16);
+        this.spritesheet = new MySpriteSheet(this.scene, this.texture, 4, 4);
+
+        
     }
 
     display() {
@@ -28,8 +32,11 @@ class MySpriteText {
 
             // Active default shader
             this.spritesheet.setDefaultShader();
-        }
+        } 
 
+        /* this.spritesheet.activateCellP(5);
+        this.rectangles[0].display();
+        this.spritesheet.setDefaultShader(); */
     }
 
     // returns the p value position of the char in the texture
