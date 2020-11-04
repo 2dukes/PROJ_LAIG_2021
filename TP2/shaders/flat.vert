@@ -21,11 +21,14 @@ uniform float n;
 
 void main() {
 
-    float rowSize = 1.0 / sizeM;
-    float columnSize = 1.0 / sizeN;
+    vTextureCoord = vec2((aTextureCoord[0]+m)/sizeM, (aTextureCoord[1]+n)/sizeN);  
 
-    //vTextureCoord = vec2(columnSize * (m + aTextureCoord[0]), rowSize * (n + aTextureCoord[1]));
-    /* float column_begin;
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+
+    coords = vec4(aVertexPosition, 1.0);
+}
+/* 
+float column_begin;
     float row_begin;
 
     if(aTextureCoord[0] == 0.0 && aTextureCoord[1] == 0.0) // Vértice superior esquerdo
@@ -46,12 +49,4 @@ void main() {
         column_begin = columnSize * m;
         row_begin = rowSize * (n + 1.0);
 
-    vTextureCoord = vec2(column_begin, row_begin); */
-
-    vTextureCoord = aTextureCoord;
-
-
-    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-    coords = vec4(aVertexPosition, 1.0);
-}
+    vTextureCoord = vec2(column_begin, row_begin);  */

@@ -10,7 +10,7 @@ class MySpriteText {
         this.texture = new CGFtexture(this.scene, 'textures/oolite-font.png');
         
         // the font texture has 16 columns and 16 rows
-        this.spritesheet = new MySpriteSheet(this.scene, this.texture, 4, 4);
+        this.spritesheet = new MySpriteSheet(this.scene, this.texture, 16, 16);
 
         
     }
