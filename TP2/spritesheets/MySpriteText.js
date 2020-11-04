@@ -8,7 +8,7 @@ class MySpriteText {
             rectangles[i] = new MyRectangle(this.scene, this.scene, 0, 0, 1, 1);
         
         // the font texture has 16 columns and 16 rows
-        this.spritesheet = MySpritesheet('/textures/oolite-font.png', 16, 16, this.scene);
+        this.spritesheet = MySpritesheet(this.scene, '/textures/oolite-font.png', 16, 16);
     }
 
     display() {
