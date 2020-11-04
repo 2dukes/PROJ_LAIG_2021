@@ -171,7 +171,7 @@
         
 
         <animation id="sofa1Animation">
-            <keyframe instant="1.0">
+            <!-- <keyframe instant="1.0">
                 <translation x="0.0" y="0.0" z="0.0" />
                 <rotation axis="x" angle="0.0" />
                 <rotation axis="y" angle="0.0" />
@@ -233,7 +233,51 @@
                 <rotation axis="y" angle="-135.0" />
                 <rotation axis="z" angle="0.0" />
                 <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe> -->
+
+            <keyframe instant="1.0">
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
+
+            <keyframe instant="4.0">
+                <translation x="0.0" y="0.0" z="4.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="6.0">
+                <translation x="3.5" y="0.0" z="8.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="180.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="8.0">
+                <translation x="3.5" y="0.0" z="4.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="180.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            <keyframe instant="10.0">
+                <translation x="3.5" y="0.0" z="4.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="90.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+
+            
+
+            
 
         </animation>
 
@@ -247,7 +291,7 @@
                 <rotation axis="z" angle="0.0" />
                 <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
-
+<!--
             <keyframe instant="1.2">
                 <translation x="0.0" y="0.5" z="0.0" />
                 <rotation axis="x" angle="0.0" />
@@ -345,7 +389,7 @@
             </keyframe>
 
 
-            <!-- fim saltinhos -->
+             fim saltinhos
 
             <keyframe instant="4.0">
                 <translation x="0.0" y="0.0" z="0.0" />
@@ -403,7 +447,9 @@
                 <rotation axis="y" angle="45.0" />
                 <rotation axis="z" angle="0.0" />
                 <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
+            </keyframe> 
+-->
+
 
             
         </animation>
@@ -1706,10 +1752,49 @@
             </transformations>
 
             <descendants>
+                <noderef id="sofa1_animation" />
+                <noderef id="sofa2_animation" />
+            </descendants>
+        </node>
+
+        <!-- Sofá 1 animation -->
+        <node id="sofa1_animation">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <animationref id="sofa1Animation" />
+
+            <descendants>
                 <noderef id="sofa1" />
+            </descendants>
+        </node>
+
+        <!-- Sofá 2 animation -->
+        <node id="sofa2_animation">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <animationref id="sofa2Animation" />
+
+            <descendants>
                 <noderef id="sofa2" />
             </descendants>
         </node>
+
 
 
         <!-- Sofá 1 -->
@@ -1724,8 +1809,6 @@
                 <translation x="1.7" y="0.0" z="2.0" />
                 <scale sx="1.5" sy="1.2" sz="1.2" />
             </transformations>
-
-            <animationref id="sofa1Animation" />
 
             <descendants>
                 <noderef id="base_baixo_sofa" />
@@ -1751,8 +1834,6 @@
                 <scale sx="1.5" sy="1.2" sz="1.2" />
                 <rotation axis="y" angle="225" />
             </transformations>
-
-            <animationref id="sofa2Animation" />
 
             <descendants>
                 <noderef id="base_baixo_sofa" />
