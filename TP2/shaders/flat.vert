@@ -24,30 +24,7 @@ void main() {
     float rowSize = 1 / sizeM;
     float columnSize = 1 / sizeN;
 
-    if(aTextureCoord[0] == 0 && aTextureCoord[1] == 0) // Vértice superior esquerdo
-        column_begin = columnSize * m;
-        row_begin = rowSize * n;
-        
-    
-    if(aTextureCoord[0] == 1 && aTextureCoord[1] == 1) // Vértice inferior direito
-        column_begin = columnSize * (m + 1);
-        row_begin = rowSize * (n + 1);
-    
-    if(aTextureCoord[0] == 1 && aTextureCoord[1] == 0) // Vértice superior direito
-        column_begin = columnSize * (m + 1);
-        row_begin = rowSize * n;
-
-
-    if(aTextureCoord[0] == 0 && aTextureCoord[1] == 1) // Vértice inferior esquerdo
-        column_begin = columnSize * m;
-        row_begin = rowSize * (n + 1);
-
-    vTextureCoord = vec2(column_begin, row_begin);
-
-
-
-
-    vTextureCoord = aTextureCoord;
+    vTextureCoord = vec2(columnSize * (m + aTextureCoord[0]), rowSize * (n + aTextureCoord[1]));
 
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
 
