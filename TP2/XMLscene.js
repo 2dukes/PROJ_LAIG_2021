@@ -157,6 +157,11 @@ class XMLscene extends CGFscene {
         for(let keyframeAnimation of this.animations) {
             keyframeAnimation.update(timeInSeconds);
         }
+
+        // cosole.log(this.spriteSheetAnim);
+        for(let spriteSheetAnim of this.spriteSheetAnim) {
+            spriteSheetAnim.update(timeInSeconds);
+        }
     }
 
     /**

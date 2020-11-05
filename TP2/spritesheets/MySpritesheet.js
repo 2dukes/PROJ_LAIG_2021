@@ -1,7 +1,7 @@
 class MySpriteSheet {
     constructor(scene, texture, sizeM, sizeN) {
         this.scene = scene;
-        this.scene.texture = texture; // CGFTexture
+        this.texture = texture; // CGFTexture
         this.sizeM = sizeM;
         this.sizeN = sizeN;
 
@@ -11,6 +11,7 @@ class MySpriteSheet {
 
    activateCellMN(_m, _n) {
         this.scene.setActiveShader(this.scene.textureShader);
+        this.scene.texture = this.texture;
         this.scene.texture.bind();
         this.scene.textureShader.setUniformsValues({ sizeM: this.sizeM });
         this.scene.textureShader.setUniformsValues({ sizeN: this.sizeN  });
@@ -20,10 +21,10 @@ class MySpriteSheet {
 
     activateCellP(p) {
         // Compute the number of the column and row
-        this.m = p % this.sizeM;
-        this.n = Math.floor(p / this.sizeN);
+        let m = p % this.sizeM;
+        let n = Math.floor(p / this.sizeN);
 
-        this.activateCellMN(this.m, this.n);
+        this.activateCellMN(m, n);
     }
 
     setDefaultShader() {

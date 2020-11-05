@@ -90,6 +90,10 @@
         <texture id="text_sofa_leg" path="./scenes/images/sofa_leg.jpg" />
     </textures>
 
+    <spritesheets>
+        <spritesheet id="explosionSprite" path="./textures/explosion.png" sizeM="4" sizeN="4" />
+        <spritesheet id="cavemanSprite" path="./textures/santa.jpg" sizeM="8" sizeN="8" />
+    </spritesheets>
 
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
@@ -620,7 +624,8 @@
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+                <leaf type="spriteanim" ssid="explosionSprite" startCell="0" endCell="10" duration="2" />
+                <!-- <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/> -->
             </descendants>
         </node>
 
@@ -639,7 +644,8 @@
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+                <leaf type="spriteanim" ssid="cavemanSprite" startCell="0" endCell="29" duration="5" />
+                <!-- <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/> -->
             </descendants>
         </node>
 

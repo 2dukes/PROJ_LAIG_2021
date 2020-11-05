@@ -6,9 +6,13 @@ var VIEWS_INDEX = 1;
 var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
-var MATERIALS_INDEX = 5;
-var NODES_INDEX = 7;
-var ANIMATIONS_INDEX = 6;
+
+var SPRITESHEETS_INDEX = 5;
+
+var MATERIALS_INDEX = 6;
+var ANIMATIONS_INDEX = 7;
+var NODES_INDEX = 8;
+
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -163,6 +167,7 @@ class MySceneGraph {
             if ((error = this.parseLights(nodes[index])) != null)
                 return error;
         }
+
         // <textures>
         if ((index = nodeNames.indexOf("textures")) == -1)
             return "tag <textures> missing";
@@ -175,11 +180,26 @@ class MySceneGraph {
                 return error;
         }
 
+        // <spritesheets>
+        if ((index = nodeNames.indexOf("spritesheets")) == -1) {
+            MATERIALS_INDEX = 5;
+            ANIMATIONS_INDEX = 6;
+            NODES_INDEX = 7;
+        }
+        else {
+            if (index != TEXTURES_INDEX + 1)
+                this.onXMLMinorError("tag <spritesheets> out of order");
+
+            //Parse textures block
+            if ((error = this.parseSpriteSheets(nodes[index])) != null)
+                return error;
+        }
+
         // <materials>
         if ((index = nodeNames.indexOf("materials")) == -1)
             return "tag <materials> missing";
         else {
-            if (index != MATERIALS_INDEX)
+            if (index != MATERIALS_INDEX) 
                 this.onXMLMinorError("tag <materials> out of order");
 
             //Parse materials block
@@ -189,7 +209,7 @@ class MySceneGraph {
 
         // <animations>
         if ((index = nodeNames.indexOf("animations")) == -1) // When there are no animations, then NODES_INDEX passes to 6 (last).
-            NODES_INDEX = 6;
+            NODES_INDEX = MATERIALS_INDEX + 1;
         else {
             if (index != ANIMATIONS_INDEX)
                 this.onXMLMinorError("tag <animations> out of order");
@@ -709,6 +729,8 @@ class MySceneGraph {
         var grandgrandChildren = [];
         var nodeNames = [];
 
+        this.scene.spriteSheetAnim = [];
+
         // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
 
@@ -932,6 +954,30 @@ class MySceneGraph {
 
                         leaf = new MySpriteText(this.scene, text);
                     }
+                    else if(type == 'spriteanim') {
+                        let ssId = this.reader.getString(grandgrandChildren[j], 'ssid');
+                        if(this.spriteSheets[ssId] == null) {
+                            this.onXMLMinorError("No SpriteSheet Animation with id: " + ssId + ". It will be ignored.");  
+                            continue;
+                        }
+
+                        let startCell = this.reader.getFloat(grandgrandChildren[j], 'startCell');
+                        let endCell = this.reader.getFloat(grandgrandChildren[j], 'endCell');
+                        let duration = this.reader.getFloat(grandgrandChildren[j], 'duration');
+
+                        let numCells = this.spriteSheets[ssId].sizeM * this.spriteSheets[ssId].sizeN;
+                        if(startCell == null || endCell == null || duration == null || startCell < 0 || startCell >= numCells || endCell < 0 || endCell >= numCells || duration < 0) {
+                            this.onXMLMinorError("Error in starCell | endCell | duration given for spritesheet: " + ssId + ": Default values: ");  
+                            startCell = 0;
+                            endCell = (this.spriteSheets[ssId].sizeM * this.spriteSheets[ssId].sizeN) - 1;
+                            duration = 4;
+                            this.onXMLMinorError(`startCell=${startCell}, endCell=${endCell}, duration=${duration}`);
+                        }
+                        
+                        leaf = new MySpriteAnim(this.scene, this.spriteSheets[ssId], duration, startCell, endCell);
+                        this.scene.spriteSheetAnim.push(leaf);
+                        console.log(this.scene.spriteSheetAnim);
+                    }
                     else {
                         this.onXMLMinorError("Unrecognized type of Primitive for node " + nodeID);  
                         continue;
@@ -1095,6 +1141,50 @@ class MySceneGraph {
         color.push(...[r, g, b, a]);
         
         return color;
+    }
+
+    /**
+     * Parses the <spritesheets> node.
+     * @param {block element} spritesheets
+     * @param {message to be displayed in case of error} messageError
+     */
+    parseSpriteSheets(spriteSheetsNode) {
+        //For each texture in spritesheet block, check ID, file URL, sizeM and sizeN
+        var children = spriteSheetsNode.children;
+        var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        this.spriteSheets = [];
+
+        for (let index = 0; index < nodeNames.length; index++) {
+            let spriteSheet = children[index];
+            
+            let ssId = this.reader.getString(spriteSheet, 'id');
+            let path = this.reader.getString(spriteSheet, 'path');
+            let sizeM = this.reader.getFloat(spriteSheet, 'sizeM');
+            let sizeN = this.reader.getFloat(spriteSheet, 'sizeN');
+            if(ssId == null || path == null)
+                return "No id | path defined in <spritesheet> tag!";
+            if(sizeM == null || sizeN == null || sizeN < 0 || sizeM < 0) {
+                this.onXMLMinorError(`unknown values for sizeM and sizeN of
+                    spritesheet ${ssId}. Assuming sizeM=5, sizeN=5`);
+                sizeM = 5;
+                sizeN = 5;    
+            }
+
+            // Checks for repeated IDs.
+            if (this.spriteSheets[ssId] != null)
+                return "ID must be unique for each spritesheet (conflict: ID = " + ssId + ")";
+
+            let texture = new CGFtexture(this.scene, path);
+            this.spriteSheets[ssId] = new MySpriteSheet(this.scene, texture, sizeM, sizeN);
+        }
+        // console.log(this.spriteSheets);
+
+        this.log("Parsed SpriteSheets");
+        return null;
     }
 
     /**

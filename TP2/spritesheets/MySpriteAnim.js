@@ -1,16 +1,11 @@
 class MySpriteAnim {
     constructor(scene, spriteSheet, duration, startCell, endCell) {
         this.scene = scene;
+
         this.spriteSheet = spriteSheet;
         this.duration = duration;
         this.startCell = startCell;
         this.endCell = endCell;
-
-        // Create the texture of the font sprite
-        this.texture = new CGFtexture(this.scene, 'textures/explosion.png');
-
-        // the explosion texture has 4 columns and 4 rows
-        this.spritesheet = new MySpriteSheet(this.scene, this.texture, 4, 4);
         
         // initialize base geometry
         this.rectangle = new MyRectangle(this.scene, 0, 0, 1, 1);
@@ -30,7 +25,7 @@ class MySpriteAnim {
         this.elapsedTime += timeIncrement;
 
         // Calculate which sprite cell is active
-        this.currentSprite = this.elapsedTime / this.timePerCell + this.startCell;
+        this.currentSprite = Math.floor(this.elapsedTime / this.timePerCell + this.startCell);
 
         // check if the animation has ended
         if (this.currentSprite > this.endCell) {
@@ -44,12 +39,16 @@ class MySpriteAnim {
             return;
 
         // activate corresponding sprite
-        this.spritesheet.activateCell(this.currentSprite);
+        this.spriteSheet.activateCellP(this.currentSprite);
 
         // display base geometry
         this.rectangle.display();
 
         // active default shader
-        this.spritesheet.setDefaultShader();
+        this.spriteSheet.setDefaultShader();
+    }
+
+    updateTexCoords() {
+
     }
 }
