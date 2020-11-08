@@ -542,6 +542,24 @@
 
             
         </animation>
+
+        <animation id="arvoreAnimation">
+            <keyframe instant="0.0">
+                <translation x="2.5" y="0.0" z="2.5" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="0.5" sy="0.5" sz="0.5" />
+            </keyframe>
+
+            <keyframe instant="9.0">
+                <translation x="-2.5" y="0.0" z="-2.5" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
+            </keyframe>
+        </animation>
                 
 
         <animation id="presentPull1">
@@ -1276,6 +1294,8 @@
             <transformations>
 
             </transformations>
+
+            <animationref id="arvoreAnimation" />
 
             <descendants>
                 <noderef id="bolas" />
