@@ -3,10 +3,13 @@ class MySpriteText {
         this.scene = scene;
         this.text = text;
 
+        this.rectangleWidth = 0.5;
+        this.startPosition = [1, 2.2, 0.2]
+
         // Create the rectangles used to show the letters
         this.rectangles = [];
         for(let i = 0; i < this.text.length; i++) 
-            this.rectangles[i] = new MyRectangle(this.scene, 0, 0, 1, 1);
+            this.rectangles[i] = new MyRectangle(this.scene, 0, 0, this.rectangleWidth, this.rectangleWidth);
 
         // Create the texture of the font sprite
         this.texture = new CGFtexture(this.scene, 'textures/oolite-font.png');
@@ -26,7 +29,7 @@ class MySpriteText {
 
             // Making the translation of the base geometry and the corresponding display
             this.scene.pushMatrix();
-            this.scene.translate(i, 0, 0);
+            this.scene.translate(i*this.rectangleWidth + this.startPosition[0], this.startPosition[1], this.startPosition[2]);
             this.rectangles[i].display();
             this.scene.popMatrix();
 
