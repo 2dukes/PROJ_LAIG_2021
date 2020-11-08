@@ -650,6 +650,26 @@
             </keyframe>
         </animation>
 
+        <animation id="quadro1Animation">
+            <keyframe instant="2.0">
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
+
+        <animation id="quadro2Animation">
+            <keyframe instant="3.0">
+                <translation x="0.0" y="0.0" z="0.0" />
+                <rotation axis="x" angle="0.0" />
+                <rotation axis="y" angle="0.0" />
+                <rotation axis="z" angle="0.0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
+
     </animations>
 
 
@@ -708,6 +728,8 @@
             <descendants>
                 <noderef id="quadro1" />
                 <noderef id="quadro2" />
+                <noderef id="sprite1" />
+                <noderef id="sprite2" />
                 <!-- x y z coordinates of each vertex -->
             </descendants>
         </node>
@@ -726,9 +748,10 @@
                 <rotation axis="y" angle="-90" /> 
             </transformations>
 
+            <animationref id="quadro1Animation" />
+
             <descendants>
-                <leaf type="spriteanim" ssid="explosionSprite" startCell="0" endCell="10" duration="2" />
-                <!-- <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/> -->
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
             </descendants>
         </node>
 
@@ -746,9 +769,48 @@
                 <rotation axis="y" angle="-90" />
             </transformations>
 
+            <animationref id="quadro2Animation" />
+
             <descendants>
-                <leaf type="spriteanim" ssid="cavemanSprite" startCell="0" endCell="29" duration="5" />
-                <!-- <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/> -->
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="sprite1">
+
+            <material id="null" />
+
+            <texture id="text_quadro1">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="9.9" y="1.0" z="2.0" />
+                <scale sx="1.0" sy="1.5" sz="2.0" />
+                <rotation axis="y" angle="-90" /> 
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="explosionSprite" startCell="0" endCell="10" duration="2.0" />
+            </descendants>
+        </node>
+
+        <node id="sprite2">
+
+            <material id="null" />
+
+            <texture id="text_quadro2">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="9.9" y="1.0" z="6.0" />
+                <scale sx="1.0" sy="1.5" sz="2.0" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="cavemanSprite" startCell="0" endCell="29" duration="3.0" />
             </descendants>
         </node>
 
