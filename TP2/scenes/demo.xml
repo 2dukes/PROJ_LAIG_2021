@@ -825,7 +825,6 @@
             </texture>
 
             <transformations>
-                <scale sx="0" sy="0" sz="0" />
                 <scale sx="10.0" sy="3.0" sz="1.0" />
             </transformations>
 
