@@ -15,29 +15,21 @@ class MySpriteAnim {
         this.elapsedTime = 0;
         this.timePerCell = duration / (endCell - startCell + 1);
 
-        this.animationEnded = false;
+        this.numCells = endCell - startCell + 1;
     }
 
     update(timeIncrement) {
-        if (this.animationEnded)
-            return;
 
         this.elapsedTime += timeIncrement;
 
         // Calculate which sprite cell is active
-        this.currentSprite = Math.floor(this.elapsedTime / this.timePerCell + this.startCell);
+        // % this.numCells --> the animation will run forever
+        this.currentSprite = Math.floor(this.elapsedTime / this.timePerCell + this.startCell) % this.numCells;
 
-        // check if the animation has ended
-        if (this.currentSprite > this.endCell) {
-            this.animationEnded = true;
-            return;
-        }
     }
     
     display() {
-        if (this.animationEnded)
-            return;
-
+        
         // activate corresponding sprite
         this.spriteSheet.activateCellP(this.currentSprite);
 

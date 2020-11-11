@@ -46,7 +46,7 @@
         <light id="luz_estrela">            <!-- Light that imitates the Christmas Tree top star -->
             <enable value="1" />
             <!-- enable/disable -->
-            <position x="5" y="2.15" z="5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+            <position x="5" y="3.15" z="5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="0.0" a="1.0" />             <!-- diffuse component -->
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />            <!-- specular component -->
@@ -92,7 +92,8 @@
 
     <spritesheets>
         <spritesheet id="explosionSprite" path="./textures/explosion.png" sizeM="4" sizeN="4" />
-        <spritesheet id="cavemanSprite" path="./textures/santa.jpg" sizeM="8" sizeN="8" />
+        <spritesheet id="santaSprite" path="./textures/santa.jpg" sizeM="8" sizeN="8" />
+        <spritesheet id="cavemanSprite" path="./textures/caveman.png" sizeM="4" sizeN="4" />
     </spritesheets>
 
     <materials>
@@ -651,7 +652,7 @@
         </animation>
 
         <animation id="quadro1Animation">
-            <keyframe instant="2.0">
+            <keyframe instant="0.0">
                 <translation x="0.0" y="0.0" z="0.0" />
                 <rotation axis="x" angle="0.0" />
                 <rotation axis="y" angle="0.0" />
@@ -661,7 +662,7 @@
         </animation>
 
         <animation id="quadro2Animation">
-            <keyframe instant="3.0">
+            <keyframe instant="0.0">
                 <translation x="0.0" y="0.0" z="0.0" />
                 <rotation axis="x" angle="0.0" />
                 <rotation axis="y" angle="0.0" />
@@ -791,7 +792,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="explosionSprite" startCell="0" endCell="10" duration="2.0" />
+                <leaf type="spriteanim" ssid="explosionSprite" startCell="0" endCell="15" duration="1.0" />
             </descendants>
         </node>
 
@@ -810,7 +811,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="cavemanSprite" startCell="0" endCell="29" duration="3.0" />
+                <leaf type="spriteanim" ssid="santaSprite" startCell="0" endCell="63" duration="3.0" />
             </descendants>
         </node>
 
@@ -1908,7 +1909,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+                <leaf type="spriteanim" ssid="cavemanSprite" startCell="0" endCell="63" duration="1.0" />
             </descendants>
         </node>
 
