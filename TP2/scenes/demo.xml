@@ -700,12 +700,28 @@
                 <noderef id="presentes" />
                 <noderef id="mesa" />
                 <noderef id="sofas" />
-                <leaf type="spritetext" text="Merry Christmas!" />
+                <noderef id="text" />
                 <!-- "ss" is the identifier of a node or of leaf; -->
                 <!-- may be repeated as necessary. It can refer an -->
                 <!-- identifier of another node, before or later defined in the file. -->
                 <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
                 <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+            </descendants>
+        </node>
+
+        <node id="text">
+            <material id="null" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.0" y="2.2" z="0.01" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="Merry Christmas!" />
             </descendants>
         </node>
 
@@ -1909,7 +1925,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="cavemanSprite" startCell="0" endCell="63" duration="1.0" />
+                <leaf type="spriteanim" ssid="cavemanSprite" startCell="0" endCell="15" duration="1.0" />
             </descendants>
         </node>
 

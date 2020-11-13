@@ -976,7 +976,7 @@ class MySceneGraph {
                         
                         leaf = new MySpriteAnim(this.scene, this.spriteSheets[ssId], duration, startCell, endCell);
                         this.scene.spriteSheetAnim.push(leaf);
-                        console.log(this.scene.spriteSheetAnim);
+                        // console.log(this.scene.spriteSheetAnim);
                     }
                     else {
                         this.onXMLMinorError("Unrecognized type of Primitive for node " + nodeID);  

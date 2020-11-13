@@ -4,7 +4,7 @@ class MySpriteText {
         this.text = text;
 
         this.rectangleWidth = 0.5;
-        this.startPosition = [1, 2.2, 0.2];
+        this.startPosition = (text.length / 2) / 2;
 
         // Create the rectangles used to show the letters
         this.rectangles = [];
@@ -29,7 +29,8 @@ class MySpriteText {
 
             // Making the translation of the base geometry and the corresponding display
             this.scene.pushMatrix();
-            this.scene.translate(i*this.rectangleWidth + this.startPosition[0], this.startPosition[1], this.startPosition[2]);
+            
+            this.scene.translate(i * this.rectangleWidth - this.startPosition, 0, 0);
             this.rectangles[i].display();
             this.scene.popMatrix();
 
