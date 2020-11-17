@@ -6,6 +6,8 @@ class Plane extends CGFobject {
         this.nPartsV = nPartsV;
 
         this.init();
+
+        this.initBuffers();
     }
 
     init() {
