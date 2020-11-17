@@ -17,29 +17,37 @@ class Plane extends CGFobject {
                // U = 0
             [
                 [-0.5, 0.0, 0.5, 1],
+                [-0.5, 0.0, -0.5, 1],
+                [-0.5, 0.0, 0.5, 1],
                 [-0.5, 0.0, -0.5, 1]
             ], // U = 1
             [
                 [0.5, 0.0, 0.5, 1],
-                [0.5, 0.0, -0.5, 1]
+                [0.5, 0.0, -0.5, 1],
+                [-0.5, 0.0, 0.5, 1],
+                [-0.5, 0.0, -0.5, 1]
             ], // U = 2
             [
                 [0.5, 0.0, 0.5, 1],
+                [-0.5, 0.0, 0.5, 1],
+                [-0.5, 0.0, -0.5, 1],
                 [0.5, 0.0, -0.5, 1]
             ], // U = 3
             [
                 [0.5, 0.0, 0.5, 1],
+                [-0.5, 0.0, 0.5, 1],
+                [-0.5, 0.0, -0.5, 1],
                 [0.5, 0.0, -0.5, 1]
-            ]
+            ],
+
         ];
 
-        // let nurbsSurface = new CGFnurbsSurface(1, 1, controlPoints);
-        // this.nSurface = new CGFnurbsObject(this.scene, this.nPartsU, this.nPartsV, nurbsSurface); 
+        let nurbsSurface = new CGFnurbsSurface(1, 1, controlPoints);
+        this.nSurface = new CGFnurbsObject(this.scene, this.nPartsU, this.nPartsV, nurbsSurface); 
     }
 
     display() {
-
-        // this.nSurface.display();
+        this.nSurface.display();
     }
 
     updateTexCoords(s, t) {
