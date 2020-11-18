@@ -325,7 +325,8 @@ class MySceneGraph {
             return "No Perspective Cameras defined for scene.";
         if(orthogonalIndexes.length == -1)
             return "No Orthogonal Cameras defined for scene.";
-
+        
+        const DEGREE_TO_RAD = Math.PI / 180;
         this.cameras = [];
 
         // Perspective cameras
@@ -378,8 +379,8 @@ class MySceneGraph {
                 if(x_to == null || y_to == null || z_to == null)
                     return 'No x | y | z coordinate found on <to> tag!';
             }
-            
-            this.cameras[id] = new CGFcamera(angle, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to));
+
+            this.cameras[id] = new CGFcamera(DEGREE_TO_RAD * angle, near, far, vec3.fromValues(x_from, y_from, z_from), vec3.fromValues(x_to, y_to, z_to));
         }
 
         // Orthogonal cameras
