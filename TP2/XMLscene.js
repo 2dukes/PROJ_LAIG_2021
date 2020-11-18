@@ -189,7 +189,7 @@ class XMLscene extends CGFscene {
         
         // this.mPlane = new Plane(this, 5, 5);
         // this.patch = new MyPatch(this, 3, 2, 20, 20, [[-6,-6,0,1],[-6,6,0,1],[0,-6,6,1],[0,6,6,1],[6,-6,0,1],[6,6,0,1]]);
-        // this.barrel = new Barrel(this, 0.25, 0.4, 0.5, 10, 10);
+        this.barrel = new Barrel(this, 0.25, 0.3, 1, 10, 10);
 
         if (this.sceneInited) {
             // Draw axis
@@ -200,7 +200,7 @@ class XMLscene extends CGFscene {
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
             
-            // this.barrel.display();
+            this.barrel.display();
         }
         else
         {
