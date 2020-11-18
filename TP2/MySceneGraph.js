@@ -945,6 +945,40 @@ class MySceneGraph {
 
                         leaf = new MyTorus(this.scene, outer, inner, slices, loops); 
                     }
+                    else if (type == 'plane') {
+                        let npartsU = this.reader.getFloat(grandgrandChildren[j], 'npartsU');
+                        let npartsV = this.reader.getFloat(grandgrandChildren[j], 'npartsV');
+                        if(npartsU == null || npartsV == null) {
+                            this.onXMLMinorError("Error in nPartsU | nPartsV of plane for node " + nodeID + ". Assuming nPartsU = 2, nPartsV = 2"); 
+                            npartsU = 2;
+                            npartsV = 2; 
+                        }
+                        if(!Number.isInteger(npartsU) || !Number.isInteger(npartsV)) {
+                            this.onXMLMinorError("Error in nPartsU | nPartsV of plane for node " + nodeID + ". Values have to be integers. Assuming nPartsU = 2, nPartsV = 2"); 
+                            npartsU = 2;
+                            npartsV = 2; 
+                        }
+
+                        leaf = new Plane(this.scene, npartsU, npartsV);
+                    }
+                    else if(type == 'defbarrel') {
+                        let base = this.reader.getFloat(grandgrandChildren[j], 'base');
+                        let middle = this.reader.getFloat(grandgrandChildren[j], 'middle');
+                        let height = this.reader.getFloat(grandgrandChildren[j], 'height');
+                        let slices = this.reader.getFloat(grandgrandChildren[j], 'slices');
+                        let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks');
+
+                        if(base == null || middle == null || height == null || slices == null || stacks == null || !Number.isInteger(slices) || !Number.isInteger(stacks)) {
+                            this.onXMLMinorError("Error in base | middle | height | slices | stacks of plane for node " + nodeID + ". Assuming base = 0.25, middle = 0.4, height = 0.5, slices = 10, stacks = 10."); 
+                            base = 0.25;
+                            middle = 0.4; 
+                            height = 0.5;
+                            slices = 10;
+                            stacks = 10;
+                        }
+
+                        leaf = new Barrel(this.scene, base, middle, height, slices, stacks)
+                    }
                     else if(type == 'spritetext') {
                         let text = this.reader.getString(grandgrandChildren[j], 'text');
                         if(text == null) {

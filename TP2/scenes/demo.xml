@@ -701,6 +701,8 @@
                 <noderef id="mesa" />
                 <noderef id="sofas" />
                 <noderef id="text" />
+                <!-- <leaf type="plane" npartsU="5" npartsV="5" /> -->
+                <leaf type="defbarrel" base="0.3" middle="0.4" height="0.5" slices="5" stacks="5" />
                 <!-- "ss" is the identifier of a node or of leaf; -->
                 <!-- may be repeated as necessary. It can refer an -->
                 <!-- identifier of another node, before or later defined in the file. -->
