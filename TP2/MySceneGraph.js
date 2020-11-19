@@ -728,6 +728,7 @@ class MySceneGraph {
 
         var grandChildren = [];
         var grandgrandChildren = [];
+        var grandgrandgrandChildren = [];
         var nodeNames = [];
 
         this.scene.spriteSheetAnim = [];
@@ -962,6 +963,44 @@ class MySceneGraph {
 
                         leaf = new Plane(this.scene, npartsU, npartsV);
                     }
+                    else if(type == 'patch') {
+                        let npointsU = this.reader.getFloat(grandgrandChildren[j], 'npointsU');
+                        let npointsV = this.reader.getFloat(grandgrandChildren[j], 'npointsV');
+                        let npartsU = this.reader.getFloat(grandgrandChildren[j], 'npartsU');
+                        let npartsV = this.reader.getFloat(grandgrandChildren[j], 'npartsV');
+                        let numberOfControlPoints = npointsU * npointsV;
+
+                        if(npointsU == null || npointsV == null || npartsU == null || npartsV == null || !Number.isInteger(npointsU) || !Number.isInteger(npointsV) || !Number.isInteger(npartsU) || !Number.isInteger(npartsV)) {
+                            this.onXMLMinorError("Error in npointsU | npointsV | npartsU | npartsV of patch for node " + nodeID + ". Assuming npointsU = 3, npointsV = 2, npartsU = 20, npartsV = 20."); 
+                            npointsU = 3;
+                            npointsV = 2; 
+                            npartsU = 20;
+                            npartsV = 20;
+
+                            // new MyPatch(this, 3, 2, 20, 20, [[-2,-2,0,1],[-2,2,0,1],[0,-2,2,1],[0,2,2,1],[2,-2,0,1],[2,2,0,1]]);
+
+                            // Será que é correto assumirmos estes valores, neste caso?
+                        }
+
+                        let controlPoints = [];
+
+                        grandgrandgrandChildren = grandgrandChildren[j].children;
+                        if(grandgrandgrandChildren.length !== numberOfControlPoints)
+                            return "The number of control points needs to be npointsU * npointsV for node " + nodeID; 
+                        
+                        for (let k = 0; k < grandgrandgrandChildren.length; k++) {
+                            let labelName = grandgrandgrandChildren[k].nodeName;
+                            if(labelName == "controlpoint") { // <leaf>
+                                let xx = this.reader.getFloat(grandgrandgrandChildren[k], 'xx');
+                                let yy = this.reader.getFloat(grandgrandgrandChildren[k], 'yy');
+                                let zz = this.reader.getFloat(grandgrandgrandChildren[k], 'zz');
+                                controlPoints.push([xx,yy,zz,1.0]);
+                            }
+                            else return "The label name needs to be controlpoint, but it's " + labelName +" for node " + nodeID;
+                        }
+
+                        leaf = new MyPatch(this.scene, npointsU, npointsV, npartsU, npartsV, controlPoints);
+                    }
                     else if(type == 'defbarrel') {
                         let base = this.reader.getFloat(grandgrandChildren[j], 'base');
                         let middle = this.reader.getFloat(grandgrandChildren[j], 'middle');
@@ -970,7 +1009,7 @@ class MySceneGraph {
                         let stacks = this.reader.getFloat(grandgrandChildren[j], 'stacks');
 
                         if(base == null || middle == null || height == null || slices == null || stacks == null || !Number.isInteger(slices) || !Number.isInteger(stacks)) {
-                            this.onXMLMinorError("Error in base | middle | height | slices | stacks of plane for node " + nodeID + ". Assuming base = 0.25, middle = 0.4, height = 0.5, slices = 10, stacks = 10."); 
+                            this.onXMLMinorError("Error in base | middle | height | slices | stacks of barrel for node " + nodeID + ". Assuming base = 0.25, middle = 0.4, height = 0.5, slices = 10, stacks = 10."); 
                             base = 0.25;
                             middle = 0.4; 
                             height = 0.5;
