@@ -31,6 +31,7 @@ class MySpriteText {
             this.scene.pushMatrix();
             
             this.scene.translate(i * this.rectangleWidth - this.startPosition, 0, 0);
+            
             this.rectangles[i].display();
             this.scene.popMatrix();
 
