@@ -93,7 +93,7 @@
 
     <spritesheets>
         <spritesheet id="explosionSprite" path="./textures/explosion.png" sizeM="4" sizeN="4" />
-        <spritesheet id="santaSprite" path="./textures/santa.jpg" sizeM="8" sizeN="8" />
+        <spritesheet id="santaSprite" path="./textures/santa.png" sizeM="4" sizeN="4" />
         <spritesheet id="cavemanSprite" path="./textures/caveman.png" sizeM="4" sizeN="4" />
     </spritesheets>
 
@@ -835,7 +835,7 @@
 
             <material id="null" />
 
-            <texture id="text_quadro1">
+            <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -854,7 +854,7 @@
 
             <material id="null" />
 
-            <texture id="text_quadro2">
+            <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -865,7 +865,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="santaSprite" startCell="0" endCell="63" duration="3.0" />
+                <leaf type="spriteanim" ssid="santaSprite" startCell="0" endCell="15" duration="1.0" />
             </descendants>
         </node>
 

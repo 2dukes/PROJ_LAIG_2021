@@ -34,6 +34,7 @@ class MySpriteAnim {
         this.spriteSheet.activateCellP(this.currentSprite);
 
         // display base geometry
+        
         this.rectangle.display();
 
         // active default shader

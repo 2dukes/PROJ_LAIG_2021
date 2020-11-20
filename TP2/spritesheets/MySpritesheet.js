@@ -10,7 +10,7 @@ class MySpriteSheet {
     }
 
    activateCellMN(_m, _n) {
-        this.scene.setActiveShader(this.scene.textureShader);
+        this.scene.setActiveShaderSimple(this.scene.textureShader);
         this.scene.texture = this.texture;
         this.scene.texture.bind();
         this.scene.textureShader.setUniformsValues({ sizeM: this.sizeM });
