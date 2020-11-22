@@ -10,9 +10,9 @@
 ----
 ## Project information
 
-- Strong points: scene XML complexity, implementation of primitives, geometric transformations, textures and materials.
+- Strong points: scene XML complexity, implementation of animations, spritesheets and nurbs.
 - Scene
-  - The scene depicts a room with a Christmas atmosphere. It consists of decorations on the walls, as well as a Christmas tree with the appropriate ornaments (balls and gifts). It also has a table with a TV, and two sofas. Each object has an assigned material or texture.
+  - The scene depicts a room with a Christmas atmosphere. It consists of decorations on the walls, as well as a Christmas tree with the appropriate ornaments (balls and gifts). It also has a table with a TV, and two sofas. Each object has an assigned material or texture. It also has animations, spritesheets and nurbs.
   - [LAIG_TP1_XML_T1_G06_v04.xml](./scenes/LAIG_TP1_XML_T1_G06_v04.xml)
 ----
 ## Issues/Problems
