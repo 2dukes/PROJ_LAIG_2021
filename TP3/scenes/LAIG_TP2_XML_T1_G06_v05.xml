@@ -175,12 +175,30 @@
                 <noderef id="sofas" />
                 <noderef id="text" />
                 <noderef id="barrel" />
+                <noderef id="board" />
                 
                 <!-- "ss" is the identifier of a node or of leaf; -->
                 <!-- may be repeated as necessary. It can refer an -->
                 <!-- identifier of another node, before or later defined in the file. -->
                 <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
                 <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+            </descendants>
+        </node>
+
+        <node id="board">
+            <material id="null" />
+
+            <texture id="text_barrel">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <!-- <translation x="5.0" y="1.0" z="5.2" />
+                <rotation axis="x" angle="-90" />  -->
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.1" topRadius="1" bottomRadius="1" stacks="6" slices="6"/>
             </descendants>
         </node>
         
