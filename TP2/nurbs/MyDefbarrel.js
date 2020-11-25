@@ -45,7 +45,7 @@ class Barrel extends CGFobject {
             ] 
  
         ];
-
+        
         let nurbsSurface = new CGFnurbsSurface(3, 3, controlPoints);
         this.nSurface = new CGFnurbsObject(this.scene, this.stacks, this.slices, nurbsSurface); 
     }
