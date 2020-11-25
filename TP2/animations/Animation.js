@@ -17,8 +17,3 @@ class Animation {
         
     }
 }
-
-// time
-// animationHasEnded?
-// currentState
-// id Animação

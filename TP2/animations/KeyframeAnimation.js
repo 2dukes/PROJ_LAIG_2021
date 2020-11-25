@@ -12,13 +12,7 @@ class KeyFrameAnimation extends Animation {
         if(!this.animationEnded) {
             super.update(timeIncrement);
 
-            /*
-            t = 10.1
-            Keyframe 0 -> Instante 2  
-            KeyFrame 1 -> Instante 10
-            Length = 2
-            */
-
+            // começar a animação
             if(this.keyFrames[this.currentKeyFrame].instant <= this.elapsedTime) {
                 this.currentKeyFrame++;
                 this.animationStarted = true;
@@ -27,23 +21,28 @@ class KeyFrameAnimation extends Animation {
             if(!this.animationStarted)
                 return;
             
+            // para o caso final
             if(this.currentKeyFrame == this.keyFrames.length) {
-                this.currentKeyFrame--; // Para o caso final
+                this.currentKeyFrame--;
                 this.animationEnded = true;
             }
-
+            
+            // obter a keyframe atual
             let currentKeyFrame = this.keyFrames[this.currentKeyFrame];
 
             let formerKeyFrame;
 
+            // obter a keyframe anterior
             if (this.currentKeyFrame == 0)
                 formerKeyFrame = new Transformation(0, [0, 0, 0], [0, 0, 0], [1, 1, 1]);
             else 
                 formerKeyFrame = this.keyFrames[this.currentKeyFrame - 1];
 
+            // calcular os tempos de CPU e real
             let cpuDiff = (this.elapsedTime - formerKeyFrame.instant);
             let keyFrameDiff = (currentKeyFrame.instant - formerKeyFrame.instant);
 
+            // calcular a percentagem de tempo decorrido entre keyframes
             let percentageTime;
             if(cpuDiff - keyFrameDiff > 0)
                 percentageTime = 1.0;
