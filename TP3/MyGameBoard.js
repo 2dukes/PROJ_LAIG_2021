@@ -9,7 +9,7 @@ class MyGameBoard {
 
     initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap) {
         // Length of each Diagonal
-        let lineLength = [5, 8, 9, 10, 12, 12, 11, 12, 11, 10, 9, 8, 5];
+        let lineLength = [5, 8, 9, 10, 11, 12, 11, 12, 11, 10, 9, 8, 5];
         this.tiles = [];
 
         for(let index = 0; index < lineLength.length; index++) {
@@ -18,7 +18,7 @@ class MyGameBoard {
             let startingLine = diagonalLineMap.get(index + 1);
             let diagonalStartPosition = diagonalStartingCoordinatesMap.get(index + 1);
             for(let i = 0; i < value; i++) 
-                this.tiles.push(new MyTile(this, this.tileRadius, i + startingLine, index + 1, diagonalStartPosition, startingLine));
+                this.tiles.push(new MyTile(this, this.scene, this.tileRadius, i + startingLine, index + 1, diagonalStartPosition, startingLine));
         }
 
         console.log(this.tiles);
@@ -39,21 +39,25 @@ class MyGameBoard {
     initializeDiagonalCoordinates() {
         let diagonalStartingCoordinatesMap = new Map();
 
+        let auxiliarRadius = (this.tileRadius * Math.sqrt(3)) / 2;
+        let auxDiag2 = 2 * this.tileRadius + auxiliarRadius;
+        let auxOffset = this.tileRadius + (auxiliarRadius / 2);
+
         // NDiagonal -> Starting Coordinates
         let startingCoords = [
-            { x: 0, y: 0 },                                                // 1
-            { x: 2 * this.tileRadius, y: 0 },                              // 2
-            { x: 4 * this.tileRadius, y: -this.tileRadius },               // 3
-            { x: 5 * this.tileRadius, y: -2 * this.tileRadius },           // 4
-            { x: 6 * this.tileRadius, y: -3 * this.tileRadius },           // 5
-            { x: 6 * this.tileRadius, y: -4 * this.tileRadius },           // 6
-            { x: 7 * this.tileRadius, y: -6 * this.tileRadius },           // 7
-            { x: 7 * this.tileRadius, y: -7 * this.tileRadius },           // 8
-            { x: 7 * this.tileRadius, y: -9 * this.tileRadius },           // 9
-            { x: 7 * this.tileRadius, y: -11 * this.tileRadius },          // 10
-            { x: 7 * this.tileRadius, y: -13 * this.tileRadius },          // 11
-            { x: 7 * this.tileRadius, y: -15 * this.tileRadius },          // 12
-            { x: 6 * this.tileRadius, y: -18 * this.tileRadius },          // 13
+            { x: 0, y: 0 },                                                    // 1
+            { x: auxDiag2, y: 0 },                                             // 2
+            { x: auxDiag2 + auxOffset, y: -auxiliarRadius },                   // 3
+            { x: auxDiag2 + 2 * auxOffset, y: -2 * auxiliarRadius },           // 4
+            { x: auxDiag2 + 3 * auxOffset, y: -3 * auxiliarRadius },           // 5
+            { x: auxDiag2 + 4 * auxOffset, y: -4 * auxiliarRadius },           // 6
+            { x: auxDiag2 + 4 * auxOffset, y: -6 * auxiliarRadius },           // 7
+            { x: auxDiag2 + 5 * auxOffset, y: -7 * auxiliarRadius },           // 8
+            { x: auxDiag2 + 5 * auxOffset, y: -9 * auxiliarRadius },           // 9
+            { x: auxDiag2 + 5 * auxOffset, y: -11 * auxiliarRadius },          // 10
+            { x: auxDiag2 + 5 * auxOffset, y: -13 * auxiliarRadius },          // 11
+            { x: auxDiag2 + 5 * auxOffset, y: -15 * auxiliarRadius },          // 12
+            { x: auxDiag2 + 4 * auxOffset, y: -18 * auxiliarRadius },          // 13
         ];
 
         startingCoords.forEach(function(value, index) {
@@ -64,6 +68,9 @@ class MyGameBoard {
     }
 
     display() {
+        this.tiles.forEach((tile) => {
+            tile.display();
+        });
         
     }
 }

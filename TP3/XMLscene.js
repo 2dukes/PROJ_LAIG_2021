@@ -41,7 +41,7 @@ class XMLscene extends CGFscene {
         this.defaultAppearance=new CGFappearance(this);
 
         // Testing purposes
-        let gameBoard = new MyGameBoard(this.scene, 0.25);
+        this.gameBoard = new MyGameBoard(this, 0.25);
 
     }
 
@@ -197,6 +197,8 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             // Draw axis
+            this.gameBoard.display();
+
             this.axis.display();
  
             this.defaultAppearance.apply();

@@ -1404,9 +1404,9 @@ class MySceneGraph {
         
         //To do: Create display loop for transversing the scene graph, calling the root node's display function
                 
-        // let identity = mat4.create();
+        let identity = mat4.create();
         
-        // this.processNode(this.idRoot, this.materials[this.nodes[this.idRoot].materialID], this.nodes[this.idRoot].textureID, identity);
+        this.processNode(this.idRoot, this.materials[this.nodes[this.idRoot].materialID], this.nodes[this.idRoot].textureID, identity);
         
     }
 
