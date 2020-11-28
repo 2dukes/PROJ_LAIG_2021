@@ -1422,8 +1422,10 @@ class MySceneGraph {
         }
         else { // Apply Animation Matrix
             // if the animation did not start yet, the object is not displayed
-            if(!this.nodes[idRoot].animation.animationStarted) 
+            if(!this.nodes[idRoot].animation.animationStarted) {
+                this.scene.popMatrix();
                 return;
+            }
 
             if(parentMatrix != null)
                 this.scene.multMatrix(parentMatrix);
