@@ -40,6 +40,9 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance=new CGFappearance(this);
 
+        // Testing purposes
+        let gameBoard = new MyGameBoard(this.scene, 0.25);
+
     }
 
     /**
@@ -149,6 +152,7 @@ class XMLscene extends CGFscene {
      * Update function for each Period of Time
      */
     update(currentTime) {
+
         let timeInterval = currentTime - this.lastTime;
         this.lastTime = currentTime;
 
