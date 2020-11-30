@@ -2,17 +2,14 @@ class MyGameOrchestrator {
     constructor(scene) {
         this.scene = scene;
 
-        console.log("INIT!");
-
         // this.gameSequence = new MyGameSequence(...);
         // this.animator = new MyAnimator(...);
         this.gameBoard = new MyGameBoard(this.scene, 0.25);
-    //     this.theme = new MySceneGraph(...);
-    //     this.prolog = new MyPrologInterface(...);
+        // this.theme = new MySceneGraph(...);
+        // this.prolog = new MyPrologInterface(...);
 
-    this.pickedNow = new MyTile(this.gameBoard, this.scene, 1, 1, 1, 1, 1);
-    this.lastPicked = new MyTile(this.gameBoard, this.scene, 1, 1, 1, 1, 1);
-
+        this.pickedNow = null;
+        this.lastPicked = null;
     }
     
     update(time) {
@@ -29,7 +26,8 @@ class MyGameOrchestrator {
                     this.pickedNow = this.scene.pickResults[i][0];
                     if (this.pickedNow instanceof MyTile) {
                         this.pickedNow.isPicked = true;
-                        this.lastPicked.isPicked = false;
+                        if (this.lastPicked != null)
+                            this.lastPicked.isPicked = false;
                         console.log("The picked object is in the line " + this.pickedNow.line + " and diagonal " + this.pickedNow.diagonal);
                     }
                     else if (this.pickedNow) {
