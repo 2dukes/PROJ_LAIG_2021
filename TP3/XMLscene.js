@@ -197,7 +197,16 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             // Draw axis
+
+            this.pushMatrix();
+
+            this.translate(4.7,0.8,4.0);
+            this.scale(0.5,1,0.5);
+            this.rotate(-Math.PI / 2, 1, 0, 0);
+
             this.gameBoard.display();
+
+            this.popMatrix();
 
             this.axis.display();
  
