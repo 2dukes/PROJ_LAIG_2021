@@ -14,7 +14,6 @@ class MyGameBoard {
 
         for(let index = 0; index < lineLength.length; index++) {
             let value = lineLength[index];
-
             let startingLine = diagonalLineMap.get(index + 1);
             let diagonalStartPosition = diagonalStartingCoordinatesMap.get(index + 1);
             for(let i = 0; i < value; i++) 
@@ -68,7 +67,9 @@ class MyGameBoard {
     }
 
     display() {
+        let i = 1;
         this.tiles.forEach((tile) => {
+            this.scene.registerForPick(i++,this.tiles[i]);
             tile.display();
         });
         
