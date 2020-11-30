@@ -41,7 +41,7 @@ class XMLscene extends CGFscene {
         this.defaultAppearance=new CGFappearance(this);
 
         // Testing purposes
-        this.gameBoard = new MyGameBoard(this, 0.25);
+        this.game = new MyGameOrchestrator(this);
 
         // enable picking
 		this.setPickEnabled(true);
@@ -94,26 +94,6 @@ class XMLscene extends CGFscene {
             }
         }
     }
-
-    // JUST FOR TESTING:
-
-    logPicking() {
-		if (this.pickMode == false) {
-			if (this.pickResults != null && this.pickResults.length > 0) {
-				for (var i = 0; i < this.pickResults.length; i++) {
-					var obj = this.pickResults[i][0];
-                    if (obj instanceof MyTile) {
-                        console.log("The picked object is in the line " + obj.line + " and diagonal " + obj.diagonal);
-                    }
-                    else if (obj) {
-						var customId = this.pickResults[i][1];
-						console.log("Picked object: " + obj + ", with pick id " + customId);
-                    }
-				}
-				this.pickResults.splice(0, this.pickResults.length);
-			}
-		}
-	}
 
     updateCamera() {
 
@@ -197,11 +177,6 @@ class XMLscene extends CGFscene {
     display() {
         // ---- BEGIN Background, camera and axis setup
 
-        // PICKING TESTING
-        this.logPicking();
-		this.clearPickRegistration();
-
-
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -226,15 +201,8 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             // Draw axis
 
-            this.pushMatrix();
+            this.game.display();
 
-            this.translate(4.7,0.8,4.0);
-            this.scale(0.5,1,0.5);
-            this.rotate(-Math.PI / 2, 1, 0, 0);
-
-            this.gameBoard.display();
-
-            this.popMatrix();
 
             this.axis.display();
  
@@ -242,9 +210,6 @@ class XMLscene extends CGFscene {
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
-            
-            //this.barrel.display();
-            //this.patch.display();
         }
         else
         {

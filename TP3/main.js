@@ -11,7 +11,7 @@ function getUrlVars() {
     return vars;
 }	 
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', './primitives/MyRectangle.js', './primitives/MyTriangle.js', './primitives/MySphere.js', './primitives/MyCylinderRaw.js', './primitives/MyCylinder.js', './primitives/MyCircle.js', './primitives/MyTorus.js', 'MyNode.js', './animations/Animation.js', './animations/KeyframeAnimation.js', './animations/Transformation.js', './spritesheets/MySpritesheet.js', './spritesheets/MySpriteAnim.js', './spritesheets/MySpriteText.js', './nurbs/MyPlane.js', './nurbs/MyPatch.js', './nurbs/MyDefbarrel.js', './MyGameBoard.js', './MyTile.js',
+serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', './primitives/MyRectangle.js', './primitives/MyTriangle.js', './primitives/MySphere.js', './primitives/MyCylinderRaw.js', './primitives/MyCylinder.js', './primitives/MyCircle.js', './primitives/MyTorus.js', 'MyNode.js', './animations/Animation.js', './animations/KeyframeAnimation.js', './animations/Transformation.js', './spritesheets/MySpritesheet.js', './spritesheets/MySpriteAnim.js', './spritesheets/MySpriteText.js', './nurbs/MyPlane.js', './nurbs/MyPatch.js', './nurbs/MyDefbarrel.js', './MyGameOrchestrator.js', './MyGameBoard.js', './MyTile.js', 
 
 main=function()
 {

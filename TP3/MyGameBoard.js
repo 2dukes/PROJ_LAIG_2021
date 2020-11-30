@@ -5,7 +5,9 @@ class MyGameBoard {
         let diagonalLineMap = this.initializeDiagonalLineMap();
         let diagonalStartingCoordinatesMap = this.initializeDiagonalCoordinates();
         this.initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap);
+
     }
+
 
     initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap) {
         // Length of each Diagonal

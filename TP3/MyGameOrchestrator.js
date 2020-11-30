@@ -1,21 +1,65 @@
 class MyGameOrchestrator {
-    // constructor(...) {
-        // ...
+    constructor(scene) {
+        this.scene = scene;
+
+        console.log("INIT!");
+
         // this.gameSequence = new MyGameSequence(...);
         // this.animator = new MyAnimator(...);
-        // this.gameboard = new MyGameBoard(...);
-        // this.theme = new MySceneGraph(...);
-        // this.prolog = new MyPrologInterface(...);
-    // }
-    
-    // update(time) {
-    //     this.animator.update(time);
-    // }
+        this.gameBoard = new MyGameBoard(this.scene, 0.25);
+    //     this.theme = new MySceneGraph(...);
+    //     this.prolog = new MyPrologInterface(...);
 
-    // display() {
-    //     // ...
-    //     this.theme.display();
-    //     this.gameboard.display();
-    //     this.animator.display();
-    // }
+    this.pickedNow = new MyTile(this.gameBoard, this.scene, 1, 1, 1, 1, 1);
+    this.lastPicked = new MyTile(this.gameBoard, this.scene, 1, 1, 1, 1, 1);
+
+    }
+    
+    update(time) {
+        //this.animator.update(time);
+    }
+
+    logPicking() {
+
+		if (this.scene.pickMode == false) {
+			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+
+				for (var i = 0; i < this.scene.pickResults.length; i++) {
+                    this.lastPicked = this.pickedNow;
+                    this.pickedNow = this.scene.pickResults[i][0];
+                    if (this.pickedNow instanceof MyTile) {
+                        this.pickedNow.isPicked = true;
+                        this.lastPicked.isPicked = false;
+                        console.log("The picked object is in the line " + this.pickedNow.line + " and diagonal " + this.pickedNow.diagonal);
+                    }
+                    else if (this.pickedNow) {
+                        var customId = this.scene.pickResults[i][1];
+						console.log("Picked object: " + this.pickedNow + ", with pick id " + customId);
+                    }
+				}
+				this.scene.pickResults.splice(0, this.scene.pickResults.length);
+			}
+		}
+	}
+
+    display() {
+
+        //this.theme.display();
+
+        // PICKING TESTING
+        this.logPicking();
+		this.scene.clearPickRegistration();
+
+        this.scene.pushMatrix();
+
+        this.scene.translate(4.83,0.8,4.0);
+        this.scene.scale(0.5,1,0.5);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.gameBoard.display();
+
+        this.scene.popMatrix();
+
+
+        //this.animator.display();
+    }
 }
