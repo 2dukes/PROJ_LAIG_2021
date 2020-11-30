@@ -67,11 +67,10 @@ class MyGameBoard {
     }
 
     display() {
-        let i = 1;
-        this.tiles.forEach((tile) => {
-            this.scene.registerForPick(i++,this.tiles[i]);
-            tile.display();
-        });
+        for (let i = 0; i < this.tiles.length; i++) {
+            this.scene.registerForPick(i + 1,this.tiles[i]);
+            this.tiles[i].display();
+        }
         
     }
 }

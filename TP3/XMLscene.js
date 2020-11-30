@@ -102,10 +102,13 @@ class XMLscene extends CGFscene {
 			if (this.pickResults != null && this.pickResults.length > 0) {
 				for (var i = 0; i < this.pickResults.length; i++) {
 					var obj = this.pickResults[i][0];
-					if (obj) {
+                    if (obj instanceof MyTile) {
+                        console.log("The picked object is in the line " + obj.line + " and diagonal " + obj.diagonal);
+                    }
+                    else if (obj) {
 						var customId = this.pickResults[i][1];
-						console.log("Picked object: " + obj + ", with pick id " + customId);						
-					}
+						console.log("Picked object: " + obj + ", with pick id " + customId);
+                    }
 				}
 				this.pickResults.splice(0, this.pickResults.length);
 			}
