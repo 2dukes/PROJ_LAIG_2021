@@ -11,11 +11,16 @@ class MyTile {
 
 
         this.defaultAp=new CGFappearance(this.scene);
-        this.defaultAp.setAmbient(1,0,0,1); // Ambient RGB
-        this.defaultAp.setDiffuse(1,0,0,1); // Diffuse RGB
-        this.defaultAp.setSpecular(1,0,0,1); // Specular RGB
-        this.defaultAp.setEmission(1,0,0,1); // Emissive RGB
-        this.defaultAp.setShininess(10);
+        this.defaultAp.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
+        this.defaultAp.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
+        this.defaultAp.setSpecular(0.5,0.5,0.5,1); // Specular RGB
+        this.defaultAp.setEmission(0.5,0.5,0.5,1); // Emissive RGB
+        this.defaultAp.setShininess(1);
+
+        this.texture1 = new CGFtexture(this.scene, "./scenes/images/b.png");
+        this.defaultAp.setTexture(this.texture1);
+        this.defaultAp.setTextureWrap('CLAMP_TO_EDGE', 'REPEAT');
+        this.defaultAp.apply();
 
 
         this.otherAppearance=new CGFappearance(this.scene);
