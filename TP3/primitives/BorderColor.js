@@ -5,13 +5,14 @@
  * 
  */
 class BorderColor extends CGFobject {
-    constructor(scene, purpleAp, greenAp) {
+    constructor(scene, purpleAp, greenAp, orangeBorder) {
         super(scene);
 
         this.purple = new MyTriangle(this.scene, 0, 1, 0.5, 0, 0, 0.5*Math.tan(30*Math.PI/180));
 
         this.purpleAp = purpleAp;
         this.greenAp = greenAp;
+        this.orangeBorder = orangeBorder;
         
     }
 
@@ -43,6 +44,21 @@ class BorderColor extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0.15,-4.95,0.04);
         this.scene.rotate(150*Math.PI/180, 0, 0, 1);
+        this.scene.scale(2.05,2.05,0);
+        this.purple.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.orangeBorder.apply();
+        this.scene.translate(2.63,-1.37,0.04);
+        this.scene.rotate(-90*Math.PI/180, 0, 0, 1);
+        this.scene.scale(2.05,2.05,0);
+        this.purple.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-1.92,-3.4,0.04);
+        this.scene.rotate(90*Math.PI/180, 0, 0, 1);
         this.scene.scale(2.05,2.05,0);
         this.purple.display();
         this.scene.popMatrix();
