@@ -1,6 +1,7 @@
 :-use_module(library(sockets)).
 :-use_module(library(lists)).
 :-use_module(library(codesio)).
+:- consult('src/alliances.pl').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%                                        Server                                                   %%%%
@@ -145,3 +146,13 @@ validate_type_of_game(2, Res):- Res = '"CvC"'.
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 	
+
+% Alliances
+
+% Gets Game Modes
+parse_input(getGameModes, GameModes) :-
+	GameModes = {
+		'"sucess"': true,
+		'"gameModes"': [random, greddy, greddy_hard] 
+	}.
+
