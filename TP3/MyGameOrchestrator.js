@@ -26,17 +26,14 @@ class MyGameOrchestrator {
                     this.pickedNow = this.scene.pickResults[i][0];
                     if (this.pickedNow instanceof MyTile) {
                         this.pickedNow.isPicked = true;
-                        if (this.lastPicked != null)
-                            this.lastPicked.isPicked = false;
                         console.log("The picked object is in the line " + this.pickedNow.line + " and diagonal " + this.pickedNow.diagonal);
                     }
-                    else if (this.pickedNow) {
-                        var customId = this.scene.pickResults[i][1];
-						console.log("Picked object: " + this.pickedNow + ", with pick id " + customId);
-                    }
+                    if (this.lastPicked != null)
+                        this.lastPicked.isPicked = false;
 				}
-				this.scene.pickResults.splice(0, this.scene.pickResults.length);
-			}
+				
+            }
+            this.scene.pickResults.splice(0, this.scene.pickResults.length);
 		}
 	}
 
@@ -54,6 +51,7 @@ class MyGameOrchestrator {
         this.scene.scale(0.5,1.0,0.5);
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.gameBoard.display();
+        this.scene.clearPickRegistration();
 
         this.scene.popMatrix();
 

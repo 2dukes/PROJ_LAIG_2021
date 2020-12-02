@@ -4,8 +4,49 @@ class MyGameBoard {
         this.tileRadius = tileRadius;
         let diagonalLineMap = this.initializeDiagonalLineMap();
         let diagonalStartingCoordinatesMap = this.initializeDiagonalCoordinates();
+        this.initializeTextures();
         this.initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap);
+        this.initializeBorderColors();
 
+        
+
+    }
+
+    initializeBorderColors() {
+        let purpleBorder=new CGFappearance(this.scene);
+        purpleBorder.setAmbient(0.502,0,0.502,1); // Ambient RGB
+        purpleBorder.setDiffuse(0.502,0,0.502,1); // Diffuse RGB
+        purpleBorder.setSpecular(0.502,0,0.502,1); // Specular RGB
+        purpleBorder.setEmission(0.502,0,0.502,1); // Emissive RGB
+        purpleBorder.setShininess(1);
+
+        this.borderColors = new BorderColor(this.scene, purpleBorder);
+    }
+
+    initializeTextures() {
+        this.defaultAp=new CGFappearance(this.scene);
+        this.defaultAp.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
+        this.defaultAp.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
+        this.defaultAp.setSpecular(0.5,0.5,0.5,1); // Specular RGB
+        this.defaultAp.setEmission(0.5,0.5,0.5,1); // Emissive RGB
+        this.defaultAp.setShininess(1);
+
+        this.texture1 = new CGFtexture(this.scene, "./scenes/images/tiles/empty_tile.png");
+        this.defaultAp.setTexture(this.texture1);
+        this.defaultAp.setTextureWrap('REPEAT', 'REPEAT');
+        this.defaultAp.apply();
+
+        this.otherAppearance=new CGFappearance(this.scene);
+        this.otherAppearance.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
+        this.otherAppearance.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
+        this.otherAppearance.setSpecular(0.5,0.5,0.5,1); // Specular RGB
+        this.otherAppearance.setEmission(0.5,0.5,0.5,1); // Emissive RGB/ Emissive RGB
+        this.otherAppearance.setShininess(10); 
+
+        this.texture2 = new CGFtexture(this.scene, "./scenes/images/tiles/green_tile.png");
+        this.otherAppearance.setTexture(this.texture2);
+        this.otherAppearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.otherAppearance.apply();
     }
 
 
@@ -19,7 +60,7 @@ class MyGameBoard {
             let startingLine = diagonalLineMap.get(index + 1);
             let diagonalStartPosition = diagonalStartingCoordinatesMap.get(index + 1);
             for(let i = 0; i < value; i++) 
-                this.tiles.push(new MyTile(this, this.scene, this.tileRadius, i + startingLine, index + 1, diagonalStartPosition, startingLine));
+                this.tiles.push(new MyTile(this, this.scene, this.tileRadius, i + startingLine, index + 1, diagonalStartPosition, startingLine, this.otherAppearance, this.defaultAp));
         }
 
         console.log(this.tiles);
@@ -69,11 +110,17 @@ class MyGameBoard {
     }
 
     display() {
+
+        
+
         for (let i = 0; i < this.tiles.length; i++) {
             this.scene.registerForPick(i + 1,this.tiles[i]);
             this.tiles[i].display();
         }
+        this.borderColors.display();
+
         
+
     }
 }
 
