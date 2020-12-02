@@ -6,10 +6,21 @@ class MyGameBoard {
         let diagonalStartingCoordinatesMap = this.initializeDiagonalCoordinates();
         this.initializeTextures();
         this.initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap);
+        this.initializeBorderColors();
+
         
 
-        this.decagon = new MyDecagon(this.scene);
+    }
 
+    initializeBorderColors() {
+        let purpleBorder=new CGFappearance(this.scene);
+        purpleBorder.setAmbient(0.502,0,0.502,1); // Ambient RGB
+        purpleBorder.setDiffuse(0.502,0,0.502,1); // Diffuse RGB
+        purpleBorder.setSpecular(0.502,0,0.502,1); // Specular RGB
+        purpleBorder.setEmission(0.502,0,0.502,1); // Emissive RGB
+        purpleBorder.setShininess(1);
+
+        this.borderColors = new BorderColor(this.scene, purpleBorder);
     }
 
     initializeTextures() {
@@ -106,7 +117,7 @@ class MyGameBoard {
             this.scene.registerForPick(i + 1,this.tiles[i]);
             this.tiles[i].display();
         }
-        this.decagon.display();
+        this.borderColors.display();
 
         
 

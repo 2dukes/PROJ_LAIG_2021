@@ -26,16 +26,10 @@ class MyGameOrchestrator {
                     this.pickedNow = this.scene.pickResults[i][0];
                     if (this.pickedNow instanceof MyTile) {
                         this.pickedNow.isPicked = true;
-                        if (this.lastPicked != null)
-                            this.lastPicked.isPicked = false;
                         console.log("The picked object is in the line " + this.pickedNow.line + " and diagonal " + this.pickedNow.diagonal);
                     }
-                    else {
-                        if (this.lastPicked != null)
-                            this.lastPicked.isPicked = false;
-                        var customId = this.scene.pickResults[i][1];
-						console.log("Picked object: " + this.pickedNow + ", with pick id " + customId);
-                    }
+                    if (this.lastPicked != null)
+                        this.lastPicked.isPicked = false;
 				}
 				
             }
