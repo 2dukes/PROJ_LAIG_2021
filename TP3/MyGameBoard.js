@@ -108,6 +108,8 @@ class MyGameBoard {
         }
         this.decagon.display();
 
+        
+
     }
 }
 
