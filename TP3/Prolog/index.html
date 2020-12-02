@@ -53,8 +53,9 @@
         //Added "if" for new request, in order to parse JSON
         if (requestString.includes("color"))
           getPrologRequest(requestString, handleReplyJSON);
-        else
-        getPrologRequest(requestString, handleReply);
+        else 
+          getPrologRequest(requestString, handleReply);
+        
       }
 
       //Handle the Reply
