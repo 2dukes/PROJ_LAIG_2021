@@ -10,6 +10,8 @@ class MyGameOrchestrator {
 
         this.pickedNow = null;
         this.lastPicked = null;
+
+        this.auxBoard = new MyAuxBoard(this.scene);
     }
     
     update(time) {
@@ -52,6 +54,8 @@ class MyGameOrchestrator {
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.gameBoard.display();
         this.scene.clearPickRegistration();
+
+        this.auxBoard.display();
 
         this.scene.popMatrix();
 

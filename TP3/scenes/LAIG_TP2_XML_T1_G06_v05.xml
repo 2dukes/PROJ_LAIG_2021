@@ -163,16 +163,34 @@
                 <noderef id="paredes" />
                 <noderef id="quadros" />
                 <noderef id="chao" />
-                <noderef id="mesa" />
+                <noderef id="mesas" />
                 <noderef id="sofas" />
                 <noderef id="text" />
                 <noderef id="barrel" />
+                <noderef id="auxBoard" />
                 
                 <!-- "ss" is the identifier of a node or of leaf; -->
                 <!-- may be repeated as necessary. It can refer an -->
                 <!-- identifier of another node, before or later defined in the file. -->
                 <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
                 <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+            </descendants>
+        </node>
+
+        <node id="auxBoard">
+            <material id="sofaMaterial" />
+
+            <texture id="text_chao">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5" y="0.85" z="2.7" />
+                <scale sx="6" sy="0.05" sz="3.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
             </descendants>
         </node>
         
@@ -646,8 +664,8 @@
             </descendants>
         </node>
 
-        <!-- Mesa -->
-        <node id="mesa">
+        <!-- Mesas -->
+        <node id="mesas">
             <material id="mesaMaterial" />
 
             <texture id="text_mesa">
@@ -655,10 +673,48 @@
             </texture>
 
             <transformations>   
-                <translation x="5.0" y="0.0" z="6.5" />
+
+            </transformations>
+
+            <descendants>
+                <noderef id="mesa1" />
+                <noderef id="mesa2" />
+            </descendants>
+        </node>
+
+        <!-- Mesa1 -->
+        <node id="mesa1">
+            <material id="mesaMaterial" />
+
+            <texture id="text_mesa">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>   
+                <translation x="4.3" y="0.0" z="6.5" />
                 <rotation axis="y" angle="90" />
                 <translation x="-1.7" y="0.0" z="-7.0" />
-                <scale sx="2.0" sy="1.0" sz="1.0" />
+                <scale sx="2.0" sy="1.0" sz="1.1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pernas" />
+                <noderef id="tampo_mesa" />
+            </descendants>
+        </node>
+
+        <!-- Mesa2 -->
+        <node id="mesa2">
+            <material id="mesaMaterial" />
+
+            <texture id="text_mesa">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>   
+                <translation x="5" y="0.0" z="2.5" />
+                <rotation axis="y" angle="90" />
+                <translation x="-1.7" y="0.0" z="-7.0" />
             </transformations>
 
             <descendants>

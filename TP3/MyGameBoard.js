@@ -11,7 +11,6 @@ class MyGameBoard {
     }
 
 
-
     initializeTextures() {
         this.defaultTileAppearance=new CGFappearance(this.scene);
         this.defaultTileAppearance.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
