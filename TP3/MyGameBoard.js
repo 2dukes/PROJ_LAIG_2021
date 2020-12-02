@@ -14,13 +14,20 @@ class MyGameBoard {
 
     initializeBorderColors() {
         let purpleBorder=new CGFappearance(this.scene);
-        purpleBorder.setAmbient(0.502,0,0.502,1); // Ambient RGB
-        purpleBorder.setDiffuse(0.502,0,0.502,1); // Diffuse RGB
-        purpleBorder.setSpecular(0.502,0,0.502,1); // Specular RGB
-        purpleBorder.setEmission(0.502,0,0.502,1); // Emissive RGB
+        purpleBorder.setAmbient(0.302,0,0.302,1); // Ambient RGB
+        purpleBorder.setDiffuse(0.302,0,0.302,1); // Diffuse RGB
+        purpleBorder.setSpecular(0.0,0,0.0,1); // Specular RGB
+        purpleBorder.setEmission(0.1,0,0.1,1); // Emissive RGB
         purpleBorder.setShininess(1);
 
-        this.borderColors = new BorderColor(this.scene, purpleBorder);
+        let greenBorder=new CGFappearance(this.scene);
+        greenBorder.setAmbient(0,0.502,0,1); // Ambient RGB
+        greenBorder.setDiffuse(0,0.502,0,1); // Diffuse RGB
+        greenBorder.setSpecular(0,0,0,1); // Specular RGB
+        greenBorder.setEmission(0,0,0,1); // Emissive RGB
+        greenBorder.setShininess(1);
+
+        this.borderColors = new BorderColor(this.scene, purpleBorder, greenBorder);
     }
 
     initializeTextures() {
