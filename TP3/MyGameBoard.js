@@ -6,63 +6,9 @@ class MyGameBoard {
         let diagonalStartingCoordinatesMap = this.initializeDiagonalCoordinates();
         this.initializeTextures();
         this.initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap);
-        this.initializeBorderColors();
-
         
-
+        this.borderColors = new BorderColor(this.scene);
     }
-
-    initializeBorderColors() {
-        let purpleBorder=new CGFappearance(this.scene);
-        purpleBorder.setAmbient(0.302,0,0.302,1); // Ambient RGB
-        purpleBorder.setDiffuse(0.302,0,0.302,1); // Diffuse RGB
-        purpleBorder.setSpecular(0.0,0,0.0,1); // Specular RGB
-        purpleBorder.setEmission(0.1,0,0.1,1); // Emissive RGB
-        purpleBorder.setShininess(1);
-
-        let greenBorder=new CGFappearance(this.scene);
-        greenBorder.setAmbient(0,0.502,0,1); // Ambient RGB
-        greenBorder.setDiffuse(0,0.502,0,1); // Diffuse RGB
-        greenBorder.setSpecular(0,0,0,1); // Specular RGB
-        greenBorder.setEmission(0,0,0,1); // Emissive RGB
-        greenBorder.setShininess(1);
-
-        let orangeBorder=new CGFappearance(this.scene);
-        orangeBorder.setAmbient(100,0.4,0,1); // Ambient RGB
-        orangeBorder.setDiffuse(100,0.4,0,1); // Diffuse RGB
-        orangeBorder.setSpecular(0,0,0,1); // Specular RGB
-        orangeBorder.setEmission(0,0,0,1); // Emissive RGB
-        orangeBorder.setShininess(1);
-
-        this.borderColors = new BorderColor(this.scene, purpleBorder, greenBorder, orangeBorder);
-    }
-
-    initializeTextures() {
-        this.defaultAp=new CGFappearance(this.scene);
-        this.defaultAp.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
-        this.defaultAp.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
-        this.defaultAp.setSpecular(0.5,0.5,0.5,1); // Specular RGB
-        this.defaultAp.setEmission(0.5,0.5,0.5,1); // Emissive RGB
-        this.defaultAp.setShininess(1);
-
-        this.texture1 = new CGFtexture(this.scene, "./scenes/images/tiles/empty_tile.png");
-        this.defaultAp.setTexture(this.texture1);
-        this.defaultAp.setTextureWrap('REPEAT', 'REPEAT');
-        this.defaultAp.apply();
-
-        this.otherAppearance=new CGFappearance(this.scene);
-        this.otherAppearance.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
-        this.otherAppearance.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
-        this.otherAppearance.setSpecular(0.5,0.5,0.5,1); // Specular RGB
-        this.otherAppearance.setEmission(0.5,0.5,0.5,1); // Emissive RGB/ Emissive RGB
-        this.otherAppearance.setShininess(10); 
-
-        this.texture2 = new CGFtexture(this.scene, "./scenes/images/tiles/green_tile.png");
-        this.otherAppearance.setTexture(this.texture2);
-        this.otherAppearance.setTextureWrap('REPEAT', 'REPEAT');
-        this.otherAppearance.apply();
-    }
-
 
     initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap) {
         // Length of each Diagonal
