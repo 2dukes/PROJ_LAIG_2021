@@ -71,7 +71,6 @@
         <texture id="text_chao" path="./scenes/images/chao.jpg" />
         <texture id="text_parede" path="./scenes/images/parede.jpg" />
         <texture id="text_mesa" path="./scenes/images/mesa.jpg" />
-        <texture id="text_tv" path="./scenes/images/tv.jpg" />
         <texture id="text_sofa1" path="./scenes/images/sofa1.jpg" />
         <texture id="text_sofa2" path="./scenes/images/sofa2.jpg" />
         <texture id="text_sofa_leg" path="./scenes/images/sofa_leg.jpg" />

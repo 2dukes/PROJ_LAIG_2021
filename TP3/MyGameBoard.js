@@ -32,7 +32,7 @@ class MyGameBoard {
         this.selectedTileAppearance.setEmission(0.5,0.5,0.5,1); // Emissive RGB/ Emissive RGB
         this.selectedTileAppearance.setShininess(10); 
 
-        this.texture2 = new CGFtexture(this.scene, "./scenes/images/tiles/blue_tile.png");
+        this.texture2 = new CGFtexture(this.scene, "./scenes/images/tiles/selected_tile.png");
         this.selectedTileAppearance.setTexture(this.texture2);
         this.selectedTileAppearance.setTextureWrap('REPEAT', 'REPEAT');
         this.selectedTileAppearance.apply();
