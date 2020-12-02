@@ -6,9 +6,38 @@ class MyGameBoard {
         let diagonalStartingCoordinatesMap = this.initializeDiagonalCoordinates();
         this.initializeTextures();
         this.initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap);
-        
+
         this.borderColors = new BorderColor(this.scene);
     }
+
+
+
+    initializeTextures() {
+        this.defaultTileAppearance=new CGFappearance(this.scene);
+        this.defaultTileAppearance.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
+        this.defaultTileAppearance.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
+        this.defaultTileAppearance.setSpecular(0.5,0.5,0.5,1); // Specular RGB
+        this.defaultTileAppearance.setEmission(0.5,0.5,0.5,1); // Emissive RGB
+        this.defaultTileAppearance.setShininess(1);
+
+        this.texture1 = new CGFtexture(this.scene, "./scenes/images/tiles/empty_tile.png");
+        this.defaultTileAppearance.setTexture(this.texture1);
+        this.defaultTileAppearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.defaultTileAppearance.apply();
+
+        this.selectedTileAppearance=new CGFappearance(this.scene);
+        this.selectedTileAppearance.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
+        this.selectedTileAppearance.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
+        this.selectedTileAppearance.setSpecular(0.5,0.5,0.5,1); // Specular RGB
+        this.selectedTileAppearance.setEmission(0.5,0.5,0.5,1); // Emissive RGB/ Emissive RGB
+        this.selectedTileAppearance.setShininess(10); 
+
+        this.texture2 = new CGFtexture(this.scene, "./scenes/images/tiles/blue_tile.png");
+        this.selectedTileAppearance.setTexture(this.texture2);
+        this.selectedTileAppearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.selectedTileAppearance.apply();
+    }
+
 
     initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap) {
         // Length of each Diagonal
@@ -20,7 +49,7 @@ class MyGameBoard {
             let startingLine = diagonalLineMap.get(index + 1);
             let diagonalStartPosition = diagonalStartingCoordinatesMap.get(index + 1);
             for(let i = 0; i < value; i++) 
-                this.tiles.push(new MyTile(this, this.scene, this.tileRadius, i + startingLine, index + 1, diagonalStartPosition, startingLine, this.otherAppearance, this.defaultAp));
+                this.tiles.push(new MyTile(this, this.scene, this.tileRadius, i + startingLine, index + 1, diagonalStartPosition, startingLine, this.selectedTileAppearance, this.defaultTileAppearance));
         }
 
         console.log(this.tiles);
