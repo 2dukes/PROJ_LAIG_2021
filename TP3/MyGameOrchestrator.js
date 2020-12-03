@@ -1,65 +1,68 @@
 class MyGameOrchestrator {
-    constructor(scene) {
-        this.scene = scene;
+	constructor(scene) {
+		this.scene = scene;
 
-        // this.gameSequence = new MyGameSequence(...);
-        // this.animator = new MyAnimator(...);
-        this.gameBoard = new MyGameBoard(this.scene, 0.25);
-        // this.theme = new MySceneGraph(...);
-        // this.prolog = new MyPrologInterface(...);
+		// this.gameSequence = new MyGameSequence(...);
+		// this.animator = new MyAnimator(...);
+		this.gameBoard = new MyGameBoard(this.scene, 0.25);
+		// this.theme = new MySceneGraph(...);
+		// this.prolog = new MyPrologInterface(...);
 
-        this.pickedNow = null;
-        this.lastPicked = null;
+		this.pickedNow = null;
+		this.lastPicked = null;
 
-        this.auxBoard = new MyAuxBoard(this.scene);
-    }
-    
-    update(time) {
-        //this.animator.update(time);
-    }
+		this.auxBoard = new MyAuxBoard(this.scene);
+	}
 
-    logPicking() {
+	update(time) {
+		//this.animator.update(time);
+	}
 
+	logPicking() {
 		if (this.scene.pickMode == false) {
-			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-
+			if (
+				this.scene.pickResults != null &&
+				this.scene.pickResults.length > 0
+			) {
 				for (var i = 0; i < this.scene.pickResults.length; i++) {
-                    this.lastPicked = this.pickedNow;
-                    this.pickedNow = this.scene.pickResults[i][0];
-                    if (this.pickedNow instanceof MyTile) {
-                        this.pickedNow.isPicked = true;
-                        console.log("The picked object is in the line " + this.pickedNow.line + " and diagonal " + this.pickedNow.diagonal);
-                    }
-                    if (this.lastPicked != null)
-                        this.lastPicked.isPicked = false;
+					this.lastPicked = this.pickedNow;
+					this.pickedNow = this.scene.pickResults[i][0];
+					if (this.pickedNow instanceof MyTile) {
+						this.pickedNow.isPicked = true;
+						console.log(
+							"The picked object is in the line " +
+								this.pickedNow.line +
+								" and diagonal " +
+								this.pickedNow.diagonal
+						);
+					}
+					if (this.lastPicked != null)
+						this.lastPicked.isPicked = false;
 				}
-				
-            }
-            this.scene.pickResults.splice(0, this.scene.pickResults.length);
+			}
+			this.scene.pickResults.splice(0, this.scene.pickResults.length);
 		}
 	}
 
-    display() {
+	display() {
+		//this.theme.display();
 
-        //this.theme.display();
-
-        // PICKING TESTING
-        this.logPicking();
+		// PICKING TESTING
+		this.logPicking();
 		this.scene.clearPickRegistration();
 
-        this.scene.pushMatrix();
+		this.scene.pushMatrix();
 
-        this.scene.translate(4.83,0.8,4.0);
-        this.scene.scale(0.5,1.0,0.5);
-        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-        this.gameBoard.display();
-        this.scene.clearPickRegistration();
+		this.scene.translate(4.83, 0.8, 4.0);
+		this.scene.scale(0.5, 1.0, 0.5);
+		this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+		this.gameBoard.display();
+		this.scene.clearPickRegistration();
 
-        this.auxBoard.display();
+		this.auxBoard.display();
 
-        this.scene.popMatrix();
+		this.scene.popMatrix();
 
-
-        //this.animator.display();
-    }
+		//this.animator.display();
+	}
 }
