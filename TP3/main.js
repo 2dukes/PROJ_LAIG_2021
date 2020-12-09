@@ -77,6 +77,7 @@ serialInclude([
 	"./MyTile.js",
 	"./MyPiece.js",
 	"./MyAuxBoard.js",
+	"./MyPieceMove.js",
 
 	(main = function () {
 		// Standard application, scene and interface setup

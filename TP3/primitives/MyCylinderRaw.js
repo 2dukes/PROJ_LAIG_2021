@@ -36,7 +36,7 @@ class MyCylinderRaw extends CGFobject {
                     j*deltaStack
                 );
 
-				this.originalTexCoords.push(i*1/this.slices, 1 - (j*1/this.stacks));
+				this.originalTexCoords.push(i*1/this.stacks, 1 - (j*1/this.slices));
 
                 this.normals.push(Math.cos(deltaAng*i), Math.sin(deltaAng*i), 0);
             }

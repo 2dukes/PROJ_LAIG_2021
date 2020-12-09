@@ -40,8 +40,8 @@ class XMLscene extends CGFscene {
 
         this.defaultAppearance=new CGFappearance(this);
 
-        // Testing purposes
-        this.game = new MyGameOrchestrator(this);
+        
+        this.gameOrchestrator = new MyGameOrchestrator(this);
 
         // enable picking
 		this.setPickEnabled(true);
@@ -169,6 +169,10 @@ class XMLscene extends CGFscene {
         for(let spriteSheetAnim of this.spriteSheetAnim) {
             spriteSheetAnim.update(timeInSeconds);
         }
+
+        this.gameOrchestrator.update(timeInSeconds);
+
+        
     }
 
     /**
@@ -201,7 +205,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             // Draw axis
 
-            this.game.display();
+            this.gameOrchestrator.display();
 
 
             this.axis.display();

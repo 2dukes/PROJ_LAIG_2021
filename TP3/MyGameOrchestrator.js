@@ -12,10 +12,27 @@ class MyGameOrchestrator {
 		this.lastPicked = null;
 
 		this.auxBoard = new MyAuxBoard(this.scene);
+
+		this.elapsedTime = 0;
+
+		this.movingPiece = this.auxBoard.purplePieces[0];
+		this.movingPiece.move(0,0,0,5);
 	}
 
-	update(time) {
-		//this.animator.update(time);
+	update(currentTime) {
+
+		if (this.movingPiece.animation != null) {
+			this.movingPiece.update(currentTime);
+
+			if (this.movingPiece.animation == null) {
+                this.movingPiece = null;
+                return;
+            }
+
+            if (this.movingPiece.animation.animationEnded) {
+                this.movingPiece = null;
+            }
+		}
 	}
 
 	logPicking() {
@@ -62,7 +79,5 @@ class MyGameOrchestrator {
 		this.auxBoard.display();
 
 		this.scene.popMatrix();
-
-		//this.animator.display();
 	}
 }
