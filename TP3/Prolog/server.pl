@@ -13,7 +13,7 @@
 
 % Made by Luis Reis (ei12085@fe.up.pt) for LAIG course at FEUP.
 
-port(8081).
+port(8080).
 
 % Server Entry Point
 server :-
@@ -131,7 +131,30 @@ parse_input(startgame(Type,Level1,Level2), Res) :-
 		'"countPlayer2"': 0,
         '"nTurns"': 0
 	}.
-	
+
+% ------------------------ Alliances ------------------------
+
+% Gets Game Modes
+
+parse_input(getGameModes, Res) :-
+	Res = {
+		'"sucess"': true,
+		'"gameModes"': ['"random"', '"greddy"', '"greddy_hard"'] 
+	}.
+
+
+% PvP
+
+parse_input(userMove(GameState, selectedMove(Row-Diagonal-Colour), Nplayer), Res) :-
+	userPlay_LAIG(GameState, Row-Diagonal-Colour, Nplayer-p, Res).	
+
+% Computer Move
+
+parse_input(computerMove(GameState, Nplayer, Level), Res) :-
+	computerPlay_LAIG(GameState, Nplayer-(c-Level), Res).
+
+% ------------------------ Alliances ------------------------
+
 % Available options for color
 color(0, Res):- Res = {'"success"':true,'"color"':'"red"'}.
 color(1, Res):- Res = {'"success"':true,'"color"':'"blue"'}.
@@ -146,13 +169,111 @@ validate_type_of_game(2, Res):- Res = '"CvC"'.
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 	
+% ------------------------ Alliances ------------------------
 
-% Alliances
+codeString(empty, '"empty"').
+codeString(orange, '"orange"').
+codeString(purple, '"purple"').
+codeString(green, '"green"').
+codeString('FALSE', false).
+codeString('TRUE', true).
 
-% Gets Game Modes
-parse_input(getGameModes, GameModes) :-
-	GameModes = {
-		'"sucess"': true,
-		'"gameModes"': [random, greddy, greddy_hard] 
+addJSONQuotesToBoard([], ListResult, ListResult).
+addJSONQuotesToBoard([H | T], Aux, ListResult) :-
+	codeString(H, H_String),
+	append(Aux, [H_String], NewAux),
+	addJSONQuotesToBoard(T, NewAux, ListResult).
+
+addJSONQuotesToBoard_Global([], Result, Result).
+addJSONQuotesToBoard_Global([First | Rest], Aux, Result) :-
+	addJSONQuotesToBoard(First, [], ListResult),
+	append(Aux, [ListResult], NewAux),
+	addJSONQuotesToBoard_Global(Rest, NewAux, Result).
+
+userPlay_LAIG(GameState, Row-Diagonal-Colour, Nplayer-p, Res) :-
+	checkValidPlay(GameState, [Row, Diagonal, Colour]),
+	move(GameState, [Row, Diagonal, Colour], NewGameStateBoard),
+	updateColours(NewGameStateBoard, NewGameState, Nplayer),
+	check_over_LAIG(NewGameState, Winner),
+
+	print_move([Row, Diagonal, Colour]),
+
+	NextPlayerAux is mod(Nplayer + 1, 2),
+	NextPlayer is NextPlayerAux + 1,
+
+	Board-(Purple_1-Orange_1-Green_1-Purple_2-Orange_2-Green_2) = NewGameState,
+	addJSONQuotesToBoard_Global(Board, [], NewBoard),
+
+	buildResult(true, Nplayer, NextPlayer, NewBoard, Purple_1-Orange_1-Green_1,
+		Purple_2-Orange_2-Green_2, Winner, Res).	
+
+userPlay_LAIG(_, _, Nplayer-p, Res) :-
+	buildResult(false, Nplayer, Res).
+
+% Computer Move
+
+computerPlay_LAIG(GameState, Nplayer-(c-Level), Res) :-
+	choose_move(GameState, Nplayer, Level, Move),
+    move(GameState, Move, NewGameStateBoard),
+    updateColours(NewGameStateBoard, NewGameState, Nplayer),
+	check_over_LAIG(NewGameState, Winner),
+
+	print_move(Move),
+
+	NextPlayerAux is mod(Nplayer + 1, 2),
+	NextPlayer is NextPlayerAux + 1,
+	Board-(Purple_1-Orange_1-Green_1-Purple_2-Orange_2-Green_2) = NewGameState,
+
+	addJSONQuotesToBoard_Global(Board, [], NewBoard),
+
+	buildResult(true, Nplayer, NextPlayer, NewBoard, Purple_1-Orange_1-Green_1,
+		Purple_2-Orange_2-Green_2, Winner, Res).
+
+% Check Game Over
+
+check_over_LAIG(GameState, Winner) :-
+    game_over(GameState, Winner),
+    display_game(GameState, 0),
+    write('Player '), write(Winner), write(' won!'), nl.
+
+check_over_LAIG(_, 0). 
+
+% Response - Success
+
+buildResult(true, Nplayer, NextPlayer, Board, Purple_1-Orange_1-Green_1,
+	Purple_2-Orange_2-Green_2, Winner, Res) :-
+
+	codeString(Purple_1, Purple1),
+	codeString(Orange_1, Orange1),
+	codeString(Green_1, Green1),
+	codeString(Purple_2, Purple2),
+	codeString(Orange_2, Orange2),
+	codeString(Green_2, Green2),
+
+		Res = {
+		'"success"': true,
+		'"currentPlayer"': Nplayer,
+		'"nextPlayer"': NextPlayer,
+		'"board"': Board,
+		'"currentPlayerColours"': {
+			'"purple"': Purple1,
+			'"orange"': Orange1,
+			'"green"': Green1
+		},
+		'"nextPlayerColours"': {
+			'"purple"': Purple2,
+			'"orange"': Orange2,
+			'"green"': Green2
+		},
+		'"winner"': Winner
+	}.	
+
+% Response - Failure
+
+buildResult(false, Nplayer, Res) :-
+	Res = {
+		'"success"': false,
+		'"currentPlayer"': Nplayer
 	}.
 
+% ------------------------ Alliances ------------------------

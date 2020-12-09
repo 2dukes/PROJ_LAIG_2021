@@ -68,7 +68,7 @@ userPlay(GameState, NewGameState, Nplayer-(c-Level)) :-
 
 % Efetua um move no Board com verificação de jogada válida
 move(Board-ColoursWon, Move, NewBoard-ColoursWon) :-
-    checkValidPlay(Board-ColoursWon, Move),
+    % checkValidPlay(Board-ColoursWon, Move),
     updateBoard(Board, Move, NewBoard).
 
 % Verifica se um jogador ganhou o jogo

@@ -3,7 +3,7 @@ mainMenu(GameState) :-
     repeat,
     (
         checkInput(Input),
-        \+manageInput(Input, GameState) 
+        \+ manageInput(Input, GameState) 
     ).
 
 % Verifica se o input do menu é válido
