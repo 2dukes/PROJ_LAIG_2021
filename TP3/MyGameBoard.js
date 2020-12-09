@@ -6,7 +6,7 @@ class MyGameBoard {
         let diagonalStartingCoordinatesMap = this.initializeDiagonalCoordinates();
         this.initializeTextures();
         this.initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap);
-
+        
         this.borderColors = new BorderColor(this.scene);
     }
 
@@ -99,20 +99,11 @@ class MyGameBoard {
 
     display() {
 
-        
-
         for (let i = 0; i < this.tiles.length; i++) {
             this.scene.registerForPick(i + 1,this.tiles[i]);
             this.tiles[i].display();
         }
         this.borderColors.display();
 
-        
-
     }
 }
-
-/*
-    Map(DiagonalNumber -> NumLinha, ...);
-    Map(DiagonalNumber -> StartingCoordinates (X, Y,Z));
-*/
