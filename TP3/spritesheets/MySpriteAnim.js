@@ -24,7 +24,7 @@ class MySpriteAnim {
 
         // Calculate which sprite cell is active
         // % this.numCells --> the animation will run forever
-        this.currentSprite = Math.floor(this.elapsedTime / this.timePerCell + this.startCell) % this.numCells;
+        this.currentSprite = this.startCell + (Math.floor(this.elapsedTime / this.timePerCell) % this.numCells);
 
     }
     

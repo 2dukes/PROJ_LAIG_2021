@@ -21,7 +21,7 @@ class MySpriteSheet {
 
     activateCellP(p) {
         // Compute the number of the column and row
-        let m = p % this.sizeM;
+        let m = p % this.sizeN;
         let n = Math.floor(p / this.sizeN);
 
         this.activateCellMN(m, n);

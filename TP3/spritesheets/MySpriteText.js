@@ -39,7 +39,7 @@ class MySpriteText {
 
     // returns the p value position of the char in the texture, which is the corresponding ASCII code
     getCharacterPosition(char) {
-        return char.charCodeAt(char);
+        return char.charCodeAt(0);
     }
 
     updateTexCoords() {
