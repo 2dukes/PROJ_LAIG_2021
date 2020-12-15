@@ -12,7 +12,7 @@ class MyPiece {
 			this.scene,
 			this.radius,
 			this.radius,
-			0.2,
+			0.1,
 			6,
 			1
 		);

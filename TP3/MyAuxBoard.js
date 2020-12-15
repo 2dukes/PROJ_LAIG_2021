@@ -111,7 +111,7 @@ class MyAuxBoard {
 				)
 			);
 
-			height += 0.1;
+			height += 0.05;
 
 			if (i % 14 == 0 && i != 0) {
 				order2 += 14;
