@@ -6,6 +6,7 @@ class MyPiece {
 		this.zOffset = zOffset;
 		this.order = order;
 		this.isSelected = false;
+		this.isMoving = false;
 
 		this.tile = new MyCylinder(
 			this.scene,
@@ -24,12 +25,16 @@ class MyPiece {
 	move(initX, initZ, finalX, finalZ) {
 		let xOffset = finalX - initX;
 		let zOffset = finalZ - initZ;
-		let keyFrames = [new Transformation(5, [0,0,0], [0,0,0], [1,1,1]),new Transformation(6, [xOffset,-zOffset,0], [0,0,0], [1,1,1])];
+		let keyFrames = [
+			new Transformation(5, [0, 0, 0], [0, 0, 0], [1, 1, 1]),
+			new Transformation(6, [xOffset, -zOffset, 0], [0, 0, 0], [1, 1, 1]),
+		];
 		this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
+		this.isMoving = true;
 	}
 
 	update(currentTime) {
-		if (this.animation != null) {
+		if (this.isMoving && this.animation != null) {
 			this.animation.update(currentTime);
 		}
 	}
