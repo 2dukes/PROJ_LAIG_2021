@@ -13,50 +13,50 @@ class MyGameOrchestrator {
 
 		this.auxBoard = new MyAuxBoard(this.scene);
 
-		this.elapsedTime = 0;
-
-		// this.auxBoard.purplePieces[2][13].isMoving = true;
-		// this.auxBoard.purplePieces[2][13].move(0, 0);
+		this.movingPiece = null;
 		
 	}
 
 	update(currentTime) {
-		if (this.auxBoard.purplePieces[2][13].animation != null) {
-			this.auxBoard.purplePieces[2][13].update(currentTime);
 
-			if (this.auxBoard.purplePieces[2][13].animation == null) {
-				this.auxBoard.purplePieces[2][13].isMoving = false;
+		if (this.movingPiece == null) return;
+
+		if (this.movingPiece.animation != null) {
+			this.movingPiece.update(currentTime);
+
+			if (this.movingPiece.animation == null) {
+				this.movingPiece.isMoving = false;
+				this.movingPiece = null;
 				return;
 			}
 
-			if (this.auxBoard.purplePieces[2][13].animation.animationEnded) {
-				this.auxBoard.purplePieces[2][13].isMoving = false;
+			if (this.movingPiece.animation.animationEnded) {
+				this.movingPiece.isMoving = false;
+				this.movingPiece = null;
 			}
 		}
-		this.elapsedTime += currentTime;
 	}
 
 	logPicking() {
+
 		if (this.scene.pickMode == false) {
-			if (
-				this.scene.pickResults != null &&
-				this.scene.pickResults.length > 0
-			) {
+			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
 				for (var i = 0; i < this.scene.pickResults.length; i++) {
 					this.lastPicked = this.pickedNow;
 					this.pickedNow = this.scene.pickResults[i][0];
 					if (this.pickedNow instanceof MyTile) {
 						this.pickedNow.isPicked = true;
-						console.log(
-							"The picked object is in the line " +
-								this.pickedNow.line +
-								" and diagonal " +
-								this.pickedNow.diagonal
-						);
-						this.auxBoard.purplePieces[2][13].isMoving = true;
-						this.auxBoard.purplePieces[2][13].move(this.pickedNow.x, this.pickedNow.y);
+						
+						if (this.movingPiece != null) {
+							this.movingPiece.isMoving = true;
+							this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
+						}
 
 					}
+					if (this.pickedNow instanceof MyPiece) { 
+						this.movingPiece = this.pickedNow;
+					}
+			
 					if (this.lastPicked != null)
 						this.lastPicked.isPicked = false;
 				}
@@ -67,6 +67,13 @@ class MyGameOrchestrator {
 
 	display() {
 		//this.theme.display();
+
+		if (this.movingPiece == null) {
+			this.scene.setPickEnabled(true);
+		}
+		else if (this.movingPiece.isMoving) {
+			this.scene.setPickEnabled(false);
+		}
 
 		this.logPicking();
 		this.scene.clearPickRegistration();
@@ -80,6 +87,7 @@ class MyGameOrchestrator {
 		this.scene.clearPickRegistration();
 
 		this.auxBoard.display();
+		this.scene.clearPickRegistration();
 
 		this.scene.popMatrix();
 	}
