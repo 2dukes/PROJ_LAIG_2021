@@ -44,8 +44,8 @@ class MyAuxBoard {
 		this.greenPieceAp.apply();
 
 		this.orangePieceAp = new CGFappearance(this.scene);
-		this.orangePieceAp.setAmbient(100, 0.4, 0, 1); // Ambient RGB
-		this.orangePieceAp.setDiffuse(100, 0.4, 0, 1); // Diffuse RGB
+		this.orangePieceAp.setAmbient(1, 0.4, 0, 1); // Ambient RGB
+		this.orangePieceAp.setDiffuse(1, 0.4, 0, 1); // Diffuse RGB
 		this.orangePieceAp.setSpecular(0, 0, 0, 1); // Specular RGB
 		this.orangePieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
 		this.orangePieceAp.setShininess(1);
