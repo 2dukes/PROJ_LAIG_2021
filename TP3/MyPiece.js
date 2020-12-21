@@ -6,6 +6,7 @@ class MyPiece {
 		this.zOffset = zOffset;
 		this.isSelected = false;
 		this.isMoving = false;
+		this.isInAuxBoard = true;
 
 		this.tile = new MyCylinder(
 			this.scene,
@@ -30,6 +31,7 @@ class MyPiece {
 		];
 		this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
 		this.isMoving = true;
+		this.isInAuxBoard = false;
 	}
 
 	update(currentTime) {
@@ -46,7 +48,9 @@ class MyPiece {
 			this.animation.apply();
 		}
 
-		this.scene.translate(0, this.zOffset, this.height);
+		if (this.isInAuxBoard)
+			this.scene.translate(0, this.zOffset, this.height);
+
 		this.tile.display();
 
 		this.scene.popMatrix();
