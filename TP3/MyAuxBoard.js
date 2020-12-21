@@ -103,26 +103,31 @@ class MyAuxBoard {
 
 	display() {
 		this.scene.pushMatrix();
-		// this.scene.translate(-0.8, 2.5, 0.05);
 		for (let i = 0; i < this.purplePieces.length; i++) {
-			for (let j = 0; j < this.purplePieces[i].length; j++)
+			for (let j = 0; j < this.purplePieces[i].length; j++) {
+				this.scene.registerForPick(200 + i, this.purplePieces[i][j]);
 				this.purplePieces[i][j].display();
+			}	
 		}
 		this.scene.popMatrix();
 
 		this.scene.pushMatrix();
-		//this.scene.translate(1.3, 2.5, 0.05);
 		for (let i = 0; i < this.greenPieces.length; i++) {
-			for (let j = 0; j < this.greenPieces[i].length; j++)
+			for (let j = 0; j < this.greenPieces[i].length; j++) {
+				this.scene.registerForPick(300 + i, this.greenPieces[i][j]);
 				this.greenPieces[i][j].display();
+			}
+				
 		}
 		this.scene.popMatrix();
 
 		this.scene.pushMatrix();
-		//this.scene.translate(0.2, 2.5, 0.05);
 		for (let i = 0; i < this.orangePieces.length; i++) {
-			for (let j = 0; j < this.orangePieces[i].length; j++)
+			for (let j = 0; j < this.orangePieces[i].length; j++) {
+				this.scene.registerForPick(400 + i, this.orangePieces[i][j]);
 				this.orangePieces[i][j].display();
+			}
+				
 		}
 		this.scene.popMatrix();
 	}
