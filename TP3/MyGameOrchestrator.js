@@ -15,23 +15,33 @@ class MyGameOrchestrator {
 
 		this.elapsedTime = 0;
 
-		this.auxBoard.purplePieces[2][0].isMoving = true;
-		this.auxBoard.purplePieces[2][0].move(0, 0, 0, 5);
+		this.auxBoard.purplePieces[2][13].isMoving = true;
+		this.auxBoard.purplePieces[2][13].move(0, 0);
+		/* this.entered = false; */
+		// console.log("POSITION:");
+		// console.log(this.auxBoard.purplePieces[2][13].position);
 	}
 
 	update(currentTime) {
-		if (this.auxBoard.purplePieces[2][0].animation != null) {
-			this.auxBoard.purplePieces[2][0].update(currentTime);
+		//console.log(this.elapsedTime);
+		/* 		if (this.elapsedTime > 3 && !this.entered) {
+			this.auxBoard.purplePieces[2][13].isMoving = true;
+			this.auxBoard.purplePieces[2][13].isInAuxBoard = false;
+			this.entered = true;
+		} */
+		if (this.auxBoard.purplePieces[2][13].animation != null) {
+			this.auxBoard.purplePieces[2][13].update(currentTime);
 
-			if (this.auxBoard.purplePieces[2][0].animation == null) {
-				this.auxBoard.purplePieces[2][0].isMoving = false;
+			if (this.auxBoard.purplePieces[2][13].animation == null) {
+				this.auxBoard.purplePieces[2][13].isMoving = false;
 				return;
 			}
 
-			if (this.auxBoard.purplePieces[2][0].animation.animationEnded) {
-				this.auxBoard.purplePieces[2][0].isMoving = false;
+			if (this.auxBoard.purplePieces[2][13].animation.animationEnded) {
+				this.auxBoard.purplePieces[2][13].isMoving = false;
 			}
 		}
+		this.elapsedTime += currentTime;
 	}
 
 	logPicking() {

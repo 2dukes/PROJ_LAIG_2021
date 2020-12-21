@@ -1,12 +1,11 @@
 class MyPiece {
-	constructor(scene, radius, appearance, height, zOffset) {
+	constructor(scene, radius, appearance, position) {
 		this.scene = scene;
 		this.radius = radius;
-		this.height = height;
-		this.zOffset = zOffset;
 		this.isSelected = false;
 		this.isMoving = false;
 		this.isInAuxBoard = true;
+		this.position = position;
 
 		this.tile = new MyCylinder(
 			this.scene,
@@ -22,16 +21,22 @@ class MyPiece {
 		this.animation = null;
 	}
 
-	move(initX, initZ, finalX, finalZ) {
+	move(finalX, finalZ) {
+		let initX = this.position[0];
+		let initZ = this.position[1];
 		let xOffset = finalX - initX;
 		let zOffset = finalZ - initZ;
 		let keyFrames = [
-			new Transformation(5, [0, 0, 0], [0, 0, 0], [1, 1, 1]),
-			new Transformation(6, [xOffset, -zOffset, 0], [0, 0, 0], [1, 1, 1]),
+			new Transformation(
+				2,
+				// [this.position[0], this.position[1], this.position[2]],
+				[0, 0, 0],
+				[0, 0, 0],
+				[1, 1, 1]
+			),
+			new Transformation(3, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
 		];
 		this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
-		this.isMoving = true;
-		this.isInAuxBoard = false;
 	}
 
 	update(currentTime) {
@@ -48,9 +53,22 @@ class MyPiece {
 			this.animation.apply();
 		}
 
-		if (this.isInAuxBoard)
-			this.scene.translate(0, this.zOffset, this.height);
+		this.scene.translate(
+			this.position[0],
+			this.position[1],
+			this.position[2]
+		);
 
+		/* if (this.isInAuxBoard)
+			this.scene.translate(
+				this.position[0],
+				this.position[1],
+				this.position[2]
+			);
+		else {
+			this.scene.translate(this.position[0], this.position[1], 0);
+		}
+ */
 		this.tile.display();
 
 		this.scene.popMatrix();

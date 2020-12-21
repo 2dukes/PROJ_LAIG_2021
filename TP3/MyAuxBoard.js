@@ -68,31 +68,25 @@ class MyAuxBoard {
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 14; j++) {
 				stackPurple.push(
-					new MyPiece(
-						this.scene,
-						0.25,
-						this.purplePieceAp,
-						height,
-						zOffset
-					)
+					new MyPiece(this.scene, 0.25, this.purplePieceAp, [
+						-0.8,
+						2.5 + zOffset,
+						0.05 + height,
+					])
 				);
 				stackGreen.push(
-					new MyPiece(
-						this.scene,
-						0.25,
-						this.greenPieceAp,
-						height,
-						zOffset
-					)
+					new MyPiece(this.scene, 0.25, this.greenPieceAp, [
+						1.3,
+						2.5 + zOffset,
+						0.05 + height,
+					])
 				);
 				stackOrange.push(
-					new MyPiece(
-						this.scene,
-						0.25,
-						this.orangePieceAp,
-						height,
-						zOffset
-					)
+					new MyPiece(this.scene, 0.25, this.orangePieceAp, [
+						0.2,
+						2.5 + zOffset,
+						0.05 + height,
+					])
 				);
 				height += 0.05;
 			}
@@ -109,7 +103,7 @@ class MyAuxBoard {
 
 	display() {
 		this.scene.pushMatrix();
-		this.scene.translate(-0.8, 2.5, 0.05);
+		// this.scene.translate(-0.8, 2.5, 0.05);
 		for (let i = 0; i < this.purplePieces.length; i++) {
 			for (let j = 0; j < this.purplePieces[i].length; j++)
 				this.purplePieces[i][j].display();
@@ -117,7 +111,7 @@ class MyAuxBoard {
 		this.scene.popMatrix();
 
 		this.scene.pushMatrix();
-		this.scene.translate(1.3, 2.5, 0.05);
+		//this.scene.translate(1.3, 2.5, 0.05);
 		for (let i = 0; i < this.greenPieces.length; i++) {
 			for (let j = 0; j < this.greenPieces[i].length; j++)
 				this.greenPieces[i][j].display();
@@ -125,7 +119,7 @@ class MyAuxBoard {
 		this.scene.popMatrix();
 
 		this.scene.pushMatrix();
-		this.scene.translate(0.2, 2.5, 0.05);
+		//this.scene.translate(0.2, 2.5, 0.05);
 		for (let i = 0; i < this.orangePieces.length; i++) {
 			for (let j = 0; j < this.orangePieces[i].length; j++)
 				this.orangePieces[i][j].display();

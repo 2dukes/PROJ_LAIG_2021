@@ -78,7 +78,7 @@ class KeyFrameAnimation extends Animation {
 					),
 					1
 				) *
-					0.75);
+					0.3);
 
 			// Translation - Interpolation | Without Tweening
 
