@@ -58,13 +58,20 @@ class KeyFrameAnimation extends Animation {
             // b -> vec3 final
             // t -> interpolation amount, in the range [0-1], between the two inputs 
             
-            // Translation - Interpolation
-            
+            // Translation - Interpolation | Tweening
             let translation = vec3.create(); // vec3
-            translation[0] = currentKeyFrame.translation[0] * percentageTime;
-            translation[1] = currentKeyFrame.translation[1] * percentageTime;
-            translation[2] = -currentKeyFrame.translation[1] * (Math.pow(Math.sin(Math.PI * percentageTime), 1) * 0.5);
+            translation[0] = currentKeyFrame.translation[0] * Math.sin(Math.PI / 5 * percentageTime);
+            translation[1] = currentKeyFrame.translation[1] * Math.sin(Math.PI / 2 * percentageTime);
+            translation[2] = -currentKeyFrame.translation[1] * (Math.pow(Math.sin(Math.PI * Math.sin(Math.PI / 2 * percentageTime)), 1) * 0.75);
 
+            // Translation - Interpolation | Without Tweening
+
+            // vec3.lerp(
+            //     translation,
+            //     vec3.fromValues(formerKeyFrame.translation[0], formerKeyFrame.translation[1], formerKeyFrame.translation[2]),
+            //     vec3.fromValues(currentKeyFrame.translation[0], currentKeyFrame.translation[1], currentKeyFrame.translation[2]),
+            //     percentageTime
+            // );
             mat4.translate(auxMatrix, auxMatrix, translation);
 
 
