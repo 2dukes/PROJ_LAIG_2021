@@ -51,7 +51,6 @@ class MyGameBoard {
                 this.tiles.push(new MyTile(this, this.scene, this.tileRadius, i + startingLine, index + 1, diagonalStartPosition, startingLine, this.selectedTileAppearance, this.defaultTileAppearance));
         }
 
-        console.log(this.tiles);
     }
 
     initializeDiagonalLineMap() {
@@ -62,7 +61,7 @@ class MyGameBoard {
         startingLine.forEach(function(value, index) {
             diagonalLineMap.set(index + 1, value);
         });
-        console.log(diagonalLineMap);
+
         return diagonalLineMap;
     }
 
@@ -93,7 +92,7 @@ class MyGameBoard {
         startingCoords.forEach(function(value, index) {
             diagonalStartingCoordinatesMap.set(index + 1, { x: value.x, y: value.y });
         });
-        console.log(diagonalStartingCoordinatesMap);
+
         return diagonalStartingCoordinatesMap;
     }
 

@@ -69,9 +69,9 @@ class MyGameOrchestrator {
 
 		this.scene.pushMatrix();
 
-		this.scene.translate(4.83, 0.8, 4.0);
-		this.scene.scale(0.5, 1.0, 0.5);
-		this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+		// this.scene.translate(4.83, 0.8, 4.0);
+		// this.scene.scale(0.5, 1.0, 0.5);
+		// this.scene.rotate(-Math.PI / 2, 1, 0, 0);
 		this.gameBoard.display();
 		this.scene.clearPickRegistration();
 
