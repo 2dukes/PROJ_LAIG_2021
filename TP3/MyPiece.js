@@ -22,23 +22,30 @@ class MyPiece {
 	}
 
 	move(finalX, finalZ) {
-		let initX = this.position[0];
-		let initZ = this.position[1];
-		let xOffset = finalX - initX;
-		let zOffset = finalZ - initZ;
+		let xOffset = finalX - this.position[0];
+		let zOffset = finalZ - this.position[1];
 
 		let keyFrames = [
 			new Transformation(
-				2,
+				0.1,
 				// [this.position[0], this.position[1], this.position[2]],
 				[0, 0, 0],
 				[0, 0, 0],
 				[1, 1, 1]
 			),
-			new Transformation(3, [0, 0, this.position[2]], [0, 0, 0], [1, 1, 1]),
-			new Transformation(4, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
-			new Transformation(5, [xOffset, zOffset, -this.position[2]], [0, 0, 0], [1, 1, 1]),
-			
+			new Transformation(
+				1,
+				[0, 0, this.position[2]],
+				[0, 0, 0],
+				[1, 1, 1]
+			),
+			new Transformation(2, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
+			new Transformation(
+				3,
+				[xOffset, zOffset, -this.position[2] + 0.05],
+				[0, 0, 0],
+				[1, 1, 1]
+			),
 		];
 		this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
 	}
@@ -63,16 +70,6 @@ class MyPiece {
 			this.position[2]
 		);
 
-		/* if (this.isInAuxBoard)
-			this.scene.translate(
-				this.position[0],
-				this.position[1],
-				this.position[2]
-			);
-		else {
-			this.scene.translate(this.position[0], this.position[1], 0);
-		}
- */
 		this.tile.display();
 
 		this.scene.popMatrix();
