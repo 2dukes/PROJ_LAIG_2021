@@ -1,10 +1,9 @@
 class MyPiece {
-	constructor(scene, radius, appearance, height, zOffset, order) {
+	constructor(scene, radius, appearance, height, zOffset) {
 		this.scene = scene;
 		this.radius = radius;
 		this.height = height;
 		this.zOffset = zOffset;
-		this.order = order;
 		this.isSelected = false;
 		this.isMoving = false;
 
