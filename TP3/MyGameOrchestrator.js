@@ -50,7 +50,6 @@ class MyGameOrchestrator {
 						this.pickedNow.isPicked = true;
 						
 						if (this.movingPiece != null) {
-							this.movingPiece.isMoving = true;
 							this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
 						}
 

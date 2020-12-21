@@ -107,7 +107,8 @@ class MyAuxBoard {
 		this.scene.pushMatrix();
 		for (let i = 0; i < this.purplePieces.length; i++) {
 			for (let j = 0; j < this.purplePieces[i].length; j++) {
-				if (this.pickEnabled) this.scene.registerForPick(200 + i, this.purplePieces[i][j]);
+				if (this.pickEnabled && this.purplePieces[i][j].isInAuxBoard) this.scene.registerForPick(200 + i, this.purplePieces[i][j]);
+				if (!this.purplePieces[i][j].isInAuxBoard) this.scene.clearPickRegistration();
 				this.purplePieces[i][j].display();
 			}	
 		}
@@ -116,7 +117,8 @@ class MyAuxBoard {
 		this.scene.pushMatrix();
 		for (let i = 0; i < this.greenPieces.length; i++) {
 			for (let j = 0; j < this.greenPieces[i].length; j++) {
-				if (this.pickEnabled) this.scene.registerForPick(300 + i, this.greenPieces[i][j]);
+				if (this.pickEnabled && this.greenPieces[i][j].isInAuxBoard) this.scene.registerForPick(300 + i, this.greenPieces[i][j]);
+				if (!this.greenPieces[i][j].isInAuxBoard) this.scene.clearPickRegistration();
 				this.greenPieces[i][j].display();
 			}
 				
@@ -126,7 +128,8 @@ class MyAuxBoard {
 		this.scene.pushMatrix();
 		for (let i = 0; i < this.orangePieces.length; i++) {
 			for (let j = 0; j < this.orangePieces[i].length; j++) {
-				if (this.pickEnabled) this.scene.registerForPick(400 + i, this.orangePieces[i][j]);
+				if (this.pickEnabled && this.orangePieces[i][j].isInAuxBoard) this.scene.registerForPick(400 + i, this.orangePieces[i][j]);
+				if (!this.orangePieces[i][j].isInAuxBoard) this.scene.clearPickRegistration();
 				this.orangePieces[i][j].display();
 			}
 				

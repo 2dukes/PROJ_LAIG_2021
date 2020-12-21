@@ -48,6 +48,9 @@ class MyPiece {
 			),
 		];
 		this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
+
+		this.isMoving = true;
+		this.isInAuxBoard = false;
 	}
 
 	update(currentTime) {
