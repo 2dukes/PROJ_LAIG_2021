@@ -69,14 +69,23 @@ class MyGameOrchestrator {
 		//this.theme.display();
 
 		if (this.movingPiece == null) {
-			this.scene.setPickEnabled(true);
+			//this.scene.setPickEnabled(true);
+
+			this.gameBoard.pickEnabled = false;
+			this.auxBoard.pickEnabled = true;
 		}
 		else if (this.movingPiece.isMoving) {
-			this.scene.setPickEnabled(false);
+			//this.scene.setPickEnabled(false);
+
+			this.gameBoard.pickEnabled = false;
+			this.auxBoard.pickEnabled = false;
+		}
+		else if (!this.movingPiece.isMoving) {
+			this.gameBoard.pickEnabled = true;
+			this.auxBoard.pickEnabled = true;
 		}
 
 		this.logPicking();
-		this.scene.clearPickRegistration();
 
 		this.scene.pushMatrix();
 

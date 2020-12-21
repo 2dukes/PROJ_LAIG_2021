@@ -8,6 +8,8 @@ class MyGameBoard {
         this.initializeTiles(diagonalLineMap, diagonalStartingCoordinatesMap);
         
         this.borderColors = new BorderColor(this.scene);
+
+        this.pickEnabled = false;
     }
 
 
@@ -99,7 +101,10 @@ class MyGameBoard {
     display() {
 
         for (let i = 0; i < this.tiles.length; i++) {
-            this.scene.registerForPick(i + 1,this.tiles[i]);
+
+            if (this.pickEnabled)
+                this.scene.registerForPick(i + 1,this.tiles[i]);
+            
             this.tiles[i].display();
         }
         this.borderColors.display();

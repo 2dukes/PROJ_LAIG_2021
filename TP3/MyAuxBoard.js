@@ -8,6 +8,8 @@ class MyAuxBoard {
 		this.greenPieces = [];
 		this.orangePieces = [];
 		this.initializePieces();
+
+		this.pickEnabled = true;
 	}
 
 	initAppearances() {
@@ -105,7 +107,7 @@ class MyAuxBoard {
 		this.scene.pushMatrix();
 		for (let i = 0; i < this.purplePieces.length; i++) {
 			for (let j = 0; j < this.purplePieces[i].length; j++) {
-				this.scene.registerForPick(200 + i, this.purplePieces[i][j]);
+				if (this.pickEnabled) this.scene.registerForPick(200 + i, this.purplePieces[i][j]);
 				this.purplePieces[i][j].display();
 			}	
 		}
@@ -114,7 +116,7 @@ class MyAuxBoard {
 		this.scene.pushMatrix();
 		for (let i = 0; i < this.greenPieces.length; i++) {
 			for (let j = 0; j < this.greenPieces[i].length; j++) {
-				this.scene.registerForPick(300 + i, this.greenPieces[i][j]);
+				if (this.pickEnabled) this.scene.registerForPick(300 + i, this.greenPieces[i][j]);
 				this.greenPieces[i][j].display();
 			}
 				
@@ -124,7 +126,7 @@ class MyAuxBoard {
 		this.scene.pushMatrix();
 		for (let i = 0; i < this.orangePieces.length; i++) {
 			for (let j = 0; j < this.orangePieces[i].length; j++) {
-				this.scene.registerForPick(400 + i, this.orangePieces[i][j]);
+				if (this.pickEnabled) this.scene.registerForPick(400 + i, this.orangePieces[i][j]);
 				this.orangePieces[i][j].display();
 			}
 				
