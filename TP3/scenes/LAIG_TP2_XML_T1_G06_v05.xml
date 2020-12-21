@@ -190,7 +190,6 @@
 
             <descendants>
                 <noderef id="auxBoard1" />
-                <noderef id="auxBoard2" />
             </descendants>
         </node>
 
@@ -203,23 +202,6 @@
 
             <transformations>
                 <translation x="5" y="0.85" z="2.7" />
-                <scale sx="6" sy="0.05" sz="3.0" />
-            </transformations>
-
-            <descendants>
-                <noderef id="cube" />
-            </descendants>
-        </node>
-
-        <node id="auxBoard2">
-            <material id="sofaMaterial" />
-
-            <texture id="text_chao">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="5" y="0.85" z="7.7" />
                 <scale sx="6" sy="0.05" sz="3.0" />
             </transformations>
 
@@ -713,7 +695,6 @@
             <descendants>
                 <noderef id="mesa1" />
                 <noderef id="mesa2" />
-                <noderef id="mesa3" />
             </descendants>
         </node>
 
@@ -748,26 +729,6 @@
 
             <transformations>   
                 <translation x="5" y="0.0" z="2.5" />
-                <rotation axis="y" angle="90" />
-                <translation x="-1.7" y="0.0" z="-7.0" />
-            </transformations>
-
-            <descendants>
-                <noderef id="pernas" />
-                <noderef id="tampo_mesa" />
-            </descendants>
-        </node>
-
-        <!-- Mesa3 -->
-        <node id="mesa3">
-            <material id="mesaMaterial" />
-
-            <texture id="text_mesa">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>   
-                <translation x="5" y="0.0" z="7.5" />
                 <rotation axis="y" angle="90" />
                 <translation x="-1.7" y="0.0" z="-7.0" />
             </transformations>

@@ -59,23 +59,10 @@ class MyAuxBoard {
 
 	initializePieces() {
 		let height = 0,
-			zOffset = 9.5;
-
-		// as variáveis order1, order2 e order servem para manter o registo da ordem da próxima peça a ser jogada, de forma a que
-		// se vão tirando peças alternadamente entre os dois tabuleiros auxiliares e se tire sempre a peça no topo da stack da frente.
-		let order1 = 20;
-		let order2 = 27;
-		let order;
+			zOffset = 1;
 
 		for (let i = 0; i < 42; i++) {
-			if (i % 2 == 0) {
-				order = order1;
-			} else order = order2;
-
-			if (i % 7 == 0) {
-				if (i % 21 == 0) {
-					zOffset -= 8.5;
-				}
+			if (i % 14 == 0) {
 				zOffset -= 0.5;
 				height = 0;
 			}
@@ -86,8 +73,7 @@ class MyAuxBoard {
 					0.25,
 					this.purplePieceAp,
 					height,
-					zOffset,
-					order
+					zOffset
 				)
 			);
 			this.greenPieces.push(
@@ -96,8 +82,7 @@ class MyAuxBoard {
 					0.25,
 					this.greenPieceAp,
 					height,
-					zOffset,
-					order
+					zOffset
 				)
 			);
 			this.orangePieces.push(
@@ -106,17 +91,11 @@ class MyAuxBoard {
 					0.25,
 					this.orangePieceAp,
 					height,
-					zOffset,
-					order
+					zOffset
 				)
 			);
 
-			height += 0.1;
-
-			if (i % 14 == 0 && i != 0) {
-				order2 += 14;
-				order1--;
-			} else i % 2 == 0 ? order1-- : order2--;
+			height += 0.05;
 		}
 	}
 
