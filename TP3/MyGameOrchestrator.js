@@ -15,21 +15,12 @@ class MyGameOrchestrator {
 
 		this.elapsedTime = 0;
 
-		this.auxBoard.purplePieces[2][13].isMoving = true;
-		this.auxBoard.purplePieces[2][13].move(0, 0);
-		// this.auxBoard.purplePieces[2][13].move(0.7165063509461096 , -4.763139720814412);
-		/* this.entered = false; */
-		// console.log("POSITION:");
-		// console.log(this.auxBoard.purplePieces[2][13].position);
+		// this.auxBoard.purplePieces[2][13].isMoving = true;
+		// this.auxBoard.purplePieces[2][13].move(0, 0);
+		
 	}
 
 	update(currentTime) {
-		//console.log(this.elapsedTime);
-		/* 		if (this.elapsedTime > 3 && !this.entered) {
-			this.auxBoard.purplePieces[2][13].isMoving = true;
-			this.auxBoard.purplePieces[2][13].isInAuxBoard = false;
-			this.entered = true;
-		} */
 		if (this.auxBoard.purplePieces[2][13].animation != null) {
 			this.auxBoard.purplePieces[2][13].update(currentTime);
 
@@ -62,6 +53,9 @@ class MyGameOrchestrator {
 								" and diagonal " +
 								this.pickedNow.diagonal
 						);
+						this.auxBoard.purplePieces[2][13].isMoving = true;
+						this.auxBoard.purplePieces[2][13].move(this.pickedNow.x, this.pickedNow.y);
+
 					}
 					if (this.lastPicked != null)
 						this.lastPicked.isPicked = false;
@@ -74,15 +68,14 @@ class MyGameOrchestrator {
 	display() {
 		//this.theme.display();
 
-		// PICKING TESTING
 		this.logPicking();
 		this.scene.clearPickRegistration();
 
 		this.scene.pushMatrix();
 
-		// this.scene.translate(4.83, 0.8, 4.0);
-		// this.scene.scale(0.5, 1.0, 0.5);
-		// this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+		this.scene.translate(4.83, 0.8, 4.0);
+		this.scene.scale(0.5, 1.0, 0.5);
+		this.scene.rotate(-Math.PI / 2, 1, 0, 0);
 		this.gameBoard.display();
 		this.scene.clearPickRegistration();
 
