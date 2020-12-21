@@ -22,8 +22,8 @@ class MyTile {
 
         this.xOffset = diagonalSP.x - numberOfTransfs * (this.radius + (auxiliarRadius / 2));
         this.yOffset = diagonalSP.y - numberOfTransfs * auxiliarRadius;
-        this.x = diagonalSP.x + this.xOffset;
-        this.y = diagonalSP.y + this.yOffset;
+        this.x = this.xOffset;
+        this.y = this.yOffset;
     }
 
     display() {   

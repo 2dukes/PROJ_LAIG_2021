@@ -3,7 +3,8 @@ class KeyFrameAnimation extends Animation {
 		// Array de keyframes (instant, KeyFrames) -> KeyFrames
 		super(scene, animationID);
 		this.keyFrames = keyFrameList;
-		this.currentKeyFrame = 0;
+        this.currentKeyFrame = 0;
+        this.height = 0.3;
 	}
 
 	update(timeIncrement) {
@@ -64,30 +65,18 @@ class KeyFrameAnimation extends Animation {
 
 			// Translation - Interpolation | Tweening
 			let translation = vec3.create(); // vec3
-			translation[0] =
-				currentKeyFrame.translation[0] *
-				Math.sin((Math.PI / 5) * percentageTime);
-			translation[1] =
-				currentKeyFrame.translation[1] *
-				Math.sin((Math.PI / 2) * percentageTime);
-			translation[2] =
-				-currentKeyFrame.translation[1] *
-				(Math.pow(
-					Math.sin(
-						Math.PI * Math.sin((Math.PI / 2) * percentageTime)
-					),
-					1
-				) *
-					0.3);
+			// translation[0] = currentKeyFrame.translation[0] * percentageTime;
+            // translation[1] = currentKeyFrame.translation[1] * percentageTime;
+            // translation[2] = currentKeyFrame.translation[2] * (Math.pow(Math.sin(Math.PI * percentageTime), 1) * this.height);
 
 			// Translation - Interpolation | Without Tweening
 
-			// vec3.lerp(
-			//     translation,
-			//     vec3.fromValues(formerKeyFrame.translation[0], formerKeyFrame.translation[1], formerKeyFrame.translation[2]),
-			//     vec3.fromValues(currentKeyFrame.translation[0], currentKeyFrame.translation[1], currentKeyFrame.translation[2]),
-			//     percentageTime
-			// );
+			vec3.lerp(
+			    translation,
+			    vec3.fromValues(formerKeyFrame.translation[0], formerKeyFrame.translation[1], formerKeyFrame.translation[2]),
+			    vec3.fromValues(currentKeyFrame.translation[0], currentKeyFrame.translation[1], currentKeyFrame.translation[2]),
+			    Math.sin(Math.PI / 2 * percentageTime)
+			);
 			mat4.translate(auxMatrix, auxMatrix, translation);
 
 			// Rotation - Interpolation

@@ -17,6 +17,7 @@ class MyGameOrchestrator {
 
 		this.auxBoard.purplePieces[2][13].isMoving = true;
 		this.auxBoard.purplePieces[2][13].move(0, 0);
+		// this.auxBoard.purplePieces[2][13].move(0.7165063509461096 , -4.763139720814412);
 		/* this.entered = false; */
 		// console.log("POSITION:");
 		// console.log(this.auxBoard.purplePieces[2][13].position);

@@ -26,6 +26,7 @@ class MyPiece {
 		let initZ = this.position[1];
 		let xOffset = finalX - initX;
 		let zOffset = finalZ - initZ;
+
 		let keyFrames = [
 			new Transformation(
 				2,
@@ -34,7 +35,10 @@ class MyPiece {
 				[0, 0, 0],
 				[1, 1, 1]
 			),
-			new Transformation(3, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
+			new Transformation(3, [0, 0, this.position[2]], [0, 0, 0], [1, 1, 1]),
+			new Transformation(4, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
+			new Transformation(5, [xOffset, zOffset, -this.position[2]], [0, 0, 0], [1, 1, 1]),
+			
 		];
 		this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
 	}
