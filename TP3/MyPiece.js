@@ -64,6 +64,10 @@ class MyPiece {
 			this.animation.apply();
 		}
 
+		if (this.isSelected) {
+			this.scene.translate(0,0,0.5);
+		}
+
 		this.scene.translate(
 			this.position[0],
 			this.position[1],

@@ -26,12 +26,14 @@ class MyGameOrchestrator {
 
 			if (this.movingPiece.animation == null) {
 				this.movingPiece.isMoving = false;
+				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
 				return;
 			}
 
 			if (this.movingPiece.animation.animationEnded) {
 				this.movingPiece.isMoving = false;
+				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
 			}
 		}
@@ -55,10 +57,14 @@ class MyGameOrchestrator {
 					}
 					if (this.pickedNow instanceof MyPiece) { 
 						this.movingPiece = this.pickedNow;
+						this.movingPiece.isSelected = true;
+
+						if (this.lastPicked != null) this.lastPicked.isSelected = false;
 					}
 			
-					if (this.lastPicked != null)
+					if (this.lastPicked != null) {
 						this.lastPicked.isPicked = false;
+					}
 				}
 			}
 			this.scene.pickResults.splice(0, this.scene.pickResults.length);
@@ -69,14 +75,10 @@ class MyGameOrchestrator {
 		//this.theme.display();
 
 		if (this.movingPiece == null) {
-			//this.scene.setPickEnabled(true);
-
 			this.gameBoard.pickEnabled = false;
 			this.auxBoard.pickEnabled = true;
 		}
 		else if (this.movingPiece.isMoving) {
-			//this.scene.setPickEnabled(false);
-
 			this.gameBoard.pickEnabled = false;
 			this.auxBoard.pickEnabled = false;
 		}
