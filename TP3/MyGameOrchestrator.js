@@ -15,21 +15,21 @@ class MyGameOrchestrator {
 
 		this.elapsedTime = 0;
 
-		this.auxBoard.purplePieces[0].isMoving = true;
-		this.auxBoard.purplePieces[0].move(0, 0, 0, 5);
+		this.auxBoard.purplePieces[1][0].isMoving = true;
+		this.auxBoard.purplePieces[1][0].move(0, 0, 0, 5);
 	}
 
 	update(currentTime) {
-		if (this.auxBoard.purplePieces[0].animation != null) {
-			this.auxBoard.purplePieces[0].update(currentTime);
+		if (this.auxBoard.purplePieces[1][0].animation != null) {
+			this.auxBoard.purplePieces[1][0].update(currentTime);
 
-			if (this.auxBoard.purplePieces[0].animation == null) {
-				this.auxBoard.purplePieces[0].isMoving = false;
+			if (this.auxBoard.purplePieces[1][0].animation == null) {
+				this.auxBoard.purplePieces[1][0].isMoving = false;
 				return;
 			}
 
-			if (this.auxBoard.purplePieces[0].animation.animationEnded) {
-				this.auxBoard.purplePieces[0].isMoving = false;
+			if (this.auxBoard.purplePieces[1][0].animation.animationEnded) {
+				this.auxBoard.purplePieces[1][0].isMoving = false;
 			}
 		}
 	}
