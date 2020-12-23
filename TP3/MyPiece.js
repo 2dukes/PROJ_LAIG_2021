@@ -25,7 +25,8 @@ class MyPiece {
 	move(finalX, finalZ) {
 		let xOffset = finalX - this.position[0];
 		let zOffset = finalZ - this.position[1];
-
+		console.log(xOffset);
+		console.log(zOffset);
 		let keyFrames = [
 			new Transformation(
 				0.01,
@@ -33,9 +34,9 @@ class MyPiece {
 				[0, 0, 0],
 				[1, 1, 1]
 			),
-			new Transformation(0.02, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
+			new Transformation(0.5, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
 			new Transformation(
-				0.03,
+				1,
 				[xOffset, zOffset, -this.position[2] + 0.05],
 				[0, 0, 0],
 				[1, 1, 1]
@@ -45,6 +46,7 @@ class MyPiece {
 
 		this.isMoving = true;
 		this.isInAuxBoard = false;
+		
 	}
 
 	update(currentTime) {

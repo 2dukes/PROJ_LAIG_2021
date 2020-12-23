@@ -59,6 +59,32 @@ class MyAuxBoard {
 		this.orangePieceAp.apply();
 	}
 
+	getNextPiece(color) {
+		if(color == "purple") {
+			for (let i = 0; i < this.purplePieces.length; i++) {
+				if (this.purplePieces[i].length != 0) {
+					return this.purplePieces[i][this.purplePieces[i].length - 1];
+				}
+			}
+		}
+		else if(color == "orange") {
+			for (let i = 0; i < this.orangePieces.length; i++) {
+				if (this.orangePieces[i].length != 0) {
+					return this.orangePieces[i][this.orangePieces[i].length - 1];
+				}
+			}
+		}
+		else if(color == "green") {
+			for (let i = 0; i < this.greenPieces.length; i++) {
+				if (this.greenPieces[i].length != 0) {
+					return this.greenPieces[i][this.greenPieces[i].length - 1];
+				}
+			}
+		}
+
+		return null;
+	}
+
 	initializePieces() {
 		let height = 0,
 			zOffset = 0.5;

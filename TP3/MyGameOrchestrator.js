@@ -16,8 +16,44 @@ class MyGameOrchestrator {
 		this.movingPiece = null;
 
 		this.gameSequence = new MyGameSequence(this.scene);
+
+		this.gameMode = "PvB";
+
+		// this.computerPiece = null;
+		this.promise = true;
+
+
+		
+		// this.makePlay();
+
+		// this.isComputerMove = false;
 		
 	}
+
+	// makePlay() {
+	// 	let stringParamBot = this.gameBoard.formatFetchStringComputer();
+
+
+	// 	let response = this.gameBoard.callPrologMove(stringParamBot);
+	// 	response.then((jsonResponse) => {
+	// 		this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
+								
+	// 		/* console.log(jsonResponse.playedRow);
+	// 		console.log(jsonResponse.playedDiagonal); */
+	// 		let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
+	// 		console.log("--------COORDS:--------------");
+	// 		console.log(tileCoords);
+	// 		console.log(this.movingPiece);
+	// 		if(tileCoords != null) {
+	// 			alert('1');
+	// 			this.movingPiece.move(0, 0);
+	// 			// this.isComputerMove = true;
+	// 			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1]));
+	// 		} else 
+	// 			console.log('Incorrect line or diagonal in computer move!');
+	// 	});
+
+	// }
 
 	update(currentTime) {
 
@@ -38,10 +74,39 @@ class MyGameOrchestrator {
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
 			}
-		}
-	}
+		
 
-	logPicking() {
+
+
+		/* if (this.computerPiece == null) return;
+
+		if (this.computerPiece.animation != null) {
+			this.computerPiece.update(currentTime);
+
+			if (this.computerPiece.animation == null) {
+				this.computerPiece.isMoving = false;
+				this.computerPiece.isSelected = false;
+				this.computerPiece = null;
+				return;
+			}
+
+			if (this.computerPiece.animation.animationEnded) {
+				this.computerPiece.isMoving = false;
+				this.computerPiece.isSelected = false;
+				this.computerPiece = null;
+			}
+		} */
+	}
+}
+
+	async logPicking() {
+
+		if (this.gameMode == "BvB") {
+
+
+
+			return;
+		}
 
 		if (this.scene.pickMode == false) {
 			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
@@ -51,12 +116,34 @@ class MyGameOrchestrator {
 					if (this.pickedNow instanceof MyTile) {
 						this.pickedNow.isPicked = true;
 						
-						if (this.movingPiece != null) {
-							let stringParam = this.gameBoard.formatFetchString(this.pickedNow.line, this.pickedNow.diagonal, this.movingPiece.color);
-							if(this.gameBoard.callPrologMove(stringParam)) {
-								this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
-								this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y));
-							}
+						if (this.movingPiece != null && this.promise) {
+							let stringParamPlayer = this.gameBoard.formatFetchStringPlayer(this.pickedNow.line, this.pickedNow.diagonal, this.movingPiece.color);
+							this.gameBoard.callPrologMove(stringParamPlayer);							
+							this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
+							this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y));
+							
+							if (this.gameMode == "PvB") {
+								let stringParamBot = this.gameBoard.formatFetchStringComputer();
+								this.promise = false;
+								let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
+								//alert('2');
+								this.promise = true;
+								
+								this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
+								
+								/* console.log(jsonResponse.playedRow);
+								console.log(jsonResponse.playedDiagonal); */
+								let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
+								console.log("--------COORDS:--------------");
+								console.log(tileCoords);
+								console.log(this.movingPiece);
+								if(tileCoords != null) {
+									this.movingPiece.move(tileCoords[0], tileCoords[1]);
+									this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1]));
+								} else 
+									console.log('Incorrect line or diagonal in computer move!');
+							} 
+							
 							
 							// console.log("-------------------GAME SEQUENCE:------------------");
 							// console.log(this.gameSequence.moves);
@@ -65,6 +152,7 @@ class MyGameOrchestrator {
 						}
 
 					}
+
 					if (this.pickedNow instanceof MyPiece) { 
 						this.movingPiece = this.pickedNow;
 						this.movingPiece.isSelected = true;

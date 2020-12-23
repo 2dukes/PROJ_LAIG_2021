@@ -42,31 +42,60 @@ class MyGameBoard {
             SECONDPLAYER: 2
         };
 
+        this.gameLevel = 'greedy';
         this.player1Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
         this.player2Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
         this.currentPlayer = 1;
         this.winner = 0; // 0 = No Winner | 1 or 2 is the player number winner
     }
 
-    formatFetchString(finalLine, finalDiagonal, color) {
+    getTileCoordinates(line, diagonal) {
+        // this.tiles.forEach((tile) => {
+        //     console.log(tile.line); console.log(tile.diagonal); console.log("-----COORDS----");
+        //     if (tile.line == line && tile.diagonal == diagonal) 
+        //         return [tile.x, tile.y];
+        // });
+
+        for (let i = 0; i < this.tiles.length; i++) {
+            if (this.tiles[i].diagonal == diagonal && this.tiles[i].line == line) 
+                return [this.tiles[i].x, this.tiles[i].y];
+        }
+
+        return null;
+    }
+
+    formatFetchString(predicateName) {
         let boardString = JSON.stringify(this.board);
 		
-		boardString = boardString.replace (/"/g,''); 
-		let stringParam = `userMove(${boardString}-(`;
-		this.player1Score.forEach((playerColour) => {
+        boardString = boardString.replace (/"/g,''); 
+        let stringParam = `${predicateName}(${boardString}-(`;
+        this.player1Score.forEach((playerColour) => {
 			stringParam += `'${playerColour}'-`;
 		});
 		this.player2Score.forEach((playerColour) => {
 			stringParam += `'${playerColour}'-`;
-		});
-		stringParam = stringParam.slice(0, stringParam.length - 1);
+        });
+        stringParam = stringParam.slice(0, stringParam.length - 1);
+
+        return stringParam;
+    }
+
+    formatFetchStringPlayer(finalLine, finalDiagonal, color) {
+        let stringParam = this.formatFetchString('userMove');
 		stringParam += `),selectedMove(${finalLine}-${finalDiagonal}-${color}),${this.currentPlayer})`;
         
 		return stringParam;
     }
 
+    formatFetchStringComputer() {
+        let stringParam = this.formatFetchString('computerMove');
+        stringParam += `),${this.currentPlayer},${this.gameLevel})`;
+
+        return stringParam;
+    }
+
     async callPrologMove(stringParam) {
-        let response = await fetch(`http://localhost:8080/${stringParam}`, { 
+        let response = await fetch(`http://localhost:8081/${stringParam}`, { 
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -74,15 +103,12 @@ class MyGameBoard {
 		});
         let jsonResponse = await response.json();
         console.log(jsonResponse);
-        if(jsonResponse.success) {
+        if(jsonResponse.success) 
             this.parseResponse(jsonResponse);
-            return true;
-        }
-        else {
-            console.log('Invalid move!');
-            return false;
-        }
+        
+        return jsonResponse;
     }
+
 
     parsePlayerColours(playerColours, playerNumber) {
         if(playerNumber == this.players.FIRSTPLAYER) {
