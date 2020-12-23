@@ -28,18 +28,17 @@ class MyPiece {
 		let keyFrames = [
 			new Transformation(
 				0.1,
-				// [this.position[0], this.position[1], this.position[2]],
 				[0, 0, 0],
 				[0, 0, 0],
 				[1, 1, 1]
 			),
 			new Transformation(2, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
 			new Transformation(
-				2.4,
+				6,
 				[xOffset, zOffset, -this.position[2] + 0.05],
 				[0, 0, 0],
 				[1, 1, 1]
-			),
+			)
 		];
 		this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
 
