@@ -45,7 +45,17 @@ class XMLscene extends CGFscene {
 		let boardString = JSON.stringify(this.gameOrchestrator.gameBoard.board);
 		
 		boardString = boardString.replace (/"/g,''); 
-		let stringParam = `userMove(${boardString}-('FALSE'-'FALSE'-'FALSE'-'FALSE'-'FALSE'-'FALSE'),selectedMove(1-1-green),2)`;
+		let stringParam = `userMove(${boardString}-(`;
+		this.gameOrchestrator.gameBoard.player1Score.forEach((playerColour) => {
+			stringParam += `'${playerColour}'-`;
+		});
+		this.gameOrchestrator.gameBoard.player2Score.forEach((playerColour) => {
+			stringParam += `'${playerColour}'-`;
+		});
+		stringParam = stringParam.slice(0, stringParam.length - 1);
+		stringParam += `),selectedMove(1-1-green),2)`;
+		
+		console.log(stringParam);
 		
         let response = await fetch(`http://localhost:8080/${stringParam}`, { 
             method: 'GET',

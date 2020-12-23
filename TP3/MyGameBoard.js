@@ -35,7 +35,11 @@ class MyGameBoard {
         [                                empty,    empty,   empty,   empty],                    
         [                                     empty,   empty,   empty],                         
         [                                          empty,   empty]                              
-        ]; 
+        ];
+
+        this.player1Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
+        this.player2Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
+        this.currentPlayer = 1;
     }
 
 
