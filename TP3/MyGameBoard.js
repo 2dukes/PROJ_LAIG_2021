@@ -147,7 +147,7 @@ class MyGameBoard {
         let diagonalLineMap = new Map();
 
         // NDiagonal -> NLinha it Starts
-        let startingLine = [1, 1, 2, 3, 4, 5, 7, 8, 10, 12, 13, 16, 19];
+        let startingLine = [1, 1, 2, 3, 4, 5, 7, 8, 10, 12, 14, 16, 19];
         startingLine.forEach(function(value, index) {
             diagonalLineMap.set(index + 1, value);
         });

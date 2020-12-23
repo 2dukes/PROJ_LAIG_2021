@@ -55,11 +55,12 @@ class MyGameOrchestrator {
 							this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
 							this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y));
 							let stringParam = this.gameBoard.formatFetchString(this.pickedNow.line, this.pickedNow.diagonal, this.movingPiece.color);
+							console.log(this.pickedNow.line, this.pickedNow.diagonal);
 							this.gameBoard.callPrologMove(stringParam);
 
-							console.log("-------------------GAME SEQUENCE:------------------");
-							console.log(this.gameSequence.moves);
-							console.log("---------------------------------------------------");
+							// console.log("-------------------GAME SEQUENCE:------------------");
+							// console.log(this.gameSequence.moves);
+							// console.log("---------------------------------------------------");
 
 						}
 
