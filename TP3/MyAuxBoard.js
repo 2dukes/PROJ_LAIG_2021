@@ -74,21 +74,21 @@ class MyAuxBoard {
 						-0.8,
 						2.5 + zOffset,
 						0.05 + height,
-					])
+					],"purple")
 				);
 				stackGreen.push(
 					new MyPiece(this.scene, 0.25, this.greenPieceAp, [
 						1.3,
 						2.5 + zOffset,
 						0.05 + height,
-					])
+					],"green")
 				);
 				stackOrange.push(
 					new MyPiece(this.scene, 0.25, this.orangePieceAp, [
 						0.2,
 						2.5 + zOffset,
 						0.05 + height,
-					])
+					],"orange")
 				);
 				height += 0.05;
 			}

@@ -16,7 +16,7 @@ class XMLscene extends CGFscene {
 	 * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
 	 * @param {CGFApplication} application
 	 */
-	async init(application) {
+	init(application) {
 		super.init(application);
 
 		this.sceneInited = false;
@@ -42,29 +42,29 @@ class XMLscene extends CGFscene {
 
 		this.gameOrchestrator = new MyGameOrchestrator(this);
 
-		let boardString = JSON.stringify(this.gameOrchestrator.gameBoard.board);
+		// let boardString = JSON.stringify(this.gameOrchestrator.gameBoard.board);
 		
-		boardString = boardString.replace (/"/g,''); 
-		let stringParam = `userMove(${boardString}-(`;
-		this.gameOrchestrator.gameBoard.player1Score.forEach((playerColour) => {
-			stringParam += `'${playerColour}'-`;
-		});
-		this.gameOrchestrator.gameBoard.player2Score.forEach((playerColour) => {
-			stringParam += `'${playerColour}'-`;
-		});
-		stringParam = stringParam.slice(0, stringParam.length - 1);
-		stringParam += `),selectedMove(1-1-green),2)`;
+		// boardString = boardString.replace (/"/g,''); 
+		// let stringParam = `userMove(${boardString}-(`;
+		// this.gameOrchestrator.gameBoard.player1Score.forEach((playerColour) => {
+		// 	stringParam += `'${playerColour}'-`;
+		// });
+		// this.gameOrchestrator.gameBoard.player2Score.forEach((playerColour) => {
+		// 	stringParam += `'${playerColour}'-`;
+		// });
+		// stringParam = stringParam.slice(0, stringParam.length - 1);
+		// stringParam += `),selectedMove(1-1-green),2)`;
 		
-		console.log(stringParam);
+		// console.log(stringParam);
 		
-        let response = await fetch(`http://localhost:8080/${stringParam}`, { 
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-		});
-		let jsonResponse = await response.json();
-		console.log(jsonResponse);
+        // let response = await fetch(`http://localhost:8080/${stringParam}`, { 
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     }
+		// });
+		// let jsonResponse = await response.json();
+		// console.log(jsonResponse);
     
 
 		// enable picking

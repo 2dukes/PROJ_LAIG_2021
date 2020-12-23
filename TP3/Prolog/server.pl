@@ -198,8 +198,7 @@ userPlay_LAIG(GameState, Row-Diagonal-Colour, Nplayer-p, Res) :-
 
 	print_move([Row, Diagonal, Colour]),
 
-	NextPlayerAux is mod(Nplayer + 1, 2),
-	NextPlayer is NextPlayerAux + 1,
+	NextPlayer is mod(Nplayer, 2) + 1,
 
 	Board-(Purple_1-Orange_1-Green_1-Purple_2-Orange_2-Green_2) = NewGameState,
 	addJSONQuotesToBoard_Global(Board, [], NewBoard),
@@ -219,9 +218,11 @@ computerPlay_LAIG(GameState, Nplayer-(c-Level), Res) :-
 	check_over_LAIG(NewGameState, Winner),
 
 	print_move(Move),
+	nth1(1, Move, Row),
+	nth1(2, Move, Diagonal),
+	nth1(3, Move, Colour),
 
-	NextPlayerAux is mod(Nplayer + 1, 2),
-	NextPlayer is NextPlayerAux + 1,
+	NextPlayer is mod(Nplayer, 2) + 1,
 	Board-(Purple_1-Orange_1-Green_1-Purple_2-Orange_2-Green_2) = NewGameState,
 
 	addJSONQuotesToBoard_Global(Board, [], NewBoard),

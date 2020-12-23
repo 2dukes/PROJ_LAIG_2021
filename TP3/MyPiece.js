@@ -1,5 +1,5 @@
 class MyPiece {
-	constructor(scene, radius, appearance, position) {
+	constructor(scene, radius, appearance, position, color) {
 		this.scene = scene;
 		this.radius = radius;
 		this.isSelected = false;
@@ -17,6 +17,7 @@ class MyPiece {
 		);
 
 		this.appearance = appearance;
+		this.color = color;
 
 		this.animation = null;
 	}
@@ -34,7 +35,7 @@ class MyPiece {
 			),
 			new Transformation(2, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
 			new Transformation(
-				6,
+				2.3,
 				[xOffset, zOffset, -this.position[2] + 0.05],
 				[0, 0, 0],
 				[1, 1, 1]

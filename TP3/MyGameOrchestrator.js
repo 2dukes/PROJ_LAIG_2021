@@ -14,6 +14,8 @@ class MyGameOrchestrator {
 		this.auxBoard = new MyAuxBoard(this.scene);
 
 		this.movingPiece = null;
+
+		this.gameSequence = new MyGameSequence(this.scene);
 		
 	}
 
@@ -51,6 +53,14 @@ class MyGameOrchestrator {
 						
 						if (this.movingPiece != null) {
 							this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
+							this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y));
+							let stringParam = this.gameBoard.formatFetchString(this.pickedNow.line, this.pickedNow.diagonal, this.movingPiece.color);
+							this.gameBoard.callPrologMove(stringParam);
+
+							console.log("-------------------GAME SEQUENCE:------------------");
+							console.log(this.gameSequence.moves);
+							console.log("---------------------------------------------------");
+
 						}
 
 					}

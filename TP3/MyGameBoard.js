@@ -37,11 +37,69 @@ class MyGameBoard {
         [                                          empty,   empty]                              
         ];
 
+        this.players = {
+            FIRSTPLAYER: 1,
+            SECONDPLAYER: 2
+        };
+
         this.player1Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
         this.player2Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
         this.currentPlayer = 1;
+        this.winner = 0; // 0 = No Winner | 1 or 2 is the player number winner
     }
 
+    formatFetchString(finalLine, finalDiagonal, color) {
+        let boardString = JSON.stringify(this.board);
+		
+		boardString = boardString.replace (/"/g,''); 
+		let stringParam = `userMove(${boardString}-(`;
+		this.player1Score.forEach((playerColour) => {
+			stringParam += `'${playerColour}'-`;
+		});
+		this.player2Score.forEach((playerColour) => {
+			stringParam += `'${playerColour}'-`;
+		});
+		stringParam = stringParam.slice(0, stringParam.length - 1);
+		stringParam += `),selectedMove(${finalLine}-${finalDiagonal}-${color}),${this.currentPlayer})`;
+        
+		return stringParam;
+    }
+
+    async callPrologMove(stringParam) {
+        let response = await fetch(`http://localhost:8080/${stringParam}`, { 
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+		});
+        let jsonResponse = await response.json();
+        console.log(jsonResponse);
+        this.parseResponse(jsonResponse);
+    }
+
+    parsePlayerColours(playerColours, playerNumber) {
+        if(playerNumber == this.players.FIRSTPLAYER) {
+            this.player1Score = [
+                playerColours.purple.toString().toUpperCase(),
+                playerColours.orange.toString().toUpperCase(),
+                playerColours.green.toString().toUpperCase()
+            ];
+        }
+        else {
+            this.player2Score = [
+                playerColours.purple.toString().toUpperCase(),
+                playerColours.orange.toString().toUpperCase(),
+                playerColours.green.toString().toUpperCase()
+            ];
+        }
+    }
+
+    parseResponse(jsonResponse) {
+        this.board = jsonResponse.board;
+        this.currentPlayer = jsonResponse.nextPlayer;
+        this.winner = jsonResponse.winner;
+        this.parsePlayerColours(jsonResponse.currentPlayerColours, jsonResponse.currentPlayer);
+    }
 
     initializeTextures() {
         this.defaultTileAppearance=new CGFappearance(this.scene);
