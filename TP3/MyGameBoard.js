@@ -102,10 +102,14 @@ class MyGameBoard {
     }
 
     parseResponse(jsonResponse) {
+        if(jsonResponse.winner != 0) 
+            alert(`PLAYER ${jsonResponse.winner} won!`);
+        
         this.board = jsonResponse.board;
         this.currentPlayer = jsonResponse.nextPlayer;
         this.winner = jsonResponse.winner;
         this.parsePlayerColours(jsonResponse.currentPlayerColours, jsonResponse.currentPlayer);
+
     }
 
     initializeTextures() {
