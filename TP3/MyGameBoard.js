@@ -74,7 +74,14 @@ class MyGameBoard {
 		});
         let jsonResponse = await response.json();
         console.log(jsonResponse);
-        this.parseResponse(jsonResponse);
+        if(jsonResponse.success) {
+            this.parseResponse(jsonResponse);
+            return true;
+        }
+        else {
+            console.log('Invalid move!');
+            return false;
+        }
     }
 
     parsePlayerColours(playerColours, playerNumber) {
