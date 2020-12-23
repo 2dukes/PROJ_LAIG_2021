@@ -12,35 +12,30 @@ class MyGameBoard {
         this.pickEnabled = false;
         let empty = 'empty';
         this.board = [
-            [                                         empty,    empty],                            
-            [                                     empty,   empty,   empty],                         
-            [                                empty,    empty,   empty,  empty],                    
-            [                           empty,    empty,    empty,   empty,   empty],              
-            [                      empty,    empty,    empty,   empty,   empty,   empty],          
-            [                          empty,     empty,   empty,   empty,    empty],              
-            [                      empty,    empty,    empty,   empty,   empty,   empty],           
-            [                 empty,   empty,     empty,   empty,   empty,    empty,   empty],     
-            [                      empty,    empty,    empty,   empty,  empty,   empty],           
-            [                 empty,   empty,     empty,    empty,   empty,    empty,   empty],      
-            [                      empty,    empty,    empty,   empty,  empty,   empty],           
-            [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
-            [                      empty,    empty,    empty,   empty,  empty,   empty],           
-            [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
-            [                      empty,    empty,    empty,   empty,   empty,   empty],           
-            [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
-            [                      empty,    empty,    empty,   empty,   empty,   empty],           
-            [                           empty,    empty,   empty,    empty,   empty],               
-            [                      empty,    empty,    empty,   empty,   empty,   empty],           
-            [                           empty,    empty,   empty,   empty,   empty],                
-            [                                empty,    empty,   empty,   empty],                    
-            [                                     empty,   empty,   empty],                         
-            [                                          empty,   empty]                              
-            ];
-        var boardString = JSON.stringify(this.board);
-        boardString = boardString.replace (/"/g,''); 
-        console.log(boardString);
-        
-    
+        [                                         empty,    empty],                            
+        [                                     empty,   empty,   empty],                         
+        [                                empty,    empty,   empty,  empty],                    
+        [                           empty,    empty,    empty,   empty,   empty],              
+        [                      empty,    empty,    empty,   empty,   empty,   empty],          
+        [                          empty,     empty,   empty,   empty,    empty],              
+        [                      empty,    empty,    empty,   empty,   empty,   empty],           
+        [                 empty,   empty,     empty,   empty,   empty,    empty,   empty],     
+        [                      empty,    empty,    empty,   empty,  empty,   empty],           
+        [                 empty,   empty,     empty,    empty,   empty,    empty,   empty],      
+        [                      empty,    empty,    empty,   empty,  empty,   empty],           
+        [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
+        [                      empty,    empty,    empty,   empty,  empty,   empty],           
+        [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
+        [                      empty,    empty,    empty,   empty,   empty,   empty],           
+        [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
+        [                      empty,    empty,    empty,   empty,   empty,   empty],           
+        [                           empty,    empty,   empty,    empty,   empty],               
+        [                      empty,    empty,    empty,   empty,   empty,   empty],           
+        [                           empty,    empty,   empty,   empty,   empty],                
+        [                                empty,    empty,   empty,   empty],                    
+        [                                     empty,   empty,   empty],                         
+        [                                          empty,   empty]                              
+        ]; 
     }
 
 

@@ -204,7 +204,7 @@ userPlay_LAIG(GameState, Row-Diagonal-Colour, Nplayer-p, Res) :-
 	Board-(Purple_1-Orange_1-Green_1-Purple_2-Orange_2-Green_2) = NewGameState,
 	addJSONQuotesToBoard_Global(Board, [], NewBoard),
 
-	buildResult(true, Nplayer, NextPlayer, NewBoard, Purple_1-Orange_1-Green_1,
+	buildResult(true, Nplayer, NextPlayer, NewBoard, Row-Diagonal-Colour, Purple_1-Orange_1-Green_1,
 		Purple_2-Orange_2-Green_2, Winner, Res).	
 
 userPlay_LAIG(_, _, Nplayer-p, Res) :-
@@ -226,7 +226,7 @@ computerPlay_LAIG(GameState, Nplayer-(c-Level), Res) :-
 
 	addJSONQuotesToBoard_Global(Board, [], NewBoard),
 
-	buildResult(true, Nplayer, NextPlayer, NewBoard, Purple_1-Orange_1-Green_1,
+	buildResult(true, Nplayer, NextPlayer, NewBoard, Row-Diagonal-Colour, Purple_1-Orange_1-Green_1,
 		Purple_2-Orange_2-Green_2, Winner, Res).
 
 % Check Game Over
@@ -240,9 +240,10 @@ check_over_LAIG(_, 0).
 
 % Response - Success
 
-buildResult(true, Nplayer, NextPlayer, Board, Purple_1-Orange_1-Green_1,
+buildResult(true, Nplayer, NextPlayer, Board, Row-Diagonal-Colour, Purple_1-Orange_1-Green_1,
 	Purple_2-Orange_2-Green_2, Winner, Res) :-
 
+	codeString(Colour, PlayedColour),
 	codeString(Purple_1, Purple1),
 	codeString(Orange_1, Orange1),
 	codeString(Green_1, Green1),
@@ -255,6 +256,9 @@ buildResult(true, Nplayer, NextPlayer, Board, Purple_1-Orange_1-Green_1,
 		'"currentPlayer"': Nplayer,
 		'"nextPlayer"': NextPlayer,
 		'"board"': Board,
+		'"playedRow"': Row,
+		'"playedDiagonal"': Diagonal,
+		'"playedColour"': PlayedColour,
 		'"currentPlayerColours"': {
 			'"purple"': Purple1,
 			'"orange"': Orange1,

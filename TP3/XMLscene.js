@@ -16,7 +16,7 @@ class XMLscene extends CGFscene {
 	 * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
 	 * @param {CGFApplication} application
 	 */
-	init(application) {
+	async init(application) {
 		super.init(application);
 
 		this.sceneInited = false;
@@ -41,6 +41,21 @@ class XMLscene extends CGFscene {
 		this.defaultAppearance = new CGFappearance(this);
 
 		this.gameOrchestrator = new MyGameOrchestrator(this);
+
+		let boardString = JSON.stringify(this.gameOrchestrator.gameBoard.board);
+		
+		boardString = boardString.replace (/"/g,''); 
+		let stringParam = `userMove(${boardString}-('FALSE'-'FALSE'-'FALSE'-'FALSE'-'FALSE'-'FALSE'),selectedMove(1-1-green),2)`;
+		
+        let response = await fetch(`http://localhost:8080/${stringParam}`, { 
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+		});
+		let jsonResponse = await response.json();
+		console.log(jsonResponse);
+    
 
 		// enable picking
 		this.setPickEnabled(true);

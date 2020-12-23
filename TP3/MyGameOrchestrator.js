@@ -14,8 +14,6 @@ class MyGameOrchestrator {
 		this.auxBoard = new MyAuxBoard(this.scene);
 
 		this.movingPiece = null;
-
-		this.gameSequence = new MyGameSequence(this.scene);
 		
 	}
 
@@ -53,7 +51,6 @@ class MyGameOrchestrator {
 						
 						if (this.movingPiece != null) {
 							this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
-							this.gameSequence.addMove(new MyPieceMove(this.scene, this.pickedNow, this.pickedNow.x, this.pickedNow.y));
 						}
 
 					}
