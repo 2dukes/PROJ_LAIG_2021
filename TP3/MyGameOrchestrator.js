@@ -17,13 +17,13 @@ class MyGameOrchestrator {
 
 		this.gameSequence = new MyGameSequence(this.scene);
 
-		this.gameMode = "PvB";
+		this.gameMode = "BvB";
 
 		this.promisePlayer = true;
 		this.promiseComputer = true;
 
 		if (this.gameMode == "BvB") {
-			this.setPickEnabled(false);
+			this.scene.setPickEnabled(false);
 		}
 	}
 
@@ -65,7 +65,7 @@ class MyGameOrchestrator {
 	}
 
 	computerVsComputerMove() {
-		if(this.promiseComputer)
+		if(this.gameMode == "BvB" && this.promiseComputer)
 			this.computerMove();	
 	}
 
@@ -132,7 +132,8 @@ class MyGameOrchestrator {
 			this.auxBoard.pickEnabled = true;
 		}
 
-		this.logPicking();
+		this.gameMode == "BvB" ? this.computerVsComputerMove() : this.logPicking();
+	
 
 		this.scene.pushMatrix();
 
