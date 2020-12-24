@@ -80,6 +80,7 @@ serialInclude([
 	"./MyPieceMove.js",
 	"./MyGameSequence.js",
 	"./MyMenu.js",
+	"./MyMenuButton.js",
 
 	(main = function () {
 		// Standard application, scene and interface setup
