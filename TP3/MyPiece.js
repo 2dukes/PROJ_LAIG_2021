@@ -28,14 +28,20 @@ class MyPiece {
 
 		let keyFrames = [
 			new Transformation(
-				0.01,
+				0,
 				[0, 0, 0],
 				[0, 0, 0],
 				[1, 1, 1]
 			),
-			new Transformation(0.5, [xOffset, zOffset, 0], [0, 0, 0], [1, 1, 1]),
 			new Transformation(
-				1,
+				0.5,
+				[0, 0, 0.2],
+				[0, 0, 0],
+				[1, 1, 1]
+			),
+			new Transformation(1, [xOffset, zOffset, 0.2], [0, 0, 0], [1, 1, 1]),
+			new Transformation(
+				1.5,
 				[xOffset, zOffset, -this.position[2] + 0.05],
 				[0, 0, 0],
 				[1, 1, 1]

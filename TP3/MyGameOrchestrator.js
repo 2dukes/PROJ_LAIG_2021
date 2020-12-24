@@ -65,8 +65,8 @@ class MyGameOrchestrator {
 	}
 
 	computerVsComputerMove() {
-		if(this.gameMode == "BvB" && this.promiseComputer)
-			this.computerMove();	
+		if(this.movingPiece == null && this.gameMode == "BvB" && this.promiseComputer)
+			this.computerMove();
 	}
 
 	async computerMove() {
