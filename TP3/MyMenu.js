@@ -8,7 +8,6 @@ class MyMenu {
         this.choseAll = false;
 
         this.pickedNow = null;
-		this.lastPicked = null;
 
         this.scene.setPickEnabled(true);
     }
@@ -65,7 +64,7 @@ class MyMenu {
 		if (this.scene.pickMode == false) {
 			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
 				for (var i = 0; i < this.scene.pickResults.length; i++) {
-                    this.lastPicked = this.pickedNow;
+                    
                     this.pickedNow = this.scene.pickResults[i][0];
 					if (this.pickedNow instanceof MyMenuButton) {
                         this.pickedNow.isSelected = true;
@@ -78,7 +77,7 @@ class MyMenu {
                             }
                         }
 
-                        console.log(this.pickedNow.optionName);
+                        
 
                         if (this.pickedNow.optionName == "PvP") this.choseMode = "PvP";
                         else if (this.pickedNow.optionName == "PvB") this.choseMode = "PvB";
@@ -90,7 +89,7 @@ class MyMenu {
          
 
                         
-                        if (this.lastPicked != null)  {
+                        
                             
                             if (this.modeNames.includes(this.pickedNow.optionName)) {
                                 for (let k = 0; k < this.chooseGameMode.length; k++) {
@@ -104,14 +103,12 @@ class MyMenu {
                                         this.chooseLevelMode[k].isSelected = false;
                                 }
                             }
-                        }
+                        
                         
 
                     }
 
-                    if (this.lastPicked != null) {
-						this.lastPicked.isPicked = false;
-					}
+                    
 				
 				}
 			}
