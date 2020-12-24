@@ -20,7 +20,8 @@ class MyGameOrchestrator {
 		this.gameMode = "PvB";
 
 		// this.computerPiece = null;
-		this.promise = true;
+		this.promisePlayer = true;
+		this.promiseComputer1 = true;
 
 
 		
@@ -116,24 +117,31 @@ class MyGameOrchestrator {
 					if (this.pickedNow instanceof MyTile) {
 						this.pickedNow.isPicked = true;
 						
-						if (this.movingPiece != null && this.promise) {
+						if (this.movingPiece != null && this.promiseComputer1 && this.promisePlayer) {
 							let stringParamPlayer = this.gameBoard.formatFetchStringPlayer(this.pickedNow.line, this.pickedNow.diagonal, this.movingPiece.color);
-							this.gameBoard.callPrologMove(stringParamPlayer);							
+							this.promisePlayer = false;
+							// alert('0');
+							//this.board = this.gameBoard.board;
+						    await this.gameBoard.callPrologMove(stringParamPlayer);							
+							// alert('1');
+							this.promisePlayer = true;
 							this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
 							this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y));
 							
-							if (this.gameMode == "PvB") {
+							if (this.gameMode == "PvB" && this.promisePlayer) {
+								console.log('BOARD');
+								console.log(this.gameBoard.board);
 								let stringParamBot = this.gameBoard.formatFetchStringComputer();
-								this.promise = false;
+								this.promiseComputer1 = false;
 								let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
-								this.promise = true;
+								this.promiseComputer1 = true;
 								
 								this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
 								
 								let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
-								console.log("--------COORDS:--------------");
-								console.log(tileCoords);
-								console.log(this.movingPiece);
+								// console.log("--------COORDS:--------------");
+								// console.log(tileCoords);
+								// console.log(this.movingPiece);
 								if(tileCoords != null) {
 									this.movingPiece.move(tileCoords[0], tileCoords[1]);
 									this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1]));

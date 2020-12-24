@@ -25,8 +25,7 @@ class MyPiece {
 	move(finalX, finalZ) {
 		let xOffset = finalX - this.position[0];
 		let zOffset = finalZ - this.position[1];
-		console.log(xOffset);
-		console.log(zOffset);
+
 		let keyFrames = [
 			new Transformation(
 				0.01,

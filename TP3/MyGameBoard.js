@@ -100,7 +100,8 @@ class MyGameBoard {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
-		});
+        });
+        console.log(response);
         let jsonResponse = await response.json();
         console.log(jsonResponse);
         if(jsonResponse.success) 
@@ -132,6 +133,7 @@ class MyGameBoard {
             alert(`PLAYER ${jsonResponse.winner} won!`);
         
         this.board = jsonResponse.board;
+        console.log(this.board);
         this.currentPlayer = jsonResponse.nextPlayer;
         this.winner = jsonResponse.winner;
         this.parsePlayerColours(jsonResponse.currentPlayerColours, jsonResponse.currentPlayer);
