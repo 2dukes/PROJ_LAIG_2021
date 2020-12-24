@@ -95,7 +95,7 @@ class MyGameBoard {
     }
 
     async callPrologMove(stringParam) {
-        let response = await fetch(`http://localhost:8081/${stringParam}`, { 
+        let response = await fetch(`http://localhost:8080/${stringParam}`, { 
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

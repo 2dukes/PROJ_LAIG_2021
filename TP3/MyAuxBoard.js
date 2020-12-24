@@ -61,23 +61,26 @@ class MyAuxBoard {
 
 	getNextPiece(color) {
 		if(color == "purple") {
-			for (let i = 0; i < this.purplePieces.length; i++) {
-				if (this.purplePieces[i].length != 0) {
-					return this.purplePieces[i][this.purplePieces[i].length - 1];
+			for (let i = this.purplePieces.length - 1; i >= 0; i--) {
+				for (let j = this.purplePieces[i].length - 1; j >= 0 ; j--) {
+					if (this.purplePieces[i][j].isInAuxBoard) 
+						return this.purplePieces[i][j];
 				}
 			}
 		}
 		else if(color == "orange") {
-			for (let i = 0; i < this.orangePieces.length; i++) {
-				if (this.orangePieces[i].length != 0) {
-					return this.orangePieces[i][this.orangePieces[i].length - 1];
+			for (let i = this.orangePieces.length - 1; i >= 0; i--) {
+				for (let j = this.orangePieces[i].length - 1; j >= 0; j--) {
+					if (this.orangePieces[i][j].isInAuxBoard) 
+						return this.orangePieces[i][j];
 				}
 			}
 		}
 		else if(color == "green") {
-			for (let i = 0; i < this.greenPieces.length; i++) {
-				if (this.greenPieces[i].length != 0) {
-					return this.greenPieces[i][this.greenPieces[i].length - 1];
+			for (let i = this.greenPieces.length - 1; i >= 0; i--) {
+				for (let j = this.greenPieces[i].length - 1; j >= 0 ; j--) {
+					if (this.greenPieces[i][j].isInAuxBoard) 
+						return this.greenPieces[i][j];
 				}
 			}
 		}

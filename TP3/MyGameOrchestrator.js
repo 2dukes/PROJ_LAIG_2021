@@ -126,13 +126,10 @@ class MyGameOrchestrator {
 								let stringParamBot = this.gameBoard.formatFetchStringComputer();
 								this.promise = false;
 								let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
-								//alert('2');
 								this.promise = true;
 								
 								this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
 								
-								/* console.log(jsonResponse.playedRow);
-								console.log(jsonResponse.playedDiagonal); */
 								let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
 								console.log("--------COORDS:--------------");
 								console.log(tileCoords);
