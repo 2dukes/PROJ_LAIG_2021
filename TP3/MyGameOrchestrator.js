@@ -17,7 +17,7 @@ class MyGameOrchestrator {
 
 		this.gameSequence = new MyGameSequence(this.scene);
 
-		this.gameMode = "BvB";
+		this.gameMode = "PvB";
 
 		this.promisePlayer = true;
 		this.promiseComputer = true;

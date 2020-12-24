@@ -1,9 +1,9 @@
 class MySpriteText {
-    constructor(scene, text) {
+    constructor(scene, text, width) {
         this.scene = scene;
         this.text = text;
 
-        this.rectangleWidth = 0.5;
+        this.rectangleWidth = width;
         this.startPosition = (text.length / 2) / 2;
 
         // Create the rectangle primitive

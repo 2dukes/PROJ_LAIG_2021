@@ -1026,7 +1026,7 @@ class MySceneGraph {
                             text = "ABC";
                         }
 
-                        leaf = new MySpriteText(this.scene, text);
+                        leaf = new MySpriteText(this.scene, text, 0.5);
                     }
                     else if(type == 'spriteanim') {
                         let ssId = this.reader.getString(grandgrandChildren[j], 'ssid');
