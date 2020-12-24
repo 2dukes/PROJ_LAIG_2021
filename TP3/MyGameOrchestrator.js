@@ -17,10 +17,11 @@ class MyGameOrchestrator {
 
 		this.gameSequence = new MyGameSequence(this.scene);
 
-		this.gameMode = "PvB";
+		this.gameMode = "BvB";
 
 		this.promisePlayer = true;
 		this.promiseComputer1 = true;
+		this.promiseComputer2 = true;
 		
 	}
 
@@ -78,7 +79,22 @@ class MyGameOrchestrator {
 	}
 
 	async computerVsComputerMove() {
+		if(this.promiseComputer2) {
+			let stringParamBot = this.gameBoard.formatFetchStringComputer();
+			this.promiseComputer2 = false;
+			let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
+			this.promiseComputer2 = true;
+			
+			this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
+			
+			let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
 
+			if(tileCoords != null) {
+				this.movingPiece.move(tileCoords[0], tileCoords[1]);
+				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1]));
+			} else 
+				console.log('Incorrect line or diagonal in computer move!');
+		}
 	}
 
 	logPicking() {
