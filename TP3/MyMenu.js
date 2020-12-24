@@ -71,7 +71,11 @@ class MyMenu {
                         this.pickedNow.isSelected = true;
 
                         if (this.pickedNow.optionName == "ok") {
-                            if (this.checkAllSelected()) this.choseAll = true;
+                            if (this.checkAllSelected()) {
+                                this.choseAll = true;
+                                this.scene.gameOrchestrator.gameMode = this.choseMode;
+                                this.scene.gameOrchestrator.gameBoard.gameLevel = this.choseLevel;
+                            }
                         }
 
                         console.log(this.pickedNow.optionName);

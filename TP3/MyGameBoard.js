@@ -50,12 +50,6 @@ class MyGameBoard {
     }
 
     getTileCoordinates(line, diagonal) {
-        // this.tiles.forEach((tile) => {
-        //     console.log(tile.line); console.log(tile.diagonal); console.log("-----COORDS----");
-        //     if (tile.line == line && tile.diagonal == diagonal) 
-        //         return [tile.x, tile.y];
-        // });
-
         for (let i = 0; i < this.tiles.length; i++) {
             if (this.tiles[i].diagonal == diagonal && this.tiles[i].line == line) 
                 return [this.tiles[i].x, this.tiles[i].y];
