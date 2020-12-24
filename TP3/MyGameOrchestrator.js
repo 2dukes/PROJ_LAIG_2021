@@ -55,9 +55,9 @@ class MyGameOrchestrator {
 			let stringParamPlayer = this.gameBoard.formatFetchStringPlayer(this.pickedNow.line, this.pickedNow.diagonal, this.movingPiece.color);
 			this.promisePlayer = false;
 			await this.gameBoard.callPrologMove(stringParamPlayer);							
-			this.promisePlayer = true;
 			this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
 			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y));
+			this.promisePlayer = true;
 			
 			if (this.gameMode == "PvB") 
 				this.computerMove();
@@ -73,7 +73,6 @@ class MyGameOrchestrator {
 		let stringParamBot = this.gameBoard.formatFetchStringComputer();
 			this.promiseComputer = false;
 			let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
-			this.promiseComputer = true;
 			
 			this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
 			
@@ -82,6 +81,7 @@ class MyGameOrchestrator {
 			if(tileCoords != null) {
 				this.movingPiece.move(tileCoords[0], tileCoords[1]);
 				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1]));
+				this.promiseComputer = true;
 			} else 
 				console.log('Incorrect line or diagonal in computer move!');
 	}
