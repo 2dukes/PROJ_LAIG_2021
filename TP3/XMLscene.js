@@ -42,30 +42,8 @@ class XMLscene extends CGFscene {
 
 		this.gameOrchestrator = new MyGameOrchestrator(this);
 
-		// let boardString = JSON.stringify(this.gameOrchestrator.gameBoard.board);
-		
-		// boardString = boardString.replace (/"/g,''); 
-		// let stringParam = `userMove(${boardString}-(`;
-		// this.gameOrchestrator.gameBoard.player1Score.forEach((playerColour) => {
-		// 	stringParam += `'${playerColour}'-`;
-		// });
-		// this.gameOrchestrator.gameBoard.player2Score.forEach((playerColour) => {
-		// 	stringParam += `'${playerColour}'-`;
-		// });
-		// stringParam = stringParam.slice(0, stringParam.length - 1);
-		// stringParam += `),selectedMove(1-1-green),2)`;
-		
-		// console.log(stringParam);
-		
-        // let response = await fetch(`http://localhost:8080/${stringParam}`, { 
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     }
-		// });
-		// let jsonResponse = await response.json();
-		// console.log(jsonResponse);
-    
+		this.menuOptionSelected = false;
+		this.menu = new MyMenu(this);
 
 		// enable picking
 		this.setPickEnabled(true);
@@ -220,11 +198,9 @@ class XMLscene extends CGFscene {
 			this.lights[i].update();
 		}
 
-		// this.mPlane = new Plane(this, 5, 5);
-		//this.patch = new MyPatch(this, 3, 2, 20, 20, [[-2,-2,0,1],[-2,2,0,1],[0,-2,2,1],[0,2,2,1],[2,-2,0,1],[2,2,0,1]]);
-		//this.barrel = new Barrel(this, 0.25, 0.3, 1, 10, 10);
 
-		if (this.sceneInited) {
+
+		if (this.sceneInited && this.menu.choseAll) {
 			// Draw axis
 
 			this.gameOrchestrator.display();
@@ -237,12 +213,13 @@ class XMLscene extends CGFscene {
 			this.graph.displayScene();
 		} else {
 			// Show some "loading" visuals
-			this.defaultAppearance.apply();
+			this.menu.display();
+			// this.defaultAppearance.apply();
 
-			this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
+			// this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
 
-			this.loadingProgressObject.display();
-			this.loadingProgress++;
+			// this.loadingProgressObject.display();
+			// this.loadingProgress++;
 		}
 
 		this.popMatrix();

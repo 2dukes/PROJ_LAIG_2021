@@ -79,6 +79,7 @@ serialInclude([
 	"./MyAuxBoard.js",
 	"./MyPieceMove.js",
 	"./MyGameSequence.js",
+	"./MyMenu.js",
 
 	(main = function () {
 		// Standard application, scene and interface setup
