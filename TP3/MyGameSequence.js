@@ -10,6 +10,39 @@ class MyGameSequence {
         this.moves.push(move);
     }
 
+    getPreviousBoard() {
+        if(this.moves.length == 0) {
+            let empty = "empty";
+            return [
+                [                                         empty,    empty],                            
+                [                                     empty,   empty,   empty],                         
+                [                                empty,    empty,   empty,  empty],                    
+                [                           empty,    empty,    empty,   empty,   empty],              
+                [                      empty,    empty,    empty,   empty,   empty,   empty],          
+                [                          empty,     empty,   empty,   empty,    empty],              
+                [                      empty,    empty,    empty,   empty,   empty,   empty],           
+                [                 empty,   empty,     empty,   empty,   empty,    empty,   empty],     
+                [                      empty,    empty,    empty,   empty,  empty,   empty],           
+                [                 empty,   empty,     empty,    empty,   empty,    empty,   empty],      
+                [                      empty,    empty,    empty,   empty,  empty,   empty],           
+                [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
+                [                      empty,    empty,    empty,   empty,  empty,   empty],           
+                [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
+                [                      empty,    empty,    empty,   empty,   empty,   empty],           
+                [                 empty,   empty,     empty,   empty,     empty,    empty,   empty],      
+                [                      empty,    empty,    empty,   empty,   empty,   empty],           
+                [                           empty,    empty,   empty,    empty,   empty],               
+                [                      empty,    empty,    empty,   empty,   empty,   empty],           
+                [                           empty,    empty,   empty,   empty,   empty],                
+                [                                empty,    empty,   empty,   empty],                    
+                [                                     empty,   empty,   empty],                         
+                [                                          empty,   empty]                              
+                ];
+        } else {
+            return this.undo().board;
+        }
+    }
+
     undo() {
         if (this.moves.length == 0) return null;
         return this.moves[this.moves.length - 1];

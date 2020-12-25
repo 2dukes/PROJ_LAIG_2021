@@ -66,7 +66,7 @@ class MyGameOrchestrator {
 			this.promisePlayer = false;
 			await this.gameBoard.callPrologMove(stringParamPlayer);							
 			this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
-			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y));
+			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board));
 			this.promisePlayer = true;
 			
 			if (this.gameMode == "PvB") 
@@ -90,7 +90,7 @@ class MyGameOrchestrator {
 
 			if(tileCoords != null) {
 				this.movingPiece.move(tileCoords[0], tileCoords[1]);
-				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1]));
+				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1], this.gameBoard.board));
 				this.promiseComputer = true;
 			} else 
 				console.log('Incorrect line or diagonal in computer move!');
@@ -132,7 +132,7 @@ class MyGameOrchestrator {
 									
 									// this.movingPiece.move(0, 2.5, 0.7);
 									this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
-
+									this.gameBoard.board = this.gameSequence.getPreviousBoard();
 									this.movingPiece.isInAuxBoard = true;
 									this.movingPiece.isSelected = false;
 								}
