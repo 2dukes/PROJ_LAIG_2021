@@ -25,6 +25,13 @@ class MyGameOrchestrator {
 		if (this.gameMode == "BvB") {
 			this.scene.setPickEnabled(false);
 		}
+
+		this.undoButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "undo", 1500);
+
+		this.undoAppearance = new CGFappearance(this.scene);
+		this.undoTexture = new CGFtexture(this.scene, "./scenes/images/menu/undo.png");
+		this.undoAppearance.setTexture(this.undoTexture);
+
 	}
 
 	update(currentTime) {
@@ -35,6 +42,7 @@ class MyGameOrchestrator {
 			this.movingPiece.update(currentTime);
 
 			if (this.movingPiece.animation == null) {
+				this.movingPiece.updateFinalCoordinates();
 				this.movingPiece.isMoving = false;
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
@@ -42,6 +50,7 @@ class MyGameOrchestrator {
 			}
 
 			if (this.movingPiece.animation.animationEnded) {
+				this.movingPiece.updateFinalCoordinates();
 				this.movingPiece.isMoving = false;
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
@@ -106,6 +115,20 @@ class MyGameOrchestrator {
 
 						if (this.lastPicked != null) this.lastPicked.isSelected = false;
 					}
+
+					if (this.pickedNow instanceof MyMenuButton) {
+
+						if (this.pickedNow.optionName == "undo") {
+							console.log(this.gameSequence.undo());
+							// let lastMove = this.gameSequence.undo();
+							
+							// console.log(lastMove);
+							// let lastPieceMoved = lastMove.pieceToMove;
+							// let nextStackPosition = lastPieceMoved.getNextStackPosition(lastPieceMoved.color);
+							// this.lastPieceMoved.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
+							// this.updateFinalCoordinates();
+						}
+                    }
 			
 					if (this.lastPicked != null) {
 						this.lastPicked.isPicked = false;
@@ -144,6 +167,17 @@ class MyGameOrchestrator {
 		this.scene.clearPickRegistration();
 
 		this.auxBoard.display();
+		this.scene.clearPickRegistration();
+
+		this.scene.popMatrix();
+
+		this.scene.pushMatrix();
+
+        this.undoAppearance.apply();
+		
+		this.scene.translate(5, 1.1, 7);
+		this.scene.rotate(Math.PI, 0, 1, 0);
+		this.undoButton.display();
 		this.scene.clearPickRegistration();
 
 		this.scene.popMatrix();

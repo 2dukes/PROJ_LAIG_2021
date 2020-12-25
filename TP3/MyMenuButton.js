@@ -6,6 +6,9 @@ class MyMenuButton {
         this.button = new MyRectangle(scene, x1, y1, x2, y2);
 
         this.isSelected = false;
+
+        this.defaultAp = new CGFappearance(this.scene);
+        this.defaultAp.setTexture(null);
     }
     
     display() {
@@ -22,5 +25,6 @@ class MyMenuButton {
         this.button.display();
 
         this.scene.popMatrix();
+
     }
 }

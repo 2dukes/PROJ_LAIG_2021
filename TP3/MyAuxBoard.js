@@ -132,6 +132,25 @@ class MyAuxBoard {
 		}
 	}
 
+	getNextStackPosition(color) {
+		let pieces = [];
+		let offsetZ = 0;
+		if (color == "purple") {pieces = this.purplePieces; offsetZ = 3; }
+		else if (color == "green") {pieces = this.greenPieces; offsetZ = 2.5; }
+		else if (color == "orange") {pieces = this.orangePieces; offsetZ = 2; }
+		
+		for (let i = pieces.length - 1; i >= 0; i--) {
+			for (let j = pieces[i].length - 1; j >= 0; j--) {
+				if (pieces[i][j].isInAuxBoard && pieces[i].length < 14) {
+					let undoPiecePosition = pieces[i][j].position;
+					undoPiecePosition[2] += pieces[i][j].height;
+					return undoPiecePosition;
+				} 
+			}
+		}
+		return [0, offsetZ, 0];
+	}
+
 	display() {
 		this.scene.pushMatrix();
 		for (let i = 0; i < this.purplePieces.length; i++) {

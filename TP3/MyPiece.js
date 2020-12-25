@@ -20,11 +20,52 @@ class MyPiece {
 		this.color = color;
 
 		this.animation = null;
+
+		this.finalPosition = [];
 	}
 
-	move(finalX, finalZ) {
-		let xOffset = finalX - this.position[0];
-		let zOffset = finalZ - this.position[1];
+	// move(finalX, finalZ) {
+	// 	let	xOffset = finalX - this.position[0];
+	// 	let	zOffset = finalZ - this.position[1];
+		
+	// 	let keyFrames = [
+	// 		new Transformation(
+	// 			0,
+	// 			[0, 0, 0],
+	// 			[0, 0, 0],
+	// 			[1, 1, 1]
+	// 		),
+	// 		new Transformation(
+	// 			0.5,
+	// 			[0, 0, 0.2],
+	// 			[0, 0, 0],
+	// 			[1, 1, 1]
+	// 		),
+	// 		new Transformation(1, [xOffset, zOffset, 0.2], [0, 0, 0], [1, 1, 1]),
+	// 		new Transformation(
+	// 			1.5,
+	// 			[xOffset, zOffset, -this.position[2] + 0.05],
+	// 			[0, 0, 0],
+	// 			[1, 1, 1]
+	// 		)
+	// 	];
+	// 	this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
+
+	// 	this.isMoving = true;
+	// 	this.isInAuxBoard = false;
+		
+	// }
+
+	move(finalX, finalZ, finalY) {
+
+		let	xOffset = finalX - this.position[0];
+		let	zOffset = finalZ - this.position[1];
+		let yOffset = -this.position[2] + 0.05;
+		if (finalY !== undefined) {
+			xOffset = finalX - this.finalPosition[0];
+			zOffset = finalZ - this.finalPosition[1];
+			yOffset = finalY - this.finalPosition[2];
+		}
 
 		let keyFrames = [
 			new Transformation(
@@ -42,17 +83,28 @@ class MyPiece {
 			new Transformation(1, [xOffset, zOffset, 0.2], [0, 0, 0], [1, 1, 1]),
 			new Transformation(
 				1.5,
-				[xOffset, zOffset, -this.position[2] + 0.05],
+				[xOffset, zOffset, yOffset],
 				[0, 0, 0],
 				[1, 1, 1]
 			)
 		];
 		this.animation = new KeyFrameAnimation(this.scene, keyFrames, "");
-
-		this.isMoving = true;
-		this.isInAuxBoard = false;
 		
+		this.isMoving = true;
+
+		this.isInAuxBoard = false;
+		if (finalY !== "undefined") this.isInAuxBoard = true;
 	}
+
+	updateFinalCoordinates() { // Update animation final coordinates
+		this.finalPosition[0] = this.position[0] + this.animation.keyFrames[2].translation[0];
+		this.finalPosition[1] = this.position[1] + this.animation.keyFrames[2].translation[1];
+		this.finalPosition[2] = 0.05;
+		console.log("POSITION:");
+		console.log(this.animation.keyFrames);
+		console.log(this.finalPosition);
+	}
+
 
 	update(currentTime) {
 		if (this.isMoving && this.animation != null) {
