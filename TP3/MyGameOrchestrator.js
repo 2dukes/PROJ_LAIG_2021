@@ -122,9 +122,9 @@ class MyGameOrchestrator {
 
 						if (this.pickedNow.optionName == "undo") {
 
-							this.movingPiece = this.gameSequence.undo().pieceToMove;
-							if(this.movingPiece != null) {
-								
+							let lastGameSequence = this.gameSequence.undo();
+							if(lastGameSequence != null) {
+								this.movingPiece = lastGameSequence.pieceToMove;
 								this.gameSequence.pop();
 
 								if (this.movingPiece !== null && this.movingPiece !== undefined) {
