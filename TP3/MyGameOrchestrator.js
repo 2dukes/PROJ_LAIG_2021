@@ -123,25 +123,19 @@ class MyGameOrchestrator {
 						if (this.pickedNow.optionName == "undo") {
 
 							let last = this.gameSequence.undo();
-							
-							let lastPieceMoved = last.pieceToMove;
 
-							let nextStackPosition = this.auxBoard.getNextStackPosition(lastPieceMoved.color);
-							this.movingPiece = lastPieceMoved;
-							
-							this.movingPiece.position[0] = this.movingPiece.finalPosition[0];
-							this.movingPiece.position[1] = this.movingPiece.finalPosition[1];
-							this.movingPiece.position[2] = this.movingPiece.finalPosition[2];
+							if (last !== null && last != undefined) {
+								let nextStackPosition = this.auxBoard.getNextStackPosition(last.pieceToMove.color);
+								this.movingPiece = last.pieceToMove;
+								
+								this.movingPiece.position[0] = this.movingPiece.finalPosition[0];
+								this.movingPiece.position[1] = this.movingPiece.finalPosition[1];
+								this.movingPiece.position[2] = this.movingPiece.finalPosition[2];
 
+								this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);		
+							}
 
-							console.log("STACK POS:");
-							console.log(nextStackPosition);
-
-							
-
-							this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
-
-							
+											
 						}
                     }
 			

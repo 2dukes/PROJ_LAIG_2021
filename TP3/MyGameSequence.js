@@ -10,7 +10,8 @@ class MyGameSequence {
         this.moves.push(move);
     }
 
-    undo() { 
+    undo() {
+        if (this.moves.length == 0) return null;
         let undoMove = this.moves[this.moves.length - 1];
         this.moves.pop();
         return undoMove;
