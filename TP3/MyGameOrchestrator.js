@@ -50,9 +50,11 @@ class MyGameOrchestrator {
 			}
 
 			if (this.movingPiece.animation.animationEnded) {
+				//alert('a');
 				this.movingPiece.updateFinalCoordinates();
 				this.movingPiece.isMoving = false;
 				this.movingPiece.isSelected = false;
+				this.movingPiece.animation = null;
 				this.movingPiece = null;
 			}
 		
@@ -110,27 +112,44 @@ class MyGameOrchestrator {
 					}
 
 					if (this.pickedNow instanceof MyPiece) { 
+
+						
+
 						this.movingPiece = this.pickedNow;
 						this.movingPiece.isSelected = true;
+						console.log("MOVING PIECE");
+						console.log(this.movingPiece);
+						console.log(this.movingPiece.isSelected);
+						console.log("PICKED NOW");
+						console.log(this.pickedNow);
+						console.log(this.pickedNow.isSelected);
 
-						if (this.lastPicked != null) this.lastPicked.isSelected = false;
+						console.log("LAST PICKED");
+						console.log(this.lastPicked);
+
+						if (this.lastPicked != null && (this.lastPicked instanceof MyPiece || this.lastPicked instanceof MyTile)) this.lastPicked.isSelected = false;
 					}
 
 					if (this.pickedNow instanceof MyMenuButton) {
 
 						if (this.pickedNow.optionName == "undo") {
 
-							let last = this.gameSequence.undo();
+							this.movingPiece = this.gameSequence.undo().pieceToMove;
+							this.gameSequence.pop();
 
-							if (last !== null && last !== undefined) {
-								let nextStackPosition = this.auxBoard.getNextStackPosition(last.pieceToMove.color);
-								this.movingPiece = last.pieceToMove;
+							if (this.movingPiece !== null && this.movingPiece !== undefined) {
+								let nextStackPosition = this.auxBoard.getNextStackPosition(this.movingPiece.color);
 								
 								this.movingPiece.position[0] = this.movingPiece.finalPosition[0];
 								this.movingPiece.position[1] = this.movingPiece.finalPosition[1];
 								this.movingPiece.position[2] = this.movingPiece.finalPosition[2];
 
+								//this.movingPiece.position = this.movingPiece.finalPosition;
+
 								this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
+
+								this.movingPiece.isInAuxBoard = true;
+								this.movingPiece.isSelected = false;
 							}
 
 											
