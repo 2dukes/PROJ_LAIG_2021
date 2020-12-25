@@ -117,7 +117,7 @@ class MyMenu {
     }
     
     checkAllSelected() {
-        return this.choseMode != "" && this.choseLevel != "";
+        return (this.choseMode != "" && this.choseLevel != "") || (this.choseMode == "PvP");
     }
 
     display() {
