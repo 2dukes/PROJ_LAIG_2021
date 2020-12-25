@@ -16,6 +16,7 @@ class MyGameSequence {
     }
 
     pop() {
-        this.moves.pop();
+        if (this.moves.length != 0)
+            this.moves.pop();
     }
 }
