@@ -93,7 +93,7 @@ class MyPiece {
 		this.isMoving = true;
 
 		this.isInAuxBoard = false;
-		if (finalY !== "undefined") this.isInAuxBoard = true;
+		if (finalY !== undefined) this.isInAuxBoard = true;
 	}
 
 	updateFinalCoordinates() { // Update animation final coordinates
