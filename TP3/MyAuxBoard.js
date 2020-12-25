@@ -60,7 +60,21 @@ class MyAuxBoard {
 	}
 
 	getNextPiece(color) {
-		if(color == "purple") {
+
+		let pieces;
+
+		if (color == "purple") pieces = this.purplePieces;
+		else if (color == "orange") pieces = this.orangePieces;
+		else if (color == "green") pieces = this.greenPieces;
+		
+		for (let i = pieces.length - 1; i >= 0; i--) {
+			for (let j = pieces[i].length - 1; j >= 0 ; j--) {
+				if (pieces[i][j].isInAuxBoard) 
+					return pieces[i][j];
+			}
+		}
+		
+		/* if(color == "purple") {
 			for (let i = this.purplePieces.length - 1; i >= 0; i--) {
 				for (let j = this.purplePieces[i].length - 1; j >= 0 ; j--) {
 					if (this.purplePieces[i][j].isInAuxBoard) 
@@ -83,7 +97,7 @@ class MyAuxBoard {
 						return this.greenPieces[i][j];
 				}
 			}
-		}
+		} */
 
 		return null;
 	}
@@ -142,38 +156,19 @@ class MyAuxBoard {
 
 	getNextStackPosition(color) {
 
+		let pieces;
 		let offsetZ = 0;
-		if (color == "purple") {offsetZ = 3; }
-		else if (color == "green") {offsetZ = 2.5; }
-		else if (color == "orange") {offsetZ = 2; }
-		
-		for (let i = this.purplePieces.length - 1; i >= 0; i--) {
-			for (let j = this.purplePieces[i].length - 1; j >= 0; j--) {
-				if (this.purplePieces[i][j].isInAuxBoard && this.getStackLen(this.purplePieces[i]) < 14) {
-					
-					let undoPiecePosition = this.purplePieces[i][j].position.slice();
-					undoPiecePosition[2] = 0.05 + (j + 1)*0.05;
-					
-					return undoPiecePosition;
-				} 
-			}
-		}
+		if (color == "purple") {offsetZ = 3; pieces = this.purplePieces;}
+		else if (color == "green") {offsetZ = 2.5; pieces = this.greenPieces;}
+		else if (color == "orange") {offsetZ = 2; pieces = this.orangePieces;}
 
-		for (let i = this.greenPieces.length - 1; i >= 0; i--) {
-			for (let j = this.greenPieces[i].length - 1; j >= 0; j--) {
-				if (this.greenPieces[i][j].isInAuxBoard && this.getStackLen(this.greenPieces[i]) < 14) {
-					let undoPiecePosition = this.greenPieces[i][j].position.slice();
+		for (let i = pieces.length - 1; i >= 0; i--) {
+			for (let j = pieces[i].length - 1; j >= 0; j--) {
+				if (pieces[i][j].isInAuxBoard && this.getStackLen(pieces[i]) < 14) {
+					
+					let undoPiecePosition = pieces[i][j].position.slice();
 					undoPiecePosition[2] = 0.05 + (j + 1)*0.05;
-					return undoPiecePosition;
-				} 
-			}
-		}
-
-		for (let i = this.orangePieces.length - 1; i >= 0; i--) {
-			for (let j = this.orangePieces[i].length - 1; j >= 0; j--) {
-				if (this.orangePieces[i][j].isInAuxBoard && this.getStackLen(this.orangePieces[i]) < 14) {
-					let undoPiecePosition = this.orangePieces[i][j].position.slice();
-					undoPiecePosition[2] = 0.05 + (j + 1)*0.05;
+					
 					return undoPiecePosition;
 				} 
 			}
@@ -184,6 +179,7 @@ class MyAuxBoard {
 
 	display() {
 		this.scene.pushMatrix();
+
 		for (let i = 0; i < this.purplePieces.length; i++) {
 			for (let j = 0; j < this.purplePieces[i].length; j++) {
 				if (this.pickEnabled && this.purplePieces[i][j].isInAuxBoard) this.scene.registerForPick(200 + i, this.purplePieces[i][j]);
