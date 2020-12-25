@@ -41,6 +41,8 @@ class MyGameOrchestrator {
 		if (this.movingPiece.animation != null) {
 			this.movingPiece.update(currentTime);
 
+			//this.movingPiece.updateFinalCoordinates();
+
 			if (this.movingPiece.animation == null) {
 				this.movingPiece.updateFinalCoordinates();
 				this.movingPiece.isMoving = false;
@@ -119,21 +121,27 @@ class MyGameOrchestrator {
 					if (this.pickedNow instanceof MyMenuButton) {
 
 						if (this.pickedNow.optionName == "undo") {
-							// console.log(this.gameSequence.undo());
+
 							let last = this.gameSequence.undo();
-							console.log(last);
-							console.log(last.pieceToMove);
 							
 							let lastPieceMoved = last.pieceToMove;
-							// console.log(lastPieceMoved);
+
 							let nextStackPosition = this.auxBoard.getNextStackPosition(lastPieceMoved.color);
 							this.movingPiece = lastPieceMoved;
+							
 							this.movingPiece.position[0] = this.movingPiece.finalPosition[0];
 							this.movingPiece.position[1] = this.movingPiece.finalPosition[1];
 							this.movingPiece.position[2] = this.movingPiece.finalPosition[2];
 
+
+							console.log("STACK POS:");
+							console.log(nextStackPosition);
+
+							
+
 							this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
-							// this.updateFinalCoordinates();
+
+							
 						}
                     }
 			

@@ -141,9 +141,16 @@ class MyAuxBoard {
 		
 		for (let i = pieces.length - 1; i >= 0; i--) {
 			for (let j = pieces[i].length - 1; j >= 0; j--) {
-				if (pieces[i][j].isInAuxBoard && pieces[i].length < 14) {
+				if (pieces[i][j].isInAuxBoard) { // TODO:  && pieces[i].length < 14
 					let undoPiecePosition = pieces[i][j].position;
-					undoPiecePosition[2] += pieces[i][j].height;
+					undoPiecePosition[2] = 0.05 + (j + 1)*0.05;
+					console.log("POSSSSS:");
+					console.log(undoPiecePosition[2]);
+
+					console.log(pieces[i][j]);
+
+					// pieces[i][j].isSelected = false;
+					// pieces[i][j].isInAuxBoard = true;
 					return undoPiecePosition;
 				} 
 			}
