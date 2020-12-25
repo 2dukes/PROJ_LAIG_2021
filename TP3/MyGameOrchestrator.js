@@ -41,8 +41,6 @@ class MyGameOrchestrator {
 		if (this.movingPiece.animation != null) {
 			this.movingPiece.update(currentTime);
 
-			//this.movingPiece.updateFinalCoordinates();
-
 			if (this.movingPiece.animation == null) {
 				this.movingPiece.updateFinalCoordinates();
 				this.movingPiece.isMoving = false;
@@ -124,7 +122,7 @@ class MyGameOrchestrator {
 
 							let last = this.gameSequence.undo();
 
-							if (last !== null && last != undefined) {
+							if (last !== null && last !== undefined) {
 								let nextStackPosition = this.auxBoard.getNextStackPosition(last.pieceToMove.color);
 								this.movingPiece = last.pieceToMove;
 								
@@ -132,7 +130,7 @@ class MyGameOrchestrator {
 								this.movingPiece.position[1] = this.movingPiece.finalPosition[1];
 								this.movingPiece.position[2] = this.movingPiece.finalPosition[2];
 
-								this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);		
+								this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
 							}
 
 											

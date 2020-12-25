@@ -132,6 +132,14 @@ class MyAuxBoard {
 		}
 	}
 
+	getStackLen(stack) {
+		let len = 0;
+		for (let i = 0; i < stack.length; i++) {
+			if (stack[i].isInAuxBoard) len++;
+		}
+		return len;
+	}
+
 	getNextStackPosition(color) {
 		let pieces = [];
 		let offsetZ = 0;
@@ -141,7 +149,7 @@ class MyAuxBoard {
 		
 		for (let i = pieces.length - 1; i >= 0; i--) {
 			for (let j = pieces[i].length - 1; j >= 0; j--) {
-				if (pieces[i][j].isInAuxBoard) { // TODO:  && pieces[i].length < 14
+				if (pieces[i][j].isInAuxBoard && this.getStackLen(pieces[i]) < 14) { // TODO:  && pieces[i].length < 14
 					let undoPiecePosition = pieces[i][j].position;
 					undoPiecePosition[2] = 0.05 + (j + 1)*0.05;
 					console.log("POSSSSS:");
