@@ -76,11 +76,11 @@ class MyPiece {
 			),
 			new Transformation(
 				0.5,
-				[0, 0, 0.2],
+				[0, 0, 1.2],
 				[0, 0, 0],
 				[1, 1, 1]
 			),
-			new Transformation(1, [xOffset, zOffset, 0.2], [0, 0, 0], [1, 1, 1]),
+			new Transformation(1, [xOffset, zOffset, 1.2], [0, 0, 0], [1, 1, 1]),
 			new Transformation(
 				1.5,
 				[xOffset, zOffset, yOffset],
@@ -97,12 +97,9 @@ class MyPiece {
 	}
 
 	updateFinalCoordinates() { // Update animation final coordinates
-		this.finalPosition[0] = this.position[0] + this.animation.keyFrames[2].translation[0];
-		this.finalPosition[1] = this.position[1] + this.animation.keyFrames[2].translation[1];
-		this.finalPosition[2] = 0.05;
-		console.log("POSITION:");
-		console.log(this.animation.keyFrames);
-		console.log(this.finalPosition);
+		this.finalPosition[0] = this.position[0] + this.animation.keyFrames[3].translation[0];
+		this.finalPosition[1] = this.position[1] + this.animation.keyFrames[3].translation[1];
+		this.finalPosition[2] = this.position[2] + this.animation.keyFrames[3].translation[2];
 	}
 
 
