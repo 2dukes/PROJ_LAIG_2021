@@ -44,6 +44,7 @@ class XMLscene extends CGFscene {
 
 		this.menuOptionSelected = false;
 		this.menu = new MyMenu(this);
+		this.animationCamera = null;
 
 		// enable picking
 		this.setPickEnabled(true);
@@ -60,6 +61,9 @@ class XMLscene extends CGFscene {
 			vec3.fromValues(15, 15, 15),
 			vec3.fromValues(0, 0, 0)
 		);
+
+		this.interface.setActiveCamera(this.camera);
+		this.newCamera = this.camera;
 	}
 	/**
 	 * Initializes the scene lights with the values read from the XML file.
@@ -99,12 +103,13 @@ class XMLscene extends CGFscene {
 	}
 
 	updateCamera() {
-		let index = 0,
-			x;
+		let index = 0, x;
 		for (x in this.graph.cameras) {
 			if (index == this.selectedCamera) {
-				this.camera = this.graph.cameras[x];
-				this.interface.setActiveCamera(this.camera);
+				this.newCamera = this.graph.cameras[x];
+				this.animationCamera = new CameraAnimation(this, "cameraAnimation", this.camera, this.newCamera, 2);
+				this.camera = this.newCamera;
+				this.animationCamera.apply();
 				break;
 			} else index++;
 		}
@@ -124,34 +129,31 @@ class XMLscene extends CGFscene {
 		this.sceneInited = true;
 
 		// Gui SetUp -> Cameras
+		
 
 		this.selectedCamera = 0;
 		this.cameraIds = {};
-		let index = 0,
-			x;
+		let index = 0, x;
 		let setCamera = false;
 		for (x in this.graph.cameras) {
 			if (x == this.graph.defaultCamera) {
 				setCamera = true;
 				this.selectedCamera = index;
 			}
-
 			this.cameraIds[x] = index;
 			index++;
 		}
 
-		// console.log(this.cameraIds);
-		if (setCamera) {
-			this.gui
-				.add(this, "selectedCamera", this.cameraIds)
-				.name("Camera")
-				.onChange(this.updateCamera.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
-			this.updateCamera();
-		}
+	
+		this.gui
+			.add(this, "selectedCamera", this.cameraIds)
+			.name("Camera")
+			.onChange(this.updateCamera.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
+
 
 		// Gui SetUp -> Lights - Done in initLights().
 
-		this.setUpdatePeriod(100);
+		this.setUpdatePeriod(1000 / 60);
 	}
 
 	/**
@@ -163,14 +165,16 @@ class XMLscene extends CGFscene {
 
 		let timeInSeconds = timeInterval / 1000;
 
-		for (let keyframeAnimation of this.animations) {
+		for (let keyframeAnimation of this.animations) 
 			keyframeAnimation.update(timeInSeconds);
-		}
 
 		// console.log(this.spriteSheetAnim);
-		for (let spriteSheetAnim of this.spriteSheetAnim) {
+		for (let spriteSheetAnim of this.spriteSheetAnim) 
 			spriteSheetAnim.update(timeInSeconds);
-		}
+		
+		if (this.animationCamera != null) 
+			this.animationCamera.update(timeInSeconds);
+			
 
 		this.gameOrchestrator.update(timeInSeconds);
 	}
@@ -198,9 +202,12 @@ class XMLscene extends CGFscene {
 			this.lights[i].update();
 		}
 
+		if (this.animationCamera != null) {
+			this.animationCamera.apply();
+		}
 
 
-		if (this.sceneInited && this.menu.choseAll) {
+		if (this.sceneInited /*&& this.menu.choseAll*/) {
 			// Draw axis
 
 			this.gameOrchestrator.display();
@@ -212,14 +219,14 @@ class XMLscene extends CGFscene {
 			// Displays the scene (MySceneGraph function).
 			this.graph.displayScene();
 		} else {
-			// Show some "loading" visuals
-			this.menu.display();
-			// this.defaultAppearance.apply();
+			// Show Menu
+			// this.menu.display();
+			this.defaultAppearance.apply();
 
-			// this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
+			this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
 
-			// this.loadingProgressObject.display();
-			// this.loadingProgress++;
+			this.loadingProgressObject.display();
+			this.loadingProgress++;
 		}
 
 		this.popMatrix();
