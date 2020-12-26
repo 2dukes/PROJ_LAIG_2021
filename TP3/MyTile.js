@@ -6,7 +6,7 @@ class MyTile {
         this.diagonal = diagonal;
         this.radius = radius;
         this.piece = null;
-        this.isPicked = false;
+        this.isSelected = false;
         this.tile = new MyCylinder(this.scene, this.radius, this.radius, 0.05, 6, 1);
 
         this.appearance1 = appearance1;
@@ -29,7 +29,7 @@ class MyTile {
 
         this.scene.pushMatrix();
 
-        if (this.isPicked) {
+        if (this.isSelected) {
             this.appearance1.apply();
         }
         else {

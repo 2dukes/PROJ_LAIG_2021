@@ -61,7 +61,7 @@ class MyGameBoard {
     deselectTile(x, y) {
         for (let i = 0; i < this.tiles.length; i++) {
             if (this.tiles[i].x == x && this.tiles[i].y == y) {
-                this.tiles[i].isPicked = false;
+                this.tiles[i].isSelected = false;
                 return;
             }
         }

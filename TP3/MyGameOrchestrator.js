@@ -111,7 +111,7 @@ class MyGameOrchestrator {
 				this.gameBoard.board = this.gameSequence.getPreviousBoard();
 				this.movingPiece.isInAuxBoard = true;
 				this.movingPiece.isSelected = false;
-				this.gameBoard.deselectTile(lastGameSequence.finalX, lastGameSequence.finalY);	
+				this.gameBoard.deselectTile(lastGameSequence.finalX, lastGameSequence.finalY);
 			}
 			
 		}
@@ -125,7 +125,7 @@ class MyGameOrchestrator {
 					this.lastPicked = this.pickedNow;
 					this.pickedNow = this.scene.pickResults[i][0];
 					if (this.pickedNow instanceof MyTile) {
-						this.pickedNow.isPicked = true;
+						this.pickedNow.isSelected = true;
 						
 						this.gameMove();
 
@@ -143,7 +143,6 @@ class MyGameOrchestrator {
 
 						if (this.pickedNow.optionName == "undo" && this.finishedUndo) {
 							this.finishedUndo = false;
-							console.log('a');	
 
 							if (this.gameMode == "PvP") {
 								this.undoMove();
@@ -164,7 +163,7 @@ class MyGameOrchestrator {
                     }
 			
 					if (this.lastPicked != null) {
-						this.lastPicked.isPicked = false;
+						this.lastPicked.isSelected = false;
 					}
 				}
 			}
