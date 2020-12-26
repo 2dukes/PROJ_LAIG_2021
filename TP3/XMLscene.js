@@ -1,4 +1,4 @@
-z/**
+/**
  * XMLscene class, representing the scene that is to be rendered.
  */
 class XMLscene extends CGFscene {
@@ -228,13 +228,13 @@ class XMLscene extends CGFscene {
 
 
 		if (this.sceneInited && this.menu.choseAll) {
+			// Draw axis
 
 			this.axis.display();
 			this.defaultAppearance.apply();
 
+			// Displays the scene and game
 			this.gameOrchestrator.display();
-
-			// Displays the scene (MySceneGraph function).
 			this.graph[this.selectedTheme].displayScene();
 		} else {
 			// Show Menu
