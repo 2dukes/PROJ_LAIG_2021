@@ -88,7 +88,7 @@ class XMLscene extends CGFscene {
 				this.lights[i].setDiffuse(...graphLight[3]);
 				this.lights[i].setSpecular(...graphLight[4]);
 
-				this.lights[i].setVisible(true);
+				// this.lights[i].setVisible(true);
 
 				if (graphLight[0]) this.lights[i].enable();
 				else this.lights[i].disable();
@@ -102,7 +102,7 @@ class XMLscene extends CGFscene {
 		}
 	}
 
-	updateCamera() {
+	updateCameraGUI() {
 		let index = 0, x;
 		for (x in this.graph.cameras) {
 			if (index == this.selectedCamera) {
@@ -114,6 +114,7 @@ class XMLscene extends CGFscene {
 			} else index++;
 		}
 	}
+
 	/** Handler called when the graph is finally loaded.
 	 * As loading is asynchronous, this may be called already after the application has started the run loop
 	 */
@@ -148,7 +149,7 @@ class XMLscene extends CGFscene {
 		this.gui
 			.add(this, "selectedCamera", this.cameraIds)
 			.name("Camera")
-			.onChange(this.updateCamera.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
+			.onChange(this.updateCameraGUI.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
 
 
 		// Gui SetUp -> Lights - Done in initLights().
@@ -207,7 +208,7 @@ class XMLscene extends CGFscene {
 		}
 
 
-		if (this.sceneInited && this.menu.choseAll) {
+		if (this.sceneInited /*&& this.menu.choseAll*/) {
 			// Draw axis
 
 			this.gameOrchestrator.display();
@@ -221,13 +222,13 @@ class XMLscene extends CGFscene {
 		} else {
 			// Show Menu
 
-			this.menu.display();
-			// this.defaultAppearance.apply();
+			// this.menu.display();
+			this.defaultAppearance.apply();
 
-			// this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
+			this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
 
-			// this.loadingProgressObject.display();
-			// this.loadingProgress++;
+			this.loadingProgressObject.display();
+			this.loadingProgress++;
 		}
 
 		this.popMatrix();

@@ -20,11 +20,14 @@
             <from x="0" y="15" z="0" />
             <to x="5" y="0" z="5" />
         </perspective>
-        <ortho id="demoOrtho" near="0.01" far="100" left="-10" right="10" top="12" bottom="-12">
-            <from x="-5" y="5" z="10" />
-            <to x="5" y="1" z="5" />
-            <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
-        </ortho>
+        <perspective id="firstPlayerView" near="1.0" far="200" angle="45.0">
+            <from x="0.5" y="3" z="5" />
+            <to x="9.5" y="1" z="5" />
+        </perspective>
+        <perspective id="secondPlayerView" near="1.0" far="200" angle="45.0">
+            <from x="9.5" y="3" z="5" />
+            <to x="0.5" y="1" z="5" />
+        </perspective>
     </views>
 
     <illumination>
