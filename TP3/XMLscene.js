@@ -55,11 +55,11 @@ class XMLscene extends CGFscene {
 	 */
 	initCameras() {
 		this.camera = new CGFcamera(
-			0.75,
-			0.75,
-			550,
-			vec3.fromValues(15, 15, 15),
-			vec3.fromValues(0, 0, 0)
+			2.0,
+			0.1,
+			100,
+			vec3.fromValues(1.5, 1, 1.5),
+			vec3.fromValues(1.5, 1, -1.5)
 		);
 
 		this.interface.setActiveCamera(this.camera);
@@ -220,6 +220,7 @@ class XMLscene extends CGFscene {
 			this.graph.displayScene();
 		} else {
 			// Show Menu
+
 			this.menu.display();
 			// this.defaultAppearance.apply();
 
