@@ -149,6 +149,7 @@ class MyGameOrchestrator {
 
 							if (this.gameMode == "PvP") {
 								this.undoMove();
+								this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1; 
 							}
 							else if (this.gameMode == "PvB") {
 
@@ -156,6 +157,7 @@ class MyGameOrchestrator {
 								while(k < 2) {
 									if(this.movingPiece == null) {
 										this.undoMove();
+										this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 										k++;
 									}
 									await new Promise((r) => setTimeout(r, 2000));
