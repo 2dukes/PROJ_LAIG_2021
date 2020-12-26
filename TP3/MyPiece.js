@@ -1,5 +1,5 @@
 class MyPiece {
-	constructor(scene, radius, appearance, position, color) {
+	constructor(scene, radius, appearance, position, color, selectedPieceAp) {
 		this.scene = scene;
 		this.radius = radius;
 		this.isSelected = false;
@@ -18,6 +18,7 @@ class MyPiece {
 
 		this.appearance = appearance;
 		this.color = color;
+		this.selectedPieceAp = selectedPieceAp;
 
 		this.animation = null;
 
@@ -76,15 +77,17 @@ class MyPiece {
 
 	display() {
 		this.scene.pushMatrix();
-		this.appearance.apply();
 
 		if (this.animation != null) {
 			this.animation.apply();
 		}
 
 		if (this.isSelected) {
-			this.scene.translate(0, 0, 1);
-		}
+			this.selectedPieceAp.apply();
+        }
+        else {
+            this.appearance.apply();
+        }
 
 		this.scene.translate(
 			this.position[0],
