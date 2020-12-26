@@ -174,7 +174,10 @@ class MyGameOrchestrator {
 	display() {
 		//this.theme.display();
 
-		
+		if(this.gameBoard.currentPlayer == this.gameBoard.players.FIRSTPLAYER && this.movingPiece == null) 
+			this.scene.performCameraAnimation('firstPlayerView', 0.45);
+		else if(this.gameBoard.currentPlayer == this.gameBoard.players.SECONDPLAYER && this.movingPiece == null)
+			this.scene.performCameraAnimation('secondPlayerView', 0.45);
 
 		if (this.movingPiece == null) {
 			this.gameBoard.pickEnabled = false;

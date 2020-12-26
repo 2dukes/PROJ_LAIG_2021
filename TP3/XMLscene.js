@@ -106,13 +106,17 @@ class XMLscene extends CGFscene {
 		let index = 0, x;
 		for (x in this.graph.cameras) {
 			if (index == this.selectedCamera) {
-				this.newCamera = this.graph.cameras[x];
-				this.animationCamera = new CameraAnimation(this, "cameraAnimation", this.camera, this.newCamera, 2);
-				this.camera = this.newCamera;
-				this.animationCamera.apply();
+				this.performCameraAnimation(x, 2);
 				break;
 			} else index++;
 		}
+	}
+
+	performCameraAnimation(x, timeForAnimation) {
+		this.newCamera = this.graph.cameras[x];
+		this.animationCamera = new CameraAnimation(this, "cameraAnimation", this.camera, this.newCamera, timeForAnimation);
+		this.camera = this.newCamera;
+		this.animationCamera.apply();
 	}
 
 	/** Handler called when the graph is finally loaded.
@@ -169,7 +173,6 @@ class XMLscene extends CGFscene {
 		for (let keyframeAnimation of this.animations) 
 			keyframeAnimation.update(timeInSeconds);
 
-		// console.log(this.spriteSheetAnim);
 		for (let spriteSheetAnim of this.spriteSheetAnim) 
 			spriteSheetAnim.update(timeInSeconds);
 		
@@ -208,7 +211,7 @@ class XMLscene extends CGFscene {
 		}
 
 
-		if (this.sceneInited /*&& this.menu.choseAll*/) {
+		if (this.sceneInited && this.menu.choseAll) {
 			// Draw axis
 
 			this.gameOrchestrator.display();
@@ -222,13 +225,13 @@ class XMLscene extends CGFscene {
 		} else {
 			// Show Menu
 
-			// this.menu.display();
-			this.defaultAppearance.apply();
+			this.menu.display();
+			// this.defaultAppearance.apply();
 
-			this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
+			// this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
 
-			this.loadingProgressObject.display();
-			this.loadingProgress++;
+			// this.loadingProgressObject.display();
+			// this.loadingProgress++;
 		}
 
 		this.popMatrix();

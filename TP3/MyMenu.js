@@ -84,7 +84,7 @@ class MyMenu {
                         else if (this.pickedNow.optionName == "BvB") this.choseMode = "BvB";
 
                         else if (this.pickedNow.optionName == "greedy") this.choseLevel = "greedy";
-                        else if (this.pickedNow.optionName == "hard") this.choseLevel = "hard";
+                        else if (this.pickedNow.optionName == "hard") this.choseLevel = "greedy_hard";
                         else if (this.pickedNow.optionName == "random") this.choseLevel = "random";
          
 
