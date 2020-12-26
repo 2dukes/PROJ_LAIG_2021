@@ -159,10 +159,18 @@ class XMLscene extends CGFscene {
 			.name("Camera")
 			.onChange(this.updateCameraGUI.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
 
-
+		this.selectedTheme = "Bedroom";
+		this.gui
+			.add(this, "selectedTheme", ["Christmas Room", "Bedroom"])
+			.name("Theme")
+			.onChange(this.changeScene.bind(this));
 		// Gui SetUp -> Lights - Done in initLights().
 
 		this.setUpdatePeriod(1000 / 60);
+	}
+
+	changeScene() {
+		console.log(`Selected theme: ${this.selectedTheme}`);
 	}
 
 	/**
