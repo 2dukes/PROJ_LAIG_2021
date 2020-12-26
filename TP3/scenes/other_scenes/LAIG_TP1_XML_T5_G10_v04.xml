@@ -96,21 +96,21 @@
 
 
     <textures>
-        <texture id="floorTexture" path="woodfloor.jpg" />
-        <texture id="bookCoverTexture" path="book.jpg" />
-        <texture id="bookCoverSpineTex" path="bookspine.jpg" />
-        <texture id="bookPagesTex" path="pages.jpg" />
-        <texture id="deskTexture" path="wooddesk.jpg" />
-        <texture id="pictureTexture" path="picture.jpg" />
-        <texture id="lampshadeTex" path="lampshade.jpg" />
-        <texture id="metalTexture" path="metal.jpg" />
-        <texture id="chairSeatTex" path="chaircover.jpg" />
-        <texture id="earthTex" path="earth.jpg" />
-        <texture id="chromeTex" path="chrome.jpg" />
-        <texture id="blanket1Tex" path="blanket1.jpg" />
-        <texture id="blanket2Tex" path="blanket2.jpg" />
-        <texture id="lightbulbTex" path="lightbulb.jpg" />
-        <texture id="rainbowTex" path="rainbow.png" />
+        <texture id="floorTexture" path="scenes/other_scenes/images/woodfloor.jpg" />
+        <texture id="bookCoverTexture" path="scenes/other_scenes/images/book.jpg" />
+        <texture id="bookCoverSpineTex" path="scenes/other_scenes/images/bookspine.jpg" />
+        <texture id="bookPagesTex" path="scenes/other_scenes/images/pages.jpg" />
+        <texture id="deskTexture" path="scenes/other_scenes/images/wooddesk.jpg" />
+        <texture id="pictureTexture" path="scenes/other_scenes/images/picture.jpg" />
+        <texture id="lampshadeTex" path="scenes/other_scenes/images/lampshade.jpg" />
+        <texture id="metalTexture" path="scenes/other_scenes/images/metal.jpg" />
+        <texture id="chairSeatTex" path="scenes/other_scenes/images/chaircover.jpg" />
+        <texture id="earthTex" path="scenes/other_scenes/images/earth.jpg" />
+        <texture id="chromeTex" path="scenes/other_scenes/images/chrome.jpg" />
+        <texture id="blanket1Tex" path="scenes/other_scenes/images/blanket1.jpg" />
+        <texture id="blanket2Tex" path="scenes/other_scenes/images/blanket2.jpg" />
+        <texture id="lightbulbTex" path="scenes/other_scenes/images/lightbulb.jpg" />
+        <texture id="rainbowTex" path="scenes/other_scenes/images/rainbow.png" />
     </textures>
 
 
