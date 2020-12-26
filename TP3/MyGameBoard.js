@@ -58,6 +58,15 @@ class MyGameBoard {
         return null;
     }
 
+    deselectTile(x, y) {
+        for (let i = 0; i < this.tiles.length; i++) {
+            if (this.tiles[i].x == x && this.tiles[i].y == y) {
+                this.tiles[i].isPicked = false;
+                return;
+            }
+        }
+    }
+
     formatFetchString(predicateName) {
         let boardString = JSON.stringify(this.board);
 		

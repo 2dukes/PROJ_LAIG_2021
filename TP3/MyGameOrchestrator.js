@@ -10,6 +10,7 @@ class MyGameOrchestrator {
 
 		this.pickedNow = null;
 		this.lastPicked = null;
+		this.finishedUndo = true;
 
 		this.auxBoard = new MyAuxBoard(this.scene);
 
@@ -66,7 +67,7 @@ class MyGameOrchestrator {
 			this.promisePlayer = false;
 			await this.gameBoard.callPrologMove(stringParamPlayer);							
 			this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
-			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board));
+			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board, "player"));
 			this.promisePlayer = true;
 			
 			if (this.gameMode == "PvB") 
@@ -90,13 +91,33 @@ class MyGameOrchestrator {
 
 			if(tileCoords != null) {
 				this.movingPiece.move(tileCoords[0], tileCoords[1]);
-				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1], this.gameBoard.board));
+				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer"));
 				this.promiseComputer = true;
 			} else 
 				console.log('Incorrect line or diagonal in computer move!');
 	}
 
-	logPicking() {
+	undoMove() {
+		let lastGameSequence = this.gameSequence.undo();
+								
+		if(lastGameSequence != null) {
+			this.movingPiece = lastGameSequence.pieceToMove;
+			this.gameSequence.pop();
+
+			if (this.movingPiece !== null && this.movingPiece !== undefined) {
+				let nextStackPosition = this.auxBoard.getNextStackPosition(this.movingPiece.color);
+				
+				this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
+				this.gameBoard.board = this.gameSequence.getPreviousBoard();
+				this.movingPiece.isInAuxBoard = true;
+				this.movingPiece.isSelected = false;
+				this.gameBoard.deselectTile(lastGameSequence.finalX, lastGameSequence.finalY);	
+			}
+			
+		}
+	}
+
+	async logPicking() {
 
 		if (this.scene.pickMode == false) {
 			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
@@ -120,22 +141,25 @@ class MyGameOrchestrator {
 
 					if (this.pickedNow instanceof MyMenuButton) {
 
-						if (this.pickedNow.optionName == "undo") {
+						if (this.pickedNow.optionName == "undo" && this.finishedUndo) {
+							this.finishedUndo = false;
+							console.log('a');	
 
-							let lastGameSequence = this.gameSequence.undo();
-							if(lastGameSequence != null) {
-								this.movingPiece = lastGameSequence.pieceToMove;
-								this.gameSequence.pop();
+							if (this.gameMode == "PvP") {
+								this.undoMove();
+								
+							}
+							else if (this.gameMode == "PvB") {
 
-								if (this.movingPiece !== null && this.movingPiece !== undefined) {
-									let nextStackPosition = this.auxBoard.getNextStackPosition(this.movingPiece.color);
-									
-									// this.movingPiece.move(0, 2.5, 0.7);
-									this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
-									this.gameBoard.board = this.gameSequence.getPreviousBoard();
-									this.movingPiece.isInAuxBoard = true;
-									this.movingPiece.isSelected = false;
+								let k = 0;
+								while(k < 2) {
+									if(this.movingPiece == null) {
+										this.undoMove();
+										k++;
+									}
+									await new Promise((r) => setTimeout(r, 2000));
 								}
+								this.finishedUndo = true;
 							}
 											
 						}
@@ -153,18 +177,24 @@ class MyGameOrchestrator {
 	display() {
 		//this.theme.display();
 
+		
+
 		if (this.movingPiece == null) {
 			this.gameBoard.pickEnabled = false;
 			this.auxBoard.pickEnabled = true;
+			this.scene.setPickEnabled(true);
 		}
 		else if (this.movingPiece.isMoving) {
 			this.gameBoard.pickEnabled = false;
 			this.auxBoard.pickEnabled = false;
+			this.scene.setPickEnabled(false);
 		}
 		else if (!this.movingPiece.isMoving) {
 			this.gameBoard.pickEnabled = true;
 			this.auxBoard.pickEnabled = true;
+			this.scene.setPickEnabled(true);
 		}
+
 
 		this.gameMode == "BvB" ? this.computerVsComputerMove() : this.logPicking();
 	
