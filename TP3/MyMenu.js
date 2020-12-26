@@ -74,6 +74,7 @@ class MyMenu {
                                 this.choseAll = true;
                                 this.scene.gameOrchestrator.gameMode = this.choseMode;
                                 this.scene.gameOrchestrator.gameBoard.gameLevel = this.choseLevel;
+                                this.scene.performCameraAnimation(this.scene.playerCameras[this.scene.gameOrchestrator.gameBoard.currentPlayer], 1.5);
                             }
                         }
 
@@ -88,8 +89,6 @@ class MyMenu {
                         else if (this.pickedNow.optionName == "random") this.choseLevel = "random";
          
 
-                        
-                        
                             
                             if (this.modeNames.includes(this.pickedNow.optionName)) {
                                 for (let k = 0; k < this.chooseGameMode.length; k++) {

@@ -41,6 +41,10 @@ class XMLscene extends CGFscene {
 		this.defaultAppearance = new CGFappearance(this);
 
 		this.gameOrchestrator = new MyGameOrchestrator(this);
+		this.playerCameras = {
+			1: 'firstPlayerView',
+			2: 'secondPlayerView'
+		};
 
 		this.menuOptionSelected = false;
 		this.menu = new MyMenu(this);

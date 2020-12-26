@@ -47,6 +47,7 @@ class MyGameOrchestrator {
 				this.movingPiece.isMoving = false;
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
+				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 				return;
 			}
 
@@ -56,6 +57,7 @@ class MyGameOrchestrator {
 				this.movingPiece.isSelected = false;
 				this.movingPiece.animation = null;
 				this.movingPiece = null;
+				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			}
 		
 		}
@@ -72,11 +74,12 @@ class MyGameOrchestrator {
 			
 			if (this.gameMode == "PvB") 
 				this.computerMove();
+			
 		}
 	}
 
 	computerVsComputerMove() {
-		if(this.movingPiece == null && this.gameMode == "BvB" && this.promiseComputer)
+		if(this.movingPiece == null && this.gameMode == "BvB" && this.promiseComputer) 
 			this.computerMove();
 	}
 
@@ -174,10 +177,10 @@ class MyGameOrchestrator {
 	display() {
 		//this.theme.display();
 
-		if(this.gameBoard.currentPlayer == this.gameBoard.players.FIRSTPLAYER && this.movingPiece == null) 
-			this.scene.performCameraAnimation('firstPlayerView', 0.45);
-		else if(this.gameBoard.currentPlayer == this.gameBoard.players.SECONDPLAYER && this.movingPiece == null)
-			this.scene.performCameraAnimation('secondPlayerView', 0.45);
+		// if(this.gameBoard.currentPlayer == this.gameBoard.players.FIRSTPLAYER && this.movingPiece == null) 
+		// 	this.scene.performCameraAnimation('firstPlayerView', 0.45);
+		// else if(this.gameBoard.currentPlayer == this.gameBoard.players.SECONDPLAYER && this.movingPiece == null)
+		// 	this.scene.performCameraAnimation('secondPlayerView', 0.45);
 
 		if (this.movingPiece == null) {
 			this.gameBoard.pickEnabled = false;
