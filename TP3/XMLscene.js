@@ -207,7 +207,7 @@ class XMLscene extends CGFscene {
 		}
 
 
-		if (this.sceneInited /*&& this.menu.choseAll*/) {
+		if (this.sceneInited && this.menu.choseAll) {
 			// Draw axis
 
 			this.gameOrchestrator.display();
@@ -220,13 +220,13 @@ class XMLscene extends CGFscene {
 			this.graph.displayScene();
 		} else {
 			// Show Menu
-			// this.menu.display();
-			this.defaultAppearance.apply();
+			this.menu.display();
+			// this.defaultAppearance.apply();
 
-			this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
+			// this.rotate(-this.loadingProgress / 10.0, 0, 0, 1);
 
-			this.loadingProgressObject.display();
-			this.loadingProgress++;
+			// this.loadingProgressObject.display();
+			// this.loadingProgress++;
 		}
 
 		this.popMatrix();
