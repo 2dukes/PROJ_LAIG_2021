@@ -147,7 +147,6 @@ class MyGameOrchestrator {
 
 							if (this.gameMode == "PvP") {
 								this.undoMove();
-								
 							}
 							else if (this.gameMode == "PvB") {
 
@@ -159,9 +158,8 @@ class MyGameOrchestrator {
 									}
 									await new Promise((r) => setTimeout(r, 2000));
 								}
-								this.finishedUndo = true;
 							}
-											
+							this.finishedUndo = true;			
 						}
                     }
 			
