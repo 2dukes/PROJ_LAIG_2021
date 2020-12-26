@@ -2,37 +2,30 @@ class MyGameOrchestrator {
 	constructor(scene) {
 		this.scene = scene;
 
-		// this.gameSequence = new MyGameSequence(...);
-		// this.animator = new MyAnimator(...);
+		this.initGame();
+	}
+
+	initGame() {
 		this.gameBoard = new MyGameBoard(this.scene, 0.25);
-		// this.theme = new MySceneGraph(...);
-		// this.prolog = new MyPrologInterface(...);
+		this.auxBoard = new MyAuxBoard(this.scene);
+		this.gameSequence = new MyGameSequence(this.scene);
 
 		this.pickedNow = null;
 		this.lastPicked = null;
-		this.finishedUndo = true;
-
-		this.auxBoard = new MyAuxBoard(this.scene);
-
 		this.movingPiece = null;
-
-		this.gameSequence = new MyGameSequence(this.scene);
 
 		this.gameMode = "PvB";
 
 		this.promisePlayer = true;
 		this.promiseComputer = true;
+		this.finishedUndo = true;
 
-		if (this.gameMode == "BvB") {
-			this.scene.setPickEnabled(false);
-		}
-
+		if (this.gameMode == "BvB") this.scene.setPickEnabled(false);
+		
 		this.undoButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "undo", 1500);
-
 		this.undoAppearance = new CGFappearance(this.scene);
 		this.undoTexture = new CGFtexture(this.scene, "./scenes/images/menu/undo.png");
 		this.undoAppearance.setTexture(this.undoTexture);
-
 	}
 
 	update(currentTime) {
@@ -131,7 +124,6 @@ class MyGameOrchestrator {
 						this.pickedNow.isSelected = true;
 						
 						this.gameMove();
-
 					}
 
 					if (this.pickedNow instanceof MyPiece) { 					
@@ -177,12 +169,6 @@ class MyGameOrchestrator {
 	}
 
 	display() {
-		//this.theme.display();
-
-		// if(this.gameBoard.currentPlayer == this.gameBoard.players.FIRSTPLAYER && this.movingPiece == null) 
-		// 	this.scene.performCameraAnimation('firstPlayerView', 0.45);
-		// else if(this.gameBoard.currentPlayer == this.gameBoard.players.SECONDPLAYER && this.movingPiece == null)
-		// 	this.scene.performCameraAnimation('secondPlayerView', 0.45);
 
 		if (this.movingPiece == null) {
 			this.gameBoard.pickEnabled = false;
@@ -194,14 +180,15 @@ class MyGameOrchestrator {
 			this.auxBoard.pickEnabled = false;
 			this.scene.setPickEnabled(false);
 		}
-		else if (!this.movingPiece.isMoving) {
+		else {
 			this.gameBoard.pickEnabled = true;
 			this.auxBoard.pickEnabled = true;
 			this.scene.setPickEnabled(true);
 		}
 
 		this.gameMode == "BvB" ? this.computerVsComputerMove() : this.logPicking();
-	
+		
+		//-----------------Board and Aux Board--------------------
 
 		this.scene.pushMatrix();
 
@@ -215,6 +202,8 @@ class MyGameOrchestrator {
 		this.scene.clearPickRegistration();
 
 		this.scene.popMatrix();
+
+		//------------------ UNDO---------------------------------
 
 		this.scene.pushMatrix();
 

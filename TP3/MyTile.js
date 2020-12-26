@@ -26,30 +26,14 @@ class MyTile {
     }
 
     display() {   
-
         this.scene.pushMatrix();
 
-        if (this.isSelected) {
-            this.appearance1.apply();
-        }
-        else {
-            this.appearance2.apply();
-        }
+        this.isSelected ? this.appearance1.apply() : this.appearance2.apply();
 
         this.scene.translate(this.xOffset, this.yOffset, 0);
         this.tile.display();
 
-        //this.defaultAp.apply();
         this.scene.popMatrix();
-
         
     }
-
-    // <gameboard x1="" y2="" x2="" y2="">
-    //     <tiles radius="" />
-    // </gameboard>
-
-    // <piece type="cylinder" colour="green/orange/purple" />
-
 }
-

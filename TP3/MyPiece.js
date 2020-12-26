@@ -78,23 +78,11 @@ class MyPiece {
 	display() {
 		this.scene.pushMatrix();
 
-		if (this.animation != null) {
-			this.animation.apply();
-		}
+		if (this.animation != null) this.animation.apply();
 
-		if (this.isSelected) {
-			this.selectedPieceAp.apply();
-        }
-        else {
-            this.appearance.apply();
-        }
+		this.isSelected ? this.selectedPieceAp.apply() : this.appearance.apply();
 
-		this.scene.translate(
-			this.position[0],
-			this.position[1],
-			this.position[2]
-		);
-
+		this.scene.translate(this.position[0], this.position[1], this.position[2]);
 		this.tile.display();
 
 		this.scene.popMatrix();

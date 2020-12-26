@@ -3,10 +3,6 @@ class MyAuxBoard {
 		this.scene = scene;
 
 		this.initAppearances();
-
-		this.purplePieces = [];
-		this.greenPieces = [];
-		this.orangePieces = [];
 		this.initializePieces();
 
 		this.pickEnabled = true;
@@ -20,10 +16,7 @@ class MyAuxBoard {
 		this.purplePieceAp.setEmission(0.1, 0, 0.1, 1); // Emissive RGB
 		this.purplePieceAp.setShininess(1);
 
-		this.texture1 = new CGFtexture(
-			this.scene,
-			"./scenes/images/tiles/purple_tile.png"
-		);
+		this.texture1 = new CGFtexture(this.scene,"./scenes/images/tiles/purple_tile.png");
 		this.purplePieceAp.setTexture(this.texture1);
 		this.purplePieceAp.setTextureWrap("REPEAT", "REPEAT");
 		this.purplePieceAp.apply();
@@ -35,10 +28,7 @@ class MyAuxBoard {
 		this.greenPieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
 		this.greenPieceAp.setShininess(1);
 
-		this.texture2 = new CGFtexture(
-			this.scene,
-			"./scenes/images/tiles/green_tile.png"
-		);
+		this.texture2 = new CGFtexture(this.scene,"./scenes/images/tiles/green_tile.png");
 		this.greenPieceAp.setTexture(this.texture2);
 		this.greenPieceAp.setTextureWrap("REPEAT", "REPEAT");
 		this.greenPieceAp.apply();
@@ -50,10 +40,7 @@ class MyAuxBoard {
 		this.orangePieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
 		this.orangePieceAp.setShininess(1);
 
-		this.texture3 = new CGFtexture(
-			this.scene,
-			"./scenes/images/tiles/orange_tile.png"
-		);
+		this.texture3 = new CGFtexture(this.scene,"./scenes/images/tiles/orange_tile.png");
 		this.orangePieceAp.setTexture(this.texture3);
 		this.orangePieceAp.setTextureWrap("REPEAT", "REPEAT");
 		this.orangePieceAp.apply();
@@ -90,6 +77,11 @@ class MyAuxBoard {
 	}
 
 	initializePieces() {
+
+		this.purplePieces = [];
+		this.greenPieces = [];
+		this.orangePieces = [];
+
 		let height = 0,
 			zOffset = 0.5;
 
@@ -100,25 +92,35 @@ class MyAuxBoard {
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 14; j++) {
 				stackPurple.push(
-					new MyPiece(this.scene, 0.25, this.purplePieceAp, [
-						-0.8,
-						2.5 + zOffset,
-						0.05 + height,
-					],"purple",this.selectedPieceAp, i)
+					new MyPiece(
+						this.scene, 
+						0.25, 
+						this.purplePieceAp,
+						[-0.8,2.5 + zOffset,0.05 + height],
+						"purple",
+						this.selectedPieceAp,
+						i
+					)
 				);
 				stackGreen.push(
-					new MyPiece(this.scene, 0.25, this.greenPieceAp, [
-						1.3,
-						2.5 + zOffset,
-						0.05 + height,
-					],"green",this.selectedPieceAp, i)
+					new MyPiece(
+						this.scene,
+						0.25, this.greenPieceAp,
+						[1.3,2.5 + zOffset,0.05 + height],
+						"green",
+						this.selectedPieceAp,
+						i
+					)
 				);
 				stackOrange.push(
-					new MyPiece(this.scene, 0.25, this.orangePieceAp, [
-						0.2,
-						2.5 + zOffset,
-						0.05 + height,
-					],"orange",this.selectedPieceAp, i)
+					new MyPiece(this.scene,
+						0.25,
+						this.orangePieceAp,
+						[0.2,2.5 + zOffset,0.05 + height],
+						"orange",
+						this.selectedPieceAp,
+						i
+					)
 				);
 				height += 0.1;
 			}
