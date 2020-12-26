@@ -220,7 +220,7 @@ class MyGameOrchestrator {
 
         this.undoAppearance.apply();
 		
-		this.scene.translate(5, 1.1, 7);
+		this.scene.translate(5.5, 1.1, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.undoButton.display();
 		this.scene.clearPickRegistration();
