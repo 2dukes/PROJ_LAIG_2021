@@ -192,7 +192,6 @@ class MyGameOrchestrator {
 			this.scene.setPickEnabled(true);
 		}
 
-
 		this.gameMode == "BvB" ? this.computerVsComputerMove() : this.logPicking();
 	
 
