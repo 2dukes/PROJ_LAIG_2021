@@ -15,7 +15,7 @@ class MyPiece {
 			this.scene,
 			this.radius,
 			this.radius,
-			0.1,
+			0.05,
 			6,
 			1
 		);	
@@ -42,11 +42,11 @@ class MyPiece {
 			),
 			new Transformation(
 				0.75,
-				[0, 0, 1.5],
+				[0, 0, 0.75],
 				[0, 0, 0],
 				[1, 1, 1]
 			),
-			new Transformation(1.5, [xOffset, zOffset, 1.5], [0, 0, 0], [1, 1, 1]),
+			new Transformation(1.5, [xOffset, zOffset, 0.75], [0, 0, 0], [1, 1, 1]),
 			new Transformation(
 				2.25,
 				[xOffset, zOffset, yOffset],

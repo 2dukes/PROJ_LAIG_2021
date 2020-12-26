@@ -122,7 +122,7 @@ class MyAuxBoard {
 						i
 					)
 				);
-				height += 0.1;
+				height += 0.05;
 			}
 			this.purplePieces.push(stackPurple);
 			this.greenPieces.push(stackGreen);
@@ -145,7 +145,7 @@ class MyAuxBoard {
 		for (let i = pieces[numStack].length - 1; i >= 0; i--) {
 			if (pieces[numStack][i].isInAuxBoard) {
 				let undoPiecePosition = pieces[numStack][i].position.slice();
-				undoPiecePosition[2] = 0.05 + (i + 1)*0.1;
+				undoPiecePosition[2] = 0.05 + (i + 1)*0.05;
 				return undoPiecePosition;
 			}
 		}
