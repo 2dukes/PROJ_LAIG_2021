@@ -21,6 +21,9 @@ class XMLscene extends CGFscene {
 
 		this.sceneInited = false;
 
+		this.selectedCamera = 0;
+		this.selectedTheme = "Bedroom";
+
 		this.initCameras();
 
 		this.enableTextures(true);
@@ -81,11 +84,11 @@ class XMLscene extends CGFscene {
 		let lights = this.gui.addFolder("Lights");
 		lights.open();
 
-		for (var key in this.graph.lights) {
+		for (var key in this.graph[this.selectedTheme].lights) {
 			if (i >= 8) break; // Only eight lights allowed by WebCGF on default shaders.
 
-			if (this.graph.lights.hasOwnProperty(key)) {
-				var graphLight = this.graph.lights[key];
+			if (this.graph[this.selectedTheme].lights.hasOwnProperty(key)) {
+				var graphLight = this.graph[this.selectedTheme].lights[key];
 
 				this.lights[i].setPosition(...graphLight[1]);
 				this.lights[i].setAmbient(...graphLight[2]);
@@ -108,7 +111,7 @@ class XMLscene extends CGFscene {
 
 	updateCameraGUI() {
 		let index = 0, x;
-		for (x in this.graph.cameras) {
+		for (x in this.graph[this.selectedTheme].cameras) {
 			if (index == this.selectedCamera) {
 				this.performCameraAnimation(x, 2);
 				break;
@@ -117,7 +120,7 @@ class XMLscene extends CGFscene {
 	}
 
 	performCameraAnimation(x, timeForAnimation) {
-		this.newCamera = this.graph.cameras[x];
+		this.newCamera = this.graph[this.selectedTheme].cameras[x];
 		this.animationCamera = new CameraAnimation(this, "cameraAnimation", this.camera, this.newCamera, timeForAnimation);
 		this.camera = this.newCamera;
 		this.animationCamera.apply();
@@ -127,50 +130,55 @@ class XMLscene extends CGFscene {
 	 * As loading is asynchronous, this may be called already after the application has started the run loop
 	 */
 	onGraphLoaded() {
-		this.axis = new CGFaxis(this, this.graph.referenceLength);
 
-		this.gl.clearColor(...this.graph.background);
+		if(this.gui) {
+			this.gui.destroy();
+			this.gui = new dat.GUI();
+		}
 
-		this.setGlobalAmbientLight(...this.graph.ambient);
-
-		this.initLights();
-
-		this.sceneInited = true;
-
-		// Gui SetUp -> Cameras
+		// Gui SetUp -> Cameras	
 		
-
-		this.selectedCamera = 0;
 		this.cameraIds = {};
 		let index = 0, x;
 		let setCamera = false;
-		for (x in this.graph.cameras) {
-			if (x == this.graph.defaultCamera) {
+		for (x in this.graph[this.selectedTheme].cameras) {
+			if (x == this.graph[this.selectedTheme].defaultCamera) {
 				setCamera = true;
 				this.selectedCamera = index;
 			}
 			this.cameraIds[x] = index;
 			index++;
 		}
-
-	
+		
 		this.gui
 			.add(this, "selectedCamera", this.cameraIds)
 			.name("Camera")
 			.onChange(this.updateCameraGUI.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
 
-		this.selectedTheme = "Bedroom";
+
 		this.gui
 			.add(this, "selectedTheme", ["Christmas Room", "Bedroom"])
 			.name("Theme")
 			.onChange(this.changeScene.bind(this));
+
+		this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
+
+		this.gl.clearColor(...this.graph[this.selectedTheme].background);
+
+		this.setGlobalAmbientLight(...this.graph[this.selectedTheme].ambient);
+
 		// Gui SetUp -> Lights - Done in initLights().
+		this.initLights();
+
+		this.sceneInited = true;
+
 
 		this.setUpdatePeriod(1000 / 60);
 	}
 
 	changeScene() {
 		console.log(`Selected theme: ${this.selectedTheme}`);
+		this.onGraphLoaded();
 	}
 
 	/**
@@ -233,7 +241,7 @@ class XMLscene extends CGFscene {
 			this.defaultAppearance.apply();
 
 			// Displays the scene (MySceneGraph function).
-			this.graph.displayScene();
+			this.graph[this.selectedTheme].displayScene();
 		} else {
 			// Show Menu
 

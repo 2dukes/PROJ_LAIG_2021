@@ -24,12 +24,13 @@ class MySceneGraph {
      * @param {string} filename - File that defines the 3D scene
      * @param {XMLScene} scene
      */
-    constructor(filename, scene) {
+    constructor(filename, scene, selectedTheme) {
         this.loadedOk = null;
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
-        scene.graph = this;
+        this.theme = selectedTheme;
+        scene.graph[this.theme] = this;
         scene.animations = [];
 
         this.nodes = [];
@@ -70,7 +71,9 @@ class MySceneGraph {
         this.loadedOk = true;
 
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-        this.scene.onGraphLoaded();
+        
+        if(this.theme == this.scene.selectedTheme)
+            this.scene.onGraphLoaded();
     }
 
     /*
@@ -1397,7 +1400,7 @@ class MySceneGraph {
         return null;
     }
 
-    /**
+    /** 
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() { // Recursive - Initial call, descendants...
