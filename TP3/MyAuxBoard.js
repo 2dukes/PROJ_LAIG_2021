@@ -57,6 +57,18 @@ class MyAuxBoard {
 		this.orangePieceAp.setTexture(this.texture3);
 		this.orangePieceAp.setTextureWrap("REPEAT", "REPEAT");
 		this.orangePieceAp.apply();
+
+		this.selectedPieceAp=new CGFappearance(this.scene);
+        this.selectedPieceAp.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
+        this.selectedPieceAp.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
+        this.selectedPieceAp.setSpecular(0.5,0.5,0.5,1); // Specular RGB
+        this.selectedPieceAp.setEmission(0.5,0.5,0.5,1); // Emissive RGB/ Emissive RGB
+        this.selectedPieceAp.setShininess(10); 
+
+        this.texture4 = new CGFtexture(this.scene, "./scenes/images/tiles/selected_tile.png");
+        this.selectedPieceAp.setTexture(this.texture4);
+        this.selectedPieceAp.setTextureWrap('REPEAT', 'REPEAT');
+        this.selectedPieceAp.apply();
 	}
 
 	getNextPiece(color) {
@@ -92,21 +104,21 @@ class MyAuxBoard {
 						-0.8,
 						2.5 + zOffset,
 						0.05 + height,
-					],"purple")
+					],"purple",this.selectedPieceAp)
 				);
 				stackGreen.push(
 					new MyPiece(this.scene, 0.25, this.greenPieceAp, [
 						1.3,
 						2.5 + zOffset,
 						0.05 + height,
-					],"green")
+					],"green",this.selectedPieceAp)
 				);
 				stackOrange.push(
 					new MyPiece(this.scene, 0.25, this.orangePieceAp, [
 						0.2,
 						2.5 + zOffset,
 						0.05 + height,
-					],"orange")
+					],"orange",this.selectedPieceAp)
 				);
 				height += 0.1;
 			}
