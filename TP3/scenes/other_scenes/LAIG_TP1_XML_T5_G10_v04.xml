@@ -152,7 +152,7 @@
             <descendants>
                 <noderef id="walls" />
                 <noderef id="mesas" />
-                <noderef id="chair" />
+                <noderef id="chairs" />
                 <noderef id="door" />
                 <noderef id="bookshelf" /> 
                 <noderef id="bed" />
@@ -160,12 +160,12 @@
                 <noderef id="bedSideTable2" />
                 <noderef id="closet" />
                 <noderef id="pyramid" />
-                <noderef id="auxBoards" />
+                <noderef id="auxBoard" />
             </descendants>
         </node>
 
 
-        <node id="auxBoards">
+        <node id="auxBoard">
             <material id="sofaMaterial" />
 
             <texture id="text_chao">
@@ -189,8 +189,8 @@
             </texture>
 
             <transformations>
-                <translation x="5" y="0.85" z="2.7" />
-                <scale sx="6" sy="0.05" sz="3.0" />
+                <translation x="4.1" y="0.8" z="2.3" />
+                <scale sx="1.8" sy="0.05" sz="1.0" />
             </transformations>
 
             <descendants>
@@ -212,7 +212,6 @@
 
             <descendants>
                 <noderef id="mesa1" />
-                <noderef id="mesa2" />
             </descendants>
         </node>
 
@@ -229,26 +228,6 @@
                 <rotation axis="y" angle="90" />
                 <translation x="-1.7" y="0.0" z="-7.0" />
                 <scale sx="2.0" sy="1.0" sz="1.1" />
-            </transformations>
-
-            <descendants>
-                <noderef id="pernas" />
-                <noderef id="tampo_mesa" />
-            </descendants>
-        </node>
-
-        <!-- Mesa2 -->
-        <node id="mesa2">
-            <material id="mesaMaterial" />
-
-            <texture id="text_mesa">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>   
-                <translation x="5" y="0.0" z="2.5" />
-                <rotation axis="y" angle="90" />
-                <translation x="-1.7" y="0.0" z="-7.0" />
             </transformations>
 
             <descendants>
@@ -838,8 +817,9 @@
             </descendants>
         </node>
         <!--                                             -->
-        <!-- Chair  -->
-        <node id="chair">
+        <!-- Chairs  -->
+
+        <node id="chairs">
             <material id="null" />
 
             <texture id="null">
@@ -847,8 +827,44 @@
             </texture>
 
             <transformations>
-                <translation x="6.75" y="0" z="7.5" />
+
+            </transformations>
+
+            <descendants>
+                <noderef id="chair1" />
+                <noderef id="chair2" />
+            </descendants>
+        </node>
+
+        <node id="chair1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.75" y="0" z="3.9" />
                 <rotation axis="y" angle="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="chairBaseComplete" />
+                <noderef id="chairSeat" />
+                <noderef id="chairArmSupport" />
+            </descendants>
+        </node>
+
+        <node id="chair2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4.2" y="0" z="6.4" />
+                <rotation axis="y" angle="180" />
             </transformations>
 
             <descendants>
@@ -1906,7 +1922,8 @@
             </texture>
 
             <transformations>
-                <translation x="2.55" y="0" z="0.3" />
+                <translation x="3.9" y="0" z="0.3" />
+                <scale sx="1" sy="0.9" sz="1" />
             </transformations>
 
             <descendants>
