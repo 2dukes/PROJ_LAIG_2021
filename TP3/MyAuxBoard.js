@@ -104,21 +104,21 @@ class MyAuxBoard {
 						-0.8,
 						2.5 + zOffset,
 						0.05 + height,
-					],"purple",this.selectedPieceAp)
+					],"purple",this.selectedPieceAp, i)
 				);
 				stackGreen.push(
 					new MyPiece(this.scene, 0.25, this.greenPieceAp, [
 						1.3,
 						2.5 + zOffset,
 						0.05 + height,
-					],"green",this.selectedPieceAp)
+					],"green",this.selectedPieceAp, i)
 				);
 				stackOrange.push(
 					new MyPiece(this.scene, 0.25, this.orangePieceAp, [
 						0.2,
 						2.5 + zOffset,
 						0.05 + height,
-					],"orange",this.selectedPieceAp)
+					],"orange",this.selectedPieceAp, i)
 				);
 				height += 0.1;
 			}
@@ -133,35 +133,22 @@ class MyAuxBoard {
 		}
 	}
 
-	getStackLen(stack) {
-		let len = 0;
-		for (let i = 0; i < stack.length; i++) {
-			if (stack[i].isInAuxBoard) len++;
-		}
-		return len;
-	}
-
-	getNextStackPosition(color) {
+	getNextStackPosition(color, numStack) {
 
 		let pieces;
-		let offsetZ = 0;
-		if (color == "purple") {offsetZ = 3; pieces = this.purplePieces;}
-		else if (color == "green") {offsetZ = 2.5; pieces = this.greenPieces;}
-		else if (color == "orange") {offsetZ = 2; pieces = this.orangePieces;}
+		if (color == "purple") pieces = this.purplePieces;
+		else if (color == "green") pieces = this.greenPieces;
+		else if (color == "orange") pieces = this.orangePieces;
 
-		for (let i = pieces.length - 1; i >= 0; i--) {
-			for (let j = pieces[i].length - 1; j >= 0; j--) {
-				if (pieces[i][j].isInAuxBoard && this.getStackLen(pieces[i]) < 14) {
-					
-					let undoPiecePosition = pieces[i][j].position.slice();
-					undoPiecePosition[2] = 0.05 + (j + 1)*0.1;
-					
-					return undoPiecePosition;
-				} 
+		for (let i = pieces[numStack].length - 1; i >= 0; i--) {
+			if (pieces[numStack][i].isInAuxBoard) {
+				let undoPiecePosition = pieces[numStack][i].position.slice();
+				undoPiecePosition[2] = 0.05 + (i + 1)*0.1;
+				return undoPiecePosition;
 			}
 		}
 
-		return [0, offsetZ, 0];
+		return null; // nunca chega aqui
 	}
 
 	display() {

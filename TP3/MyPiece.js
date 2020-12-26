@@ -1,11 +1,15 @@
 class MyPiece {
-	constructor(scene, radius, appearance, position, color, selectedPieceAp) {
+	constructor(scene, radius, appearance, position, color, selectedPieceAp, numStack) {
 		this.scene = scene;
 		this.radius = radius;
 		this.isSelected = false;
 		this.isMoving = false;
 		this.isInAuxBoard = true;
 		this.position = position;
+		this.appearance = appearance;
+		this.color = color;
+		this.selectedPieceAp = selectedPieceAp;
+		this.numStack = numStack;
 
 		this.tile = new MyCylinder(
 			this.scene,
@@ -14,11 +18,7 @@ class MyPiece {
 			0.1,
 			6,
 			1
-		);
-
-		this.appearance = appearance;
-		this.color = color;
-		this.selectedPieceAp = selectedPieceAp;
+		);	
 
 		this.animation = null;
 

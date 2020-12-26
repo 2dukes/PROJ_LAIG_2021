@@ -108,7 +108,7 @@ class MyGameOrchestrator {
 			this.gameSequence.pop();
 
 			if (this.movingPiece !== null && this.movingPiece !== undefined) {
-				let nextStackPosition = this.auxBoard.getNextStackPosition(this.movingPiece.color);
+				let nextStackPosition = this.auxBoard.getNextStackPosition(this.movingPiece.color, this.movingPiece.numStack);
 				
 				this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
 				this.gameBoard.board = this.gameSequence.getPreviousBoard();
