@@ -41,6 +41,10 @@ class XMLscene extends CGFscene {
 		this.defaultAppearance = new CGFappearance(this);
 
 		this.gameOrchestrator = new MyGameOrchestrator(this);
+		this.playerCameras = {
+			1: 'firstPlayerView',
+			2: 'secondPlayerView'
+		};
 
 		this.menuOptionSelected = false;
 		this.menu = new MyMenu(this);
@@ -55,11 +59,11 @@ class XMLscene extends CGFscene {
 	 */
 	initCameras() {
 		this.camera = new CGFcamera(
-			0.75,
-			0.75,
-			550,
-			vec3.fromValues(15, 15, 15),
-			vec3.fromValues(0, 0, 0)
+			2.0,
+			0.1,
+			100,
+			vec3.fromValues(1.5, 1, 1.5),
+			vec3.fromValues(1.5, 1, -1.5)
 		);
 
 		this.interface.setActiveCamera(this.camera);
@@ -88,7 +92,7 @@ class XMLscene extends CGFscene {
 				this.lights[i].setDiffuse(...graphLight[3]);
 				this.lights[i].setSpecular(...graphLight[4]);
 
-				this.lights[i].setVisible(true);
+				// this.lights[i].setVisible(true);
 
 				if (graphLight[0]) this.lights[i].enable();
 				else this.lights[i].disable();
@@ -102,18 +106,23 @@ class XMLscene extends CGFscene {
 		}
 	}
 
-	updateCamera() {
+	updateCameraGUI() {
 		let index = 0, x;
 		for (x in this.graph.cameras) {
 			if (index == this.selectedCamera) {
-				this.newCamera = this.graph.cameras[x];
-				this.animationCamera = new CameraAnimation(this, "cameraAnimation", this.camera, this.newCamera, 2);
-				this.camera = this.newCamera;
-				this.animationCamera.apply();
+				this.performCameraAnimation(x, 2);
 				break;
 			} else index++;
 		}
 	}
+
+	performCameraAnimation(x, timeForAnimation) {
+		this.newCamera = this.graph.cameras[x];
+		this.animationCamera = new CameraAnimation(this, "cameraAnimation", this.camera, this.newCamera, timeForAnimation);
+		this.camera = this.newCamera;
+		this.animationCamera.apply();
+	}
+
 	/** Handler called when the graph is finally loaded.
 	 * As loading is asynchronous, this may be called already after the application has started the run loop
 	 */
@@ -148,7 +157,7 @@ class XMLscene extends CGFscene {
 		this.gui
 			.add(this, "selectedCamera", this.cameraIds)
 			.name("Camera")
-			.onChange(this.updateCamera.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
+			.onChange(this.updateCameraGUI.bind(this)); // Bind creates a new function that will force the this inside the function to be the parameter passed to bind().
 
 
 		// Gui SetUp -> Lights - Done in initLights().
@@ -168,7 +177,6 @@ class XMLscene extends CGFscene {
 		for (let keyframeAnimation of this.animations) 
 			keyframeAnimation.update(timeInSeconds);
 
-		// console.log(this.spriteSheetAnim);
 		for (let spriteSheetAnim of this.spriteSheetAnim) 
 			spriteSheetAnim.update(timeInSeconds);
 		
@@ -220,6 +228,7 @@ class XMLscene extends CGFscene {
 			this.graph.displayScene();
 		} else {
 			// Show Menu
+
 			this.menu.display();
 			// this.defaultAppearance.apply();
 

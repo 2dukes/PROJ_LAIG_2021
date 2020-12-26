@@ -40,14 +40,14 @@ class MyPiece {
 				[1, 1, 1]
 			),
 			new Transformation(
-				0.5,
+				0.75,
 				[0, 0, 1.2],
 				[0, 0, 0],
 				[1, 1, 1]
 			),
-			new Transformation(1, [xOffset, zOffset, 1.2], [0, 0, 0], [1, 1, 1]),
+			new Transformation(1.5, [xOffset, zOffset, 1.2], [0, 0, 0], [1, 1, 1]),
 			new Transformation(
-				1.5,
+				3.0,
 				[xOffset, zOffset, yOffset],
 				[0, 0, 0],
 				[1, 1, 1]
