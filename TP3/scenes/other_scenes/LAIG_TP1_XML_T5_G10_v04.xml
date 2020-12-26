@@ -17,10 +17,6 @@
             <from x="10" y="3.5" z="1.5" />
             <to x="-4.5" y="0" z="2.5" />
         </perspective>
-        <perspective id="Ceiling Lamp View" near="0.1" far="300" angle="15">
-            <from x="6" y="3" z="2" />
-            <to x="-4.5" y="2" z="5" />
-        </perspective>
         <perspective id="Desk View" near="0.1" far="300" angle="50">
             <from x="5" y="2.2" z="4.5" />
             <to x="5" y="-5" z="10" />
@@ -186,7 +182,7 @@
             </texture>
 
             <transformations>
-                <translation x="3" y="3" z="3" />
+                <translation x="5" y="5" z="5" />
                 <rotation axis="x" angle="180" />
                 <scale sx="0.5" sy="0.5" sz="0.5" />
             </transformations>
@@ -265,7 +261,7 @@
             </texture>
 
             <transformations>
-                <scale sx="1.2" sy="1.2" sz="1.2" />
+                <scale sx="2" sy="2" sz="2" />
             </transformations>
 
             <descendants>
@@ -1360,8 +1356,9 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="5.5" />
+                <translation x="0" y="0" z="9.1" />
                 <rotation axis="y" angle="90" />
+                <scale sx="1.6" sy="1.5" sz="2" />
             </transformations>
 
             <descendants>
@@ -2381,7 +2378,7 @@
             </texture>
 
             <transformations>
-                <translation x="3.25" y="0.0" z="5.9" />
+                <translation x="5.25" y="0.0" z="9.9" />
                 <rotation axis="y" angle="180" />
             </transformations>
 
