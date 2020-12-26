@@ -59,10 +59,10 @@ class MyAuxBoard {
 		this.orangePieceAp.apply();
 
 		this.selectedPieceAp=new CGFappearance(this.scene);
-        this.selectedPieceAp.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
-        this.selectedPieceAp.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
-        this.selectedPieceAp.setSpecular(0.5,0.5,0.5,1); // Specular RGB
-        this.selectedPieceAp.setEmission(0.5,0.5,0.5,1); // Emissive RGB/ Emissive RGB
+        this.selectedPieceAp.setAmbient(0,183/256,250/256,1); // Ambient RGB
+        this.selectedPieceAp.setDiffuse(0,183/256,250/256,1); // Diffuse RGB
+        this.selectedPieceAp.setSpecular(0,183/256,250/256,1); // Specular RGB
+        this.selectedPieceAp.setEmission(0,0.1,0.1,1); // Emissive RGB/ Emissive RGB
         this.selectedPieceAp.setShininess(10); 
 
         this.texture4 = new CGFtexture(this.scene, "./scenes/images/tiles/selected_tile.png");
