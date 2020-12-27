@@ -42,30 +42,42 @@
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="demoLight">            <!-- light identifier -->
+        <light id="Directional Light">
             <enable value="1" />
-            <!-- enable/disable -->
-            <position x="1" y="2" z="2" w="1" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+            <position x="-1" y="4" z="3" w="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="0.5" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="0.3" />
         </light>
-        
-        <light id="presente">            <!-- Light that imitates the Christmas Tree top star -->
+
+        <light id="Point Light">
             <enable value="1" />
-            <!-- enable/disable -->
-            <position x="5" y="0.25" z="2" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+            <position x="2.5" y="2.5" z="8" w="0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="0.1" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
         </light>
-        <light id="luz_quadro">            <!-- Light that imitates the Christmas Tree top star -->
+
+        <light id="Lamp Light">
+            <enable value="0" />
+            <position x="5.55" y="1.7" z="5.65" w="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="0.5" />
+            <diffuse r="0.45" g="0.45" b="0.2" a="1.0" />
+            <specular r="0.9" g="0.9" b="0.2" a="1.0" />
+        </light>
+        <light id="Ambient Light">
+            <enable value="0" />
+            <position x="2.5" y="6" z="2.5" w="0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="0.1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+        </light>
+        <light id="Ceiling Light">
             <enable value="1" />
-            <!-- enable/disable -->
-            <position x="8" y="2.1" z="5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0.25" g="0.25" b="0.25" a="1.0" />                   <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+            <position x="3" y="2.8" z="3" w="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="0.1" />
+            <diffuse r="1" g="1" b="1" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
         </light>
     </lights>
 

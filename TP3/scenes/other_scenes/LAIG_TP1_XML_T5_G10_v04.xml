@@ -40,7 +40,7 @@
 
     <lights>
         <light id="Directional Light">
-            <enable value="0" />
+            <enable value="1" />
             <position x="-1" y="4" z="3" w="1" />
             <ambient r="0.1" g="0.1" b="0.1" a="0.5" />
             <diffuse r="1" g="1" b="1" a="1" />
@@ -48,7 +48,7 @@
         </light>
 
         <light id="Point Light">
-            <enable value="0" />
+            <enable value="1" />
             <position x="2.5" y="2.5" z="8" w="0" />
             <ambient r="0.1" g="0.1" b="0.1" a="1" />
             <diffuse r="0.5" g="0.5" b="0.5" a="0.1" />
