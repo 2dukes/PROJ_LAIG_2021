@@ -93,7 +93,7 @@ class MyGameOrchestrator {
 				if(this.checkGameWinner()) {
 					this.scene.performCameraAnimation('menuCamera', 1.5);
 				} else
-					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 0.25);
 			}
 		
 		}
@@ -164,39 +164,31 @@ class MyGameOrchestrator {
 
 	checkGameWinner() {
 		if(this.winnerNum > 0) {
-			this.resetBoard();
-			this.resetVariables();
+			// this.resetBoard();
+			this.resetGame();
 			return true;
 		} return false;
 	}
 
-	resetBoard() {
-		let lastGameSequence;
-		do {
-			lastGameSequence = this.gameSequence.undo();
-			if(lastGameSequence != null) {
-				this.auxPiece = lastGameSequence.pieceToMove;
-				this.gameSequence.pop();
+	// resetBoard() {
+	// 	let lastGameSequence;
+	// 	do {
+	// 		lastGameSequence = this.gameSequence.undo();
+	// 		if(lastGameSequence != null) {
+	// 			this.auxPiece = lastGameSequence.pieceToMove;
+	// 			this.gameSequence.pop();
 
-				let nextStackPosition = this.auxBoard.getNextStackPosition(this.auxPiece.color, this.auxPiece.numStack);
-				this.auxPiece.position = nextStackPosition;
-				this.auxPiece.isInAuxBoard = true;
-				this.auxPiece.isSelected = false;
-			}
-		} while(lastGameSequence != null);
-	}
+	// 			let nextStackPosition = this.auxBoard.getNextStackPosition(this.auxPiece.color, this.auxPiece.numStack);
+	// 			this.auxPiece.position = nextStackPosition;
+	// 			this.auxPiece.isInAuxBoard = true;
+	// 			this.auxPiece.isSelected = false;
+	// 		}
+	// 	} while(lastGameSequence != null);
+	// }
 
-	resetVariables() {
+	resetGame() {
 		this.scene.menu = new MyMenu(this.scene);
 		this.resetTime();
-
-		this.pickedNow = null;
-		this.lastPicked = null;
-		this.movingPiece = null;
-
-		this.promisePlayer = true;
-		this.promiseComputer = true;
-		this.finishedUndo = true;
 
 		let playerPoints = this.gameBoard.playerPoints;
 
@@ -205,6 +197,14 @@ class MyGameOrchestrator {
 		this.gameSequence = new MyGameSequence(this.scene);
 
 		this.gameBoard.playerPoints = playerPoints;
+
+		this.pickedNow = null;
+		this.lastPicked = null;
+		this.movingPiece = null;
+
+		this.promisePlayer = true;
+		this.promiseComputer = true;
+		this.finishedUndo = true;	
 	}
 
 	async logPicking() {
@@ -269,6 +269,9 @@ class MyGameOrchestrator {
 	}
 
 	display() {
+
+		if(!this.scene.menu.choseAll)
+			return;
 
 		if (this.movingPiece == null) {
 			this.gameBoard.pickEnabled = false;
