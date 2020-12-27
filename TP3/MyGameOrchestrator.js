@@ -30,17 +30,18 @@ class MyGameOrchestrator {
 
 		this.marcador = new MySpriteText(this.scene, "0-0", 0.5);
 
-		this.numSeconds = 0;
+		this.totalSeconds = 0;
+		this.nPlays = 0;
 	}
 
 	resetTime() {
-		this.numSeconds = 0;
+		this.totalSeconds = 0;
 	}
 
 	update(currentTime) {
 
-		this.numSeconds += currentTime / 1000;
-		console.log(this.numSeconds);
+		this.totalSeconds += currentTime / 1000;
+		// console.log(this.numSeconds);
 
 		if (this.movingPiece == null) return;
 
@@ -52,8 +53,11 @@ class MyGameOrchestrator {
 				this.movingPiece.isMoving = false;
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
-				if(this.checkGameWinner(this.winnerNum)) {
+				
+				if(this.checkGameWinner(this.winnerNum) || this.nPlays == 3) {
 					this.scene.performCameraAnimation('menuCamera', 1.5);
+					this.resetBoard();
+					this.resetVariables();
 				} else
 					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 				return;
@@ -65,7 +69,24 @@ class MyGameOrchestrator {
 				this.movingPiece.isSelected = false;
 				this.movingPiece.animation = null;
 				this.movingPiece = null;
-				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+
+				this.nPlays++;
+				if(this.checkGameWinner(this.winnerNum) || this.nPlays == 3) {
+					// this.scene.performCameraAnimation('menuCamera', 1.5);
+					this.scene.camera = new CGFcamera(
+						2.0,
+						0.1,
+						100,
+						vec3.fromValues(1.5, 1, 1.5),
+						vec3.fromValues(1.5, 1, -1.5)
+					);
+			
+					this.scene.interface.setActiveCamera(this.camera);
+					this.scene.newCamera = this.camera;
+					this.resetBoard();
+					this.resetVariables();
+				} else
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			}
 		
 		}
@@ -146,7 +167,7 @@ class MyGameOrchestrator {
 				this.auxPiece = lastGameSequence.pieceToMove;
 				this.gameSequence.pop();
 
-				let nextStackPosition = this.auxBoard.getNextStackPosition(this.movingPiece.color, this.movingPiece.numStack);
+				let nextStackPosition = this.auxBoard.getNextStackPosition(this.auxPiece.color, this.auxPiece.numStack);
 				this.auxPiece.position = nextStackPosition;
 				this.auxPiece.isInAuxBoard = true;
 				this.auxPiece.isSelected = false;
@@ -155,9 +176,10 @@ class MyGameOrchestrator {
 	}
 
 	resetVariables() {
-		this.gameBoard.board = this.emptyBoard;
+		
 		this.sceneInited = false;
-		this.scene.menu.choseAll = false;
+		this.scene.menu = new MyMenu(this.scene);
+		this.resetTime();
 
 		this.pickedNow = null;
 		this.lastPicked = null;
@@ -166,6 +188,10 @@ class MyGameOrchestrator {
 		this.promisePlayer = true;
 		this.promiseComputer = true;
 		this.finishedUndo = true;
+
+		this.gameBoard = new MyGameBoard(this.scene, 0.25);
+		this.auxBoard = new MyAuxBoard(this.scene);
+		this.gameSequence = new MyGameSequence(this.scene);
 	}
 
 	async logPicking() {

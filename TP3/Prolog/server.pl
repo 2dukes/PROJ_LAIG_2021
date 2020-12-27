@@ -232,12 +232,11 @@ computerPlay_LAIG(GameState, Nplayer-(c-Level), Res) :-
 
 % Check Game Over
 
+check_over_LAIG(_, 0). 
 check_over_LAIG(GameState, Winner) :-
     game_over(GameState, Winner),
     display_game(GameState, 0),
     write('Player '), write(Winner), write(' won!'), nl.
-
-check_over_LAIG(_, 0). 
 
 % Response - Success
 
