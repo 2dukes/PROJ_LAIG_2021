@@ -6,6 +6,7 @@ class CameraAnimation extends Animation {
     constructor(scene, animationId, firstCamera, secondCamera, timeLen) {
         super(scene, animationId);
 
+        this.scene = scene;
         this.positionFirstCamera = firstCamera.position;
         this.targetFirstCamera = firstCamera.target;
         this.directionFirstCamera = firstCamera.direction;
@@ -33,6 +34,17 @@ class CameraAnimation extends Animation {
         if (this.timeLen < this.elapsedTime) {
             this.animationEnded = true;
             this.setCamera(this.angleSecondCamera, this.nearSecondCamera, this.farSecondCamera, this.positionSecondCamera, this.targetSecondCamera);
+            
+            if(this.scene.menu.choseAll && this.scene.gameOrchestrator.gameMode == "PvP") {
+                document.querySelector('#messages').style.display = "block";
+                document.querySelector('#messages').innerHTML = `Player ${this.scene.gameOrchestrator.gameBoard.currentPlayer} turn!`;
+            } else if(this.scene.menu.choseAll && this.scene.gameOrchestrator.gameMode == "PvB") {
+                document.querySelector('#messages').style.display = "block";
+                if(this.scene.gameOrchestrator.gameBoard.currentPlayer == this.scene.gameOrchestrator.gameBoard.players.FIRSTPLAYER) { // Player
+                    document.querySelector('#messages').innerHTML = `Player ${this.scene.gameOrchestrator.gameBoard.currentPlayer} turn!`;
+                } else // BOT
+                    document.querySelector('#messages').innerHTML = "Waiting for Computer...";
+            }
             return;
         }
 

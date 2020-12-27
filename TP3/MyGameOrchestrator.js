@@ -36,6 +36,7 @@ class MyGameOrchestrator {
 		this.timeSprite = new MySpriteText(this.scene, "0:00", 0.25);
 
 		this.timeout = 10;
+
 		this.nplays = 0;
 	}
 
@@ -76,7 +77,7 @@ class MyGameOrchestrator {
 				this.movingPiece.isMoving = false;
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
-				
+
 				if(this.checkGameWinner()) {
 					this.scene.performCameraAnimation('menuCamera', 1.5);
 				} else
@@ -165,21 +166,21 @@ class MyGameOrchestrator {
 
 	async computerMove() {
 		let stringParamBot = this.gameBoard.formatFetchStringComputer();
-			this.promiseComputer = false;
-			let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
-			this.winnerNum = jsonResponse.winner;
+		this.promiseComputer = false;
+		let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
+		this.winnerNum = jsonResponse.winner;
 
-			this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
-			
-			let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
+		this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
+		
+		let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
 
-			if(tileCoords != null) {
-				this.movingPiece.move(tileCoords[0], tileCoords[1]);
-				this.resetTime();
-				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.movingPiece.color, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer", this.gameBoard.player1Score, this.gameBoard.player2Score));
-				this.promiseComputer = true;
-			} else 
-				console.log('Incorrect line or diagonal in computer move!');
+		if(tileCoords != null) {
+			this.movingPiece.move(tileCoords[0], tileCoords[1]);
+			this.resetTime();
+			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.movingPiece.color, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer", this.gameBoard.player1Score, this.gameBoard.player2Score));
+			this.promiseComputer = true;
+		} else 
+			console.log('Incorrect line or diagonal in computer move!');
 	}
 
 	undoMove() {
