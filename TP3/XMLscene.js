@@ -24,6 +24,8 @@ class XMLscene extends CGFscene {
 		this.selectedCamera = 0;
 		this.selectedTheme = "Christmas Room";
 
+		this.timeout = 10;
+
 		this.initCameras();
 
 		this.enableTextures(true);
@@ -157,6 +159,10 @@ class XMLscene extends CGFscene {
 			.name("Theme")
 			.onChange(this.changeScene.bind(this));
 
+		this.gui
+			.add(this, "timeout", 5, 120)
+			.name("Timeout");
+
 		this.axis = new CGFaxis(this, this.graph[this.selectedTheme].referenceLength);
 
 		this.gl.clearColor(...this.graph[this.selectedTheme].background);
@@ -195,8 +201,11 @@ class XMLscene extends CGFscene {
 		if (this.animationCamera != null) 
 			this.animationCamera.update(timeInSeconds);
 			
-
-		this.gameOrchestrator.update(timeInSeconds);
+		if (this.menu.choseAll) {
+			this.gameOrchestrator.timeout = this.timeout;
+			this.gameOrchestrator.update(timeInSeconds);
+		}
+			
 	}
 
 	/**

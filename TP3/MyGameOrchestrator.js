@@ -31,16 +31,39 @@ class MyGameOrchestrator {
 		this.marcador = new MySpriteText(this.scene, "0-0", 0.5);
 
 		this.totalSeconds = 0;
+		this.timeStr = "";
+
+		this.timeSprite = new MySpriteText(this.scene, "0:00", 0.25);
+
+		this.timeout = 10;
 	}
 
-	resetTime() {
-		this.totalSeconds = 0;
+	resetTime(delayTime) {
+		if (delayTime == undefined)
+			this.totalSeconds = -3; // demora 3 segundos para começar a contar o tempo da jogada, tempo para a animação acabar
+		else
+			this.totalSeconds = -delayTime;
+	}
+
+	computeTime(currentTime) {
+		this.totalSeconds += currentTime;
+		let minutes = Math.floor(Math.floor(this.totalSeconds) / 60);
+		let seconds = Math.floor(this.totalSeconds) - minutes * 60;
+		this.timeStr = "";
+		this.timeStr += "" + minutes + ":" + (seconds < 10 ? "0" : "");
+		this.timeStr += "" + seconds;
+		if (this.totalSeconds < 0) this.timeStr = "0:00";
+
+		if (this.totalSeconds > this.timeout) {
+			this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1; 
+			this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+			this.resetTime(1);
+		}
 	}
 
 	update(currentTime) {
 
-		this.totalSeconds += currentTime / 1000;
-		// console.log(this.numSeconds);
+		this.computeTime(currentTime);
 
 		if (this.movingPiece == null) return;
 
@@ -88,6 +111,7 @@ class MyGameOrchestrator {
 			this.winnerNum = jsonResponse.winner;
 
 			this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
+			this.resetTime();
 			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board, "player"));
 			this.promisePlayer = true;
 			
@@ -114,6 +138,7 @@ class MyGameOrchestrator {
 
 			if(tileCoords != null) {
 				this.movingPiece.move(tileCoords[0], tileCoords[1]);
+				this.resetTime();
 				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer"));
 				this.promiseComputer = true;
 			} else 
@@ -131,6 +156,7 @@ class MyGameOrchestrator {
 				let nextStackPosition = this.auxBoard.getNextStackPosition(this.movingPiece.color, this.movingPiece.numStack);
 				
 				this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
+				this.resetTime();
 				this.gameBoard.board = this.gameSequence.getPreviousBoard();
 				this.movingPiece.isInAuxBoard = true;
 				this.movingPiece.isSelected = false;
@@ -239,8 +265,6 @@ class MyGameOrchestrator {
 					if (this.lastPicked != null) {
 						this.lastPicked.isSelected = false;
 					}
-
-					
 				}
 			}
 			this.scene.pickResults.splice(0, this.scene.pickResults.length);
@@ -302,6 +326,16 @@ class MyGameOrchestrator {
 		this.scene.translate(4.9, 1.7, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.marcador.display(this.gameBoard.playerPoints[0].toString() + "-" +  this.gameBoard.playerPoints[1].toString());
+
+		this.scene.popMatrix();
+
+		//----------------TEMPO DE JOGO------------------------------
+		
+		this.scene.pushMatrix();
+
+		this.scene.translate(4.4, 2.5, 7);
+		this.scene.rotate(Math.PI, 0, 1, 0);
+		this.timeSprite.display(this.timeStr);
 
 		this.scene.popMatrix();
 	}
