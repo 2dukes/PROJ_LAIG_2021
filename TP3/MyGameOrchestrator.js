@@ -77,7 +77,6 @@ class MyGameOrchestrator {
 				this.movingPiece = null;
 				
 				if(this.checkGameWinner()) {
-					console.log('1A');
 					this.scene.performCameraAnimation('menuCamera', 1.5);
 				} else
 					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
@@ -91,13 +90,10 @@ class MyGameOrchestrator {
 				this.movingPiece.animation = null;
 				this.movingPiece = null;
 
-				console.log(this.winnerNum);
 				if(this.checkGameWinner()) {
-					console.log('1');
 					this.scene.performCameraAnimation('menuCamera', 1.5);
-					console.log('2');
 				} else
-					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 0.5);
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			}
 		
 		}
@@ -169,8 +165,9 @@ class MyGameOrchestrator {
 	checkGameWinner() {
 		if(this.winnerNum > 0) {
 			this.resetBoard();
-			this.resetVariables()
-		}
+			this.resetVariables();
+			return true;
+		} return false;
 	}
 
 	resetBoard() {
