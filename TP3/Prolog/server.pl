@@ -8,8 +8,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % To run, enter 'server.' on sicstus command line after consulting this file.
-% You can test requests to this server by going to http://localhost:8081/<request>.
-% Go to http://localhost:8081/quit to close server.
+% You can test requests to this server by going to http://localhost:8080/<request>.
+% Go to http://localhost:8080/quit to close server.
 
 % Made by Luis Reis (ei12085@fe.up.pt) for LAIG course at FEUP.
 
@@ -232,26 +232,38 @@ computerPlay_LAIG(GameState, Nplayer-(c-Level), Res) :-
 
 % Check Game Over
 
-check_over_LAIG(_, 0). 
 check_over_LAIG(GameState, Winner) :-
     game_over(GameState, Winner),
     display_game(GameState, 0),
     write('Player '), write(Winner), write(' won!'), nl.
 
+check_over_LAIG(_, 0). 
+
 % Response - Success
 
-buildResult(true, Nplayer, NextPlayer, Board, Row-Diagonal-Colour, Purple_1-Orange_1-Green_1,
-	Purple_2-Orange_2-Green_2, Winner, Res) :-
-
-	codeString(Colour, PlayedColour),
+getColours(1, Purple_1-Purple1, Orange_1-Orange1, Green_1-Green1, Purple_2-Purple2, Orange_2-Orange2, Green_2-Green2) :-
 	codeString(Purple_1, Purple1),
 	codeString(Orange_1, Orange1),
 	codeString(Green_1, Green1),
 	codeString(Purple_2, Purple2),
 	codeString(Orange_2, Orange2),
-	codeString(Green_2, Green2),
+	codeString(Green_2, Green2).
 
-		Res = {
+getColours(2, Purple_1-Purple1, Orange_1-Orange1, Green_1-Green1, Purple_2-Purple2, Orange_2-Orange2, Green_2-Green2) :-
+	codeString(Purple_2, Purple1),
+	codeString(Orange_2, Orange1),
+	codeString(Green_2, Green1),
+	codeString(Purple_1, Purple2),
+	codeString(Orange_1, Orange2),
+	codeString(Green_1, Green2).
+
+buildResult(true, Nplayer, NextPlayer, Board, Row-Diagonal-Colour, Purple_1-Orange_1-Green_1,
+	Purple_2-Orange_2-Green_2, Winner, Res) :-
+
+	codeString(Colour, PlayedColour),
+	getColours(Nplayer, Purple_1-Purple1, Orange_1-Orange1, Green_1-Green1, Purple_2-Purple2, Orange_2-Orange2, Green_2-Green2),
+
+	Res = {
 		'"success"': true,
 		'"currentPlayer"': Nplayer,
 		'"nextPlayer"': NextPlayer,

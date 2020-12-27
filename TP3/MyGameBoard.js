@@ -11,7 +11,7 @@ class MyGameBoard {
 
         this.pickEnabled = false;
         let empty = 'empty';
-        this.emptyBoard = [
+        this.board = [
         [                                         empty,    empty],                            
         [                                     empty,   empty,   empty],                         
         [                                empty,    empty,   empty,  empty],                    
@@ -36,7 +36,6 @@ class MyGameBoard {
         [                                     empty,   empty,   empty],                         
         [                                          empty,   empty]                              
         ];
-        this.board = this.emptyBoard;
 
         this.players = {
             FIRSTPLAYER: 1,
@@ -141,10 +140,10 @@ class MyGameBoard {
         }
         
         this.board = jsonResponse.board;
-        this.currentPlayer = jsonResponse.nextPlayer;
         this.winner = jsonResponse.winner;
         this.parsePlayerColours(jsonResponse.currentPlayerColours, jsonResponse.currentPlayer);
         this.parsePlayerColours(jsonResponse.nextPlayerColours, jsonResponse.currentPlayer % 2 + 1);
+        this.currentPlayer = jsonResponse.nextPlayer;
     }
 
     initializeTextures() {

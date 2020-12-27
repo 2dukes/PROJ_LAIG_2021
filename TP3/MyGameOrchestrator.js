@@ -93,7 +93,7 @@ class MyGameOrchestrator {
 				if(this.checkGameWinner()) {
 					this.scene.performCameraAnimation('menuCamera', 1.5);
 				} else
-					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 0.25);
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			}
 		
 		}
