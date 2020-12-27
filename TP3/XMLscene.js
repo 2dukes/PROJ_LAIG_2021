@@ -195,8 +195,8 @@ class XMLscene extends CGFscene {
 		if (this.animationCamera != null) 
 			this.animationCamera.update(timeInSeconds);
 			
-
-		this.gameOrchestrator.update(timeInSeconds);
+		if (this.menu.choseAll)
+			this.gameOrchestrator.update(timeInSeconds);
 	}
 
 	/**

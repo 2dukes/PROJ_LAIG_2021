@@ -14,11 +14,6 @@ class MyMenu {
 
     initTextures() {
         this.menuAppearance = new CGFappearance(this.scene);
-        // this.menuAppearance.setAmbient(0, 0.502, 0, 1); // Ambient RGB
-        // this.menuAppearance.setDiffuse(0, 0.502, 0, 1); // Diffuse RGB
-        // this.menuAppearance.setSpecular(0, 0, 0, 1); // Specular RGB
-        // this.menuAppearance.setEmission(0, 0, 0, 1); // Emissive RGB
-        // this.menuAppearance.setShininess(1);
 
         this.textures = {
                 "title": new CGFtexture(this.scene, "./scenes/images/menu/title.png"),
