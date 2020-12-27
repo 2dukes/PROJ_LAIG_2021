@@ -144,7 +144,7 @@ class MyGameBoard {
         this.currentPlayer = jsonResponse.nextPlayer;
         this.winner = jsonResponse.winner;
         this.parsePlayerColours(jsonResponse.currentPlayerColours, jsonResponse.currentPlayer);
-
+        this.parsePlayerColours(jsonResponse.nextPlayerColours, jsonResponse.currentPlayer % 2 + 1);
     }
 
     initializeTextures() {
