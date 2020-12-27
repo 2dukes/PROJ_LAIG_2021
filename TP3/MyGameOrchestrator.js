@@ -34,10 +34,15 @@ class MyGameOrchestrator {
 		this.timeStr = "";
 
 		this.timeSprite = new MySpriteText(this.scene, "0:00", 0.25);
+
+		this.timeout = 10;
 	}
 
-	resetTime() {
-		this.totalSeconds = -3;
+	resetTime(delayTime) {
+		if (delayTime == undefined)
+			this.totalSeconds = -3; // demora 3 segundos para começar a contar o tempo da jogada, tempo para a animação acabar
+		else
+			this.totalSeconds = -delayTime;
 	}
 
 	computeTime(currentTime) {
@@ -48,6 +53,12 @@ class MyGameOrchestrator {
 		this.timeStr += "" + minutes + ":" + (seconds < 10 ? "0" : "");
 		this.timeStr += "" + seconds;
 		if (this.totalSeconds < 0) this.timeStr = "0:00";
+
+		if (this.totalSeconds > 10) {
+			this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1; 
+			this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+			this.resetTime(1);
+		}
 	}
 
 	update(currentTime) {
