@@ -8,6 +8,10 @@
     </initials>
     <views default="defaultCamera">
         <!-- at least one of the following type of cameras must be declared -->
+        <perspective id="menuCamera" near="0.1" far="100" angle="2.0">
+            <from x="1.5" y="1" z="1.5" />
+            <to x="1.5" y="1" z="-1.5" />
+        </perspective>
         <perspective id="defaultCamera" near="0.3" far="300" angle="40.0">
             <from x="-8" y="5" z="10" />
             <to x="5" y="0" z="5" />

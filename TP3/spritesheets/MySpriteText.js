@@ -15,11 +15,12 @@ class MySpriteText {
         this.spritesheet = new MySpriteSheet(this.scene, this.texture, 16, 16);
     }
 
-    display() {
-        for (let i = 0; i < this.text.length; i++) {
+    display(text) {
+        if (text == undefined) text = this.text;
+        for (let i = 0; i < text.length; i++) {
             
             // Get character's sprite position
-            let p = this.getCharacterPosition(this.text[i]);
+            let p = this.getCharacterPosition(text[i]);
 
             // Activate Sprite
             this.spritesheet.activateCellP(p);

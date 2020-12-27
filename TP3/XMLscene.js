@@ -22,7 +22,7 @@ class XMLscene extends CGFscene {
 		this.sceneInited = false;
 
 		this.selectedCamera = 0;
-		this.selectedTheme = "Bedroom";
+		this.selectedTheme = "Christmas Room";
 
 		this.initCameras();
 

@@ -11,7 +11,7 @@ class MyGameBoard {
 
         this.pickEnabled = false;
         let empty = 'empty';
-        this.board = [
+        this.emptyBoard = [
         [                                         empty,    empty],                            
         [                                     empty,   empty,   empty],                         
         [                                empty,    empty,   empty,  empty],                    
@@ -36,6 +36,7 @@ class MyGameBoard {
         [                                     empty,   empty,   empty],                         
         [                                          empty,   empty]                              
         ];
+        this.board = this.emptyBoard;
 
         this.players = {
             FIRSTPLAYER: 1,
@@ -43,6 +44,8 @@ class MyGameBoard {
         };
 
         this.gameLevel = 'greedy';
+        this.playerPoints = [0, 0];
+        
         this.player1Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
         this.player2Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
         this.currentPlayer = 1;
@@ -131,8 +134,10 @@ class MyGameBoard {
     }
 
     parseResponse(jsonResponse) {
-        if(jsonResponse.winner != 0) 
+        if(jsonResponse.winner != 0) {
+            this.playerPoints[jsonResponse.winner]++;
             alert(`PLAYER ${jsonResponse.winner} won!`);
+        }
         
         this.board = jsonResponse.board;
         this.currentPlayer = jsonResponse.nextPlayer;

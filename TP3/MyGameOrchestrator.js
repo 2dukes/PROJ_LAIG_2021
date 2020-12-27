@@ -19,6 +19,7 @@ class MyGameOrchestrator {
 		this.promisePlayer = true;
 		this.promiseComputer = true;
 		this.finishedUndo = true;
+		this.winnerNum = null;
 
 		if (this.gameMode == "BvB") this.scene.setPickEnabled(false);
 		
@@ -26,9 +27,20 @@ class MyGameOrchestrator {
 		this.undoAppearance = new CGFappearance(this.scene);
 		this.undoTexture = new CGFtexture(this.scene, "./scenes/images/menu/undo.png");
 		this.undoAppearance.setTexture(this.undoTexture);
+
+		this.marcador = new MySpriteText(this.scene, "0-0", 0.5);
+
+		this.numSeconds = 0;
+	}
+
+	resetTime() {
+		this.numSeconds = 0;
 	}
 
 	update(currentTime) {
+
+		this.numSeconds += currentTime / 1000;
+		console.log(this.numSeconds);
 
 		if (this.movingPiece == null) return;
 
@@ -40,7 +52,10 @@ class MyGameOrchestrator {
 				this.movingPiece.isMoving = false;
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
-				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+				if(this.checkGameWinner(this.winnerNum)) {
+					this.scene.performCameraAnimation('menuCamera', 1.5);
+				} else
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 				return;
 			}
 
@@ -60,7 +75,9 @@ class MyGameOrchestrator {
 		if (this.movingPiece != null && this.promiseComputer && this.promisePlayer) {
 			let stringParamPlayer = this.gameBoard.formatFetchStringPlayer(this.pickedNow.line, this.pickedNow.diagonal, this.movingPiece.color);
 			this.promisePlayer = false;
-			await this.gameBoard.callPrologMove(stringParamPlayer);							
+			let jsonResponse = await this.gameBoard.callPrologMove(stringParamPlayer);	
+			this.winnerNum = jsonResponse.winner;
+
 			this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
 			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board, "player"));
 			this.promisePlayer = true;
@@ -80,7 +97,8 @@ class MyGameOrchestrator {
 		let stringParamBot = this.gameBoard.formatFetchStringComputer();
 			this.promiseComputer = false;
 			let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
-			
+			this.winnerNum = jsonResponse.winner;
+
 			this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
 			
 			let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
@@ -113,6 +131,43 @@ class MyGameOrchestrator {
 		}
 	}
 
+	checkGameWinner(gameWinner) {
+		if(gameWinner > 0) {
+			this.resetBoard();
+			this.resetVariables()
+		}
+	}
+
+	resetBoard() {
+		let lastGameSequence;
+		do {
+			lastGameSequence = this.gameSequence.undo();
+			if(lastGameSequence != null) {
+				this.auxPiece = lastGameSequence.pieceToMove;
+				this.gameSequence.pop();
+
+				let nextStackPosition = this.auxBoard.getNextStackPosition(this.movingPiece.color, this.movingPiece.numStack);
+				this.auxPiece.position = nextStackPosition;
+				this.auxPiece.isInAuxBoard = true;
+				this.auxPiece.isSelected = false;
+			}
+		} while(lastGameSequence != null);
+	}
+
+	resetVariables() {
+		this.gameBoard.board = this.emptyBoard;
+		this.sceneInited = false;
+		this.scene.menu.choseAll = false;
+
+		this.pickedNow = null;
+		this.lastPicked = null;
+		this.movingPiece = null;
+
+		this.promisePlayer = true;
+		this.promiseComputer = true;
+		this.finishedUndo = true;
+	}
+
 	async logPicking() {
 
 		if (this.scene.pickMode == false) {
@@ -132,6 +187,12 @@ class MyGameOrchestrator {
 						this.movingPiece.isSelected = true;
 
 						if (this.lastPicked != null && (this.lastPicked instanceof MyPiece || this.lastPicked instanceof MyTile)) this.lastPicked.isSelected = false;
+					
+						if (!this.pickedNow.isSelected) {
+							this.pickedNow = null;
+							this.lastPicked = null;
+							this.movingPiece = null;
+						}
 					}
 
 					if (this.pickedNow instanceof MyMenuButton) {
@@ -162,6 +223,8 @@ class MyGameOrchestrator {
 					if (this.lastPicked != null) {
 						this.lastPicked.isSelected = false;
 					}
+
+					
 				}
 			}
 			this.scene.pickResults.splice(0, this.scene.pickResults.length);
@@ -203,7 +266,7 @@ class MyGameOrchestrator {
 
 		this.scene.popMatrix();
 
-		//------------------ UNDO---------------------------------
+		//------------------UNDO---------------------------------
 
 		this.scene.pushMatrix();
 
@@ -213,6 +276,16 @@ class MyGameOrchestrator {
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.undoButton.display();
 		this.scene.clearPickRegistration();
+
+		this.scene.popMatrix();
+
+		//----------------MARCADOR------------------------------
+		
+		this.scene.pushMatrix();
+
+		this.scene.translate(4.9, 1.7, 7);
+		this.scene.rotate(Math.PI, 0, 1, 0);
+		this.marcador.display(this.gameBoard.playerPoints[0].toString() + "-" +  this.gameBoard.playerPoints[1].toString());
 
 		this.scene.popMatrix();
 	}
