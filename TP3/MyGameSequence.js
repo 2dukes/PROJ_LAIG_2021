@@ -43,6 +43,17 @@ class MyGameSequence {
         }
     }
 
+    getPreviousPlayerScore(playerNum) {
+        if(this.moves.length == 0) {
+            return ['FALSE', 'FALSE', 'FALSE'];
+        } else {
+            if(playerNum == 1)
+                return this.undo().player1Score;
+            else
+                return this.undo().player2Score;
+        }
+    }
+
     undo() {
         if (this.moves.length == 0) return null;
         return this.moves[this.moves.length - 1];

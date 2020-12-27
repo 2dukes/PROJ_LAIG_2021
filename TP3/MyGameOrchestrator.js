@@ -108,7 +108,7 @@ class MyGameOrchestrator {
 
 			this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
 			this.resetTime();
-			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board, "player"));
+			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board, "player", this.gameBoard.player1Score, this.gameBoard.player2Score));
 			this.promisePlayer = true;
 			
 			if (this.gameMode == "PvB") 
@@ -135,7 +135,7 @@ class MyGameOrchestrator {
 			if(tileCoords != null) {
 				this.movingPiece.move(tileCoords[0], tileCoords[1]);
 				this.resetTime();
-				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer"));
+				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer", this.gameBoard.player1Score, this.gameBoard.player2Score));
 				this.promiseComputer = true;
 			} else 
 				console.log('Incorrect line or diagonal in computer move!');
@@ -154,6 +154,8 @@ class MyGameOrchestrator {
 				this.movingPiece.move(nextStackPosition[0], nextStackPosition[1], nextStackPosition[2]);
 				this.resetTime();
 				this.gameBoard.board = this.gameSequence.getPreviousBoard();
+				this.player1Score = this.gameSequence.getPreviousPlayerScore(this.gameBoard.players.FIRSTPLAYER);
+				this.player2Score = this.gameSequence.getPreviousPlayerScore(this.gameBoard.players.SECONDPLAYER);
 				this.movingPiece.isInAuxBoard = true;
 				this.movingPiece.isSelected = false;
 				this.gameBoard.deselectTile(lastGameSequence.finalX, lastGameSequence.finalY);
@@ -169,22 +171,6 @@ class MyGameOrchestrator {
 			return true;
 		} return false;
 	}
-
-	// resetBoard() {
-	// 	let lastGameSequence;
-	// 	do {
-	// 		lastGameSequence = this.gameSequence.undo();
-	// 		if(lastGameSequence != null) {
-	// 			this.auxPiece = lastGameSequence.pieceToMove;
-	// 			this.gameSequence.pop();
-
-	// 			let nextStackPosition = this.auxBoard.getNextStackPosition(this.auxPiece.color, this.auxPiece.numStack);
-	// 			this.auxPiece.position = nextStackPosition;
-	// 			this.auxPiece.isInAuxBoard = true;
-	// 			this.auxPiece.isSelected = false;
-	// 		}
-	// 	} while(lastGameSequence != null);
-	// }
 
 	resetGame() {
 		this.scene.menu = new MyMenu(this.scene);
