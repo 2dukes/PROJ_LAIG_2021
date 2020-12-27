@@ -36,6 +36,7 @@ class MyGameOrchestrator {
 		this.timeSprite = new MySpriteText(this.scene, "0:00", 0.25);
 
 		this.timeout = 10;
+		this.nplays = 0;
 	}
 
 	resetTime(delayTime) {
@@ -90,13 +91,53 @@ class MyGameOrchestrator {
 				this.movingPiece.animation = null;
 				this.movingPiece = null;
 
-				if(this.checkGameWinner()) {
+				this.nplays++;
+				// if(this.nplays == 2) 
+				// 	this.makeGameMovie();
+				
+				/*else*/ if(this.checkGameWinner()) {
 					this.scene.performCameraAnimation('menuCamera', 1.5);
 				} else
 					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			}
 		
 		}
+	}
+
+	getWinner() {
+		let p1 = 0;
+		let p2 = 0;
+		this.gameBoard.player1Score.forEach((colourWon) => {
+			p1 = colourWon == 'TRUE' ? p1 + 1 : p1; 
+		});
+		this.gameBoard.player2Score.forEach((colourWon) => {
+			p2 = colourWon == 'TRUE' ? p2 + 1 : p2; 
+		});
+
+		if(p1 > 1)
+			return 1;
+		else
+			return 2;
+	}
+
+	async makeGameMovie() {
+		// Reset first for tests
+		this.resetGame(false);
+		console.log(this.gameSequence.moves);
+		for(let i = 0; i < this.gameSequence.moves.length ; i++) {
+			let move = this.gameSequence.moves[i];
+			this.movingPiece = this.auxBoard.getNextPiece(move.pieceColour);
+			this.movingPiece.move(move.finalX, move.finalY);
+			this.gameBoard.player1Score = move.player1Score;
+			this.gameBoard.player2Score = move.player2Score;
+			await new Promise((r) => setTimeout(r, 2500));
+		}
+
+		this.winnerNum = this.getWinner();
+		console.log(`Winner: ${this.winnerNum}`);
+
+		this.resetGame(true);
+		this.scene.performCameraAnimation('menuCamera', 1.5);
 	}
 
 	async gameMove() {
@@ -108,7 +149,7 @@ class MyGameOrchestrator {
 
 			this.movingPiece.move(this.pickedNow.x, this.pickedNow.y);
 			this.resetTime();
-			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board, "player", this.gameBoard.player1Score, this.gameBoard.player2Score));
+			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.movingPiece.color, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board, "player", this.gameBoard.player1Score, this.gameBoard.player2Score));
 			this.promisePlayer = true;
 			
 			if (this.gameMode == "PvB") 
@@ -135,7 +176,7 @@ class MyGameOrchestrator {
 			if(tileCoords != null) {
 				this.movingPiece.move(tileCoords[0], tileCoords[1]);
 				this.resetTime();
-				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer", this.gameBoard.player1Score, this.gameBoard.player2Score));
+				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.movingPiece.color, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer", this.gameBoard.player1Score, this.gameBoard.player2Score));
 				this.promiseComputer = true;
 			} else 
 				console.log('Incorrect line or diagonal in computer move!');
@@ -167,20 +208,24 @@ class MyGameOrchestrator {
 	checkGameWinner() {
 		if(this.winnerNum > 0) {
 			// this.resetBoard();
-			this.resetGame();
+			console.log('A');
+			this.resetGame(true);
 			return true;
 		} return false;
 	}
 
-	resetGame() {
-		this.scene.menu = new MyMenu(this.scene);
+	resetGame(resetGameSequence) {
+		if(resetGameSequence) {
+			this.gameSequence = new MyGameSequence(this.scene);
+			this.scene.menu = new MyMenu(this.scene);
+		}
 		this.resetTime();
 
 		let playerPoints = this.gameBoard.playerPoints;
 
 		this.gameBoard = new MyGameBoard(this.scene, 0.25);
 		this.auxBoard = new MyAuxBoard(this.scene);
-		this.gameSequence = new MyGameSequence(this.scene);
+		
 
 		this.gameBoard.playerPoints = playerPoints;
 
