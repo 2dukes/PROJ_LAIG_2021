@@ -107,7 +107,7 @@ serialInclude([
 		new MySceneGraph(filename, myScene, 'Bedroom');
 		filename = getUrlVars()["file"] || "other_scenes/LAIG_TP2_XML_T1_G06_v05.xml";
 		new MySceneGraph(filename, myScene, 'Christmas Room');
-
+		
 		// start
 		app.run();
 	}),
