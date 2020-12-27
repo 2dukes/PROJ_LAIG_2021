@@ -49,6 +49,9 @@ class MyGameBoard {
         this.player2Score = ['FALSE', 'FALSE', 'FALSE']; // Purple | Orange | Green
         this.currentPlayer = 1;
         this.winner = 0; // 0 = No Winner | 1 or 2 is the player number winner
+
+        this.colors_player_1 = new MyRectangle(this.scene, 0, 0, 1.5, 0.4);
+        this.colors_player_2 = new MyRectangle(this.scene, 0, 0, 1.5, 0.4);
     }
 
     getTileCoordinates(line, diagonal) {
@@ -170,6 +173,22 @@ class MyGameBoard {
         this.selectedTileAppearance.setTexture(this.texture2);
         this.selectedTileAppearance.setTextureWrap('REPEAT', 'REPEAT');
         this.selectedTileAppearance.apply();
+
+        this.colors_player_1_ap = new CGFappearance(this.scene);
+        this.colors_player_1_ap.setEmission(0.5,0.5,0.5,1);
+        this.selectedTileAppearance.setShininess(10); 
+        this.texture3 = new CGFtexture(this.scene, "./scenes/images/colors_player_1.png");
+        this.colors_player_1_ap.setTexture(this.texture3);
+        this.colors_player_1_ap.setTextureWrap('REPEAT', 'REPEAT');
+        this.colors_player_1_ap.apply();
+
+        this.colors_player_2_ap = new CGFappearance(this.scene);
+        this.colors_player_2_ap.setEmission(0.5,0.5,0.5,1);
+        this.colors_player_2_ap.setShininess(10); 
+        this.texture4 = new CGFtexture(this.scene, "./scenes/images/colors_player_2.png");
+        this.colors_player_2_ap.setTexture(this.texture4);
+        this.colors_player_2_ap.setTextureWrap('REPEAT', 'REPEAT');
+        this.colors_player_2_ap.apply();
     }
 
 
@@ -233,6 +252,8 @@ class MyGameBoard {
 
     display() {
 
+        this.scene.pushMatrix();
+
         for (let i = 0; i < this.tiles.length; i++) {
 
             if (this.pickEnabled)
@@ -241,6 +262,23 @@ class MyGameBoard {
             this.tiles[i].display();
         }
         this.borderColors.display();
+
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.colors_player_1_ap.apply();
+        this.scene.translate(-2.7, -3.7, 0.1);
+        this.scene.rotate(-Math.PI/3, 0, 0, 1);
+        this.colors_player_1.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.colors_player_2_ap.apply();
+        this.scene.translate(2.2, 0, 0.1);
+        this.scene.rotate(-Math.PI/3, 0, 0, 1);
+        this.colors_player_2.display();
+        this.scene.popMatrix();
+
 
     }
 }
