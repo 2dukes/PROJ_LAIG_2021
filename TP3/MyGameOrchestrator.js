@@ -54,7 +54,7 @@ class MyGameOrchestrator {
 		this.timeStr += "" + seconds;
 		if (this.totalSeconds < 0) this.timeStr = "0:00";
 
-		if (this.totalSeconds > 10) {
+		if (this.totalSeconds > this.timeout) {
 			this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1; 
 			this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			this.resetTime(1);
