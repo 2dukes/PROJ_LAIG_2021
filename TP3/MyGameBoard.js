@@ -136,7 +136,8 @@ class MyGameBoard {
     parseResponse(jsonResponse) {
         if(jsonResponse.winner != 0) {
             this.playerPoints[jsonResponse.winner]++;
-            alert(`PLAYER ${jsonResponse.winner} won!`);
+            console.log(`PLAYER ${jsonResponse.winner} won!`);
+            // alert(`PLAYER ${jsonResponse.winner} won!`);
         }
         
         this.board = jsonResponse.board;

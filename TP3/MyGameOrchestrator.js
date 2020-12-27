@@ -31,7 +31,6 @@ class MyGameOrchestrator {
 		this.marcador = new MySpriteText(this.scene, "0-0", 0.5);
 
 		this.totalSeconds = 0;
-		this.nPlays = 0;
 	}
 
 	resetTime() {
@@ -54,10 +53,9 @@ class MyGameOrchestrator {
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
 				
-				if(this.checkGameWinner(this.winnerNum) || this.nPlays == 3) {
+				if(this.checkGameWinner()) {
+					console.log('1A');
 					this.scene.performCameraAnimation('menuCamera', 1.5);
-					this.resetBoard();
-					this.resetVariables();
 				} else
 					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 				return;
@@ -70,24 +68,13 @@ class MyGameOrchestrator {
 				this.movingPiece.animation = null;
 				this.movingPiece = null;
 
-				this.nPlays++;
-				if(this.checkGameWinner(this.winnerNum) || this.nPlays == 1) {
+				console.log(this.winnerNum);
+				if(this.checkGameWinner()) {
+					console.log('1');
 					this.scene.performCameraAnimation('menuCamera', 1.5);
-					// console.log(this.scene.graph['Christmas Room'].cameras['menuCamera']);
-					// // this.scene.camera = new CGFcamera(
-					// 	// 	2.0,
-					// 	// 	0.1,
-					// 	// 	100,
-					// 	// 	vec3.fromValues(1.5, 1, 1.5),
-					// 	// 	vec3.fromValues(1.5, 1, -1.5)
-					// 	// );
-				
-					// 	// this.scene.interface.setActiveCamera(this.camera);
-					// 	// this.scene.newCamera = this.camera;
-					this.resetBoard();
-					this.resetVariables();
+					console.log('2');
 				} else
-					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 0.5);
 			}
 		
 		}
@@ -153,8 +140,8 @@ class MyGameOrchestrator {
 		}
 	}
 
-	checkGameWinner(gameWinner) {
-		if(gameWinner > 0) {
+	checkGameWinner() {
+		if(this.winnerNum > 0) {
 			this.resetBoard();
 			this.resetVariables()
 		}
