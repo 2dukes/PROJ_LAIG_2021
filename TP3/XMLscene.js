@@ -226,7 +226,7 @@ class XMLscene extends CGFscene {
 			this.animationCamera.apply();
 		}
 
-
+		
 		if (this.sceneInited && this.menu.choseAll) {
 			// Draw axis
 

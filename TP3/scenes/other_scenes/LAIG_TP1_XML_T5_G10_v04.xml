@@ -6,7 +6,7 @@
 
     <views default="defaultCamera">
         <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="menuCamera" near="0.1" far="100" angle="2.0">
+        <perspective id="menuCamera" near="0.1" far="100" angle="114.591">
             <from x="1.5" y="1" z="1.5" />
             <to x="1.5" y="1" z="-1.5" />
         </perspective>

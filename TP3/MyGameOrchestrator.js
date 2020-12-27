@@ -71,18 +71,19 @@ class MyGameOrchestrator {
 				this.movingPiece = null;
 
 				this.nPlays++;
-				if(this.checkGameWinner(this.winnerNum) || this.nPlays == 3) {
-					// this.scene.performCameraAnimation('menuCamera', 1.5);
-					this.scene.camera = new CGFcamera(
-						2.0,
-						0.1,
-						100,
-						vec3.fromValues(1.5, 1, 1.5),
-						vec3.fromValues(1.5, 1, -1.5)
-					);
-			
-					this.scene.interface.setActiveCamera(this.camera);
-					this.scene.newCamera = this.camera;
+				if(this.checkGameWinner(this.winnerNum) || this.nPlays == 1) {
+					this.scene.performCameraAnimation('menuCamera', 1.5);
+					// console.log(this.scene.graph['Christmas Room'].cameras['menuCamera']);
+					// // this.scene.camera = new CGFcamera(
+					// 	// 	2.0,
+					// 	// 	0.1,
+					// 	// 	100,
+					// 	// 	vec3.fromValues(1.5, 1, 1.5),
+					// 	// 	vec3.fromValues(1.5, 1, -1.5)
+					// 	// );
+				
+					// 	// this.scene.interface.setActiveCamera(this.camera);
+					// 	// this.scene.newCamera = this.camera;
 					this.resetBoard();
 					this.resetVariables();
 				} else
@@ -176,8 +177,6 @@ class MyGameOrchestrator {
 	}
 
 	resetVariables() {
-		
-		this.sceneInited = false;
 		this.scene.menu = new MyMenu(this.scene);
 		this.resetTime();
 
@@ -189,9 +188,13 @@ class MyGameOrchestrator {
 		this.promiseComputer = true;
 		this.finishedUndo = true;
 
+		let playerPoints = this.gameBoard.playerPoints;
+
 		this.gameBoard = new MyGameBoard(this.scene, 0.25);
 		this.auxBoard = new MyAuxBoard(this.scene);
 		this.gameSequence = new MyGameSequence(this.scene);
+
+		this.gameBoard.playerPoints = playerPoints;
 	}
 
 	async logPicking() {
