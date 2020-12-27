@@ -52,6 +52,74 @@ class MyGameBoard {
 
         this.colors_player_1 = new MyRectangle(this.scene, 0, 0, 1.5, 0.4);
         this.colors_player_2 = new MyRectangle(this.scene, 0, 0, 1.5, 0.4);
+
+        this.initScorePieces();
+    }
+
+    initScorePieces() {
+        this.purplePieceAp = new CGFappearance(this.scene);
+		this.purplePieceAp.setAmbient(0.302, 0, 0.302, 1); // Ambient RGB
+		this.purplePieceAp.setDiffuse(0.302, 0, 0.302, 1); // Diffuse RGB
+		this.purplePieceAp.setSpecular(0.0, 0, 0.0, 1); // Specular RGB
+		this.purplePieceAp.setEmission(0.1, 0, 0.1, 1); // Emissive RGB
+		this.purplePieceAp.setShininess(1);
+
+		this.texture1 = new CGFtexture(this.scene,"./scenes/images/tiles/purple_tile.png");
+		this.purplePieceAp.setTexture(this.texture1);
+		this.purplePieceAp.setTextureWrap("REPEAT", "REPEAT");
+		this.purplePieceAp.apply();
+
+		this.greenPieceAp = new CGFappearance(this.scene);
+		this.greenPieceAp.setAmbient(0, 0.502, 0, 1); // Ambient RGB
+		this.greenPieceAp.setDiffuse(0, 0.502, 0, 1); // Diffuse RGB
+		this.greenPieceAp.setSpecular(0, 0, 0, 1); // Specular RGB
+		this.greenPieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
+		this.greenPieceAp.setShininess(1);
+
+		this.texture2 = new CGFtexture(this.scene,"./scenes/images/tiles/green_tile.png");
+		this.greenPieceAp.setTexture(this.texture2);
+		this.greenPieceAp.setTextureWrap("REPEAT", "REPEAT");
+		this.greenPieceAp.apply();
+
+		this.orangePieceAp = new CGFappearance(this.scene);
+		this.orangePieceAp.setAmbient(1, 0.4, 0, 1); // Ambient RGB
+		this.orangePieceAp.setDiffuse(1, 0.4, 0, 1); // Diffuse RGB
+		this.orangePieceAp.setSpecular(0, 0, 0, 1); // Specular RGB
+		this.orangePieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
+		this.orangePieceAp.setShininess(1);
+
+		this.texture3 = new CGFtexture(this.scene,"./scenes/images/tiles/orange_tile.png");
+		this.orangePieceAp.setTexture(this.texture3);
+		this.orangePieceAp.setTextureWrap("REPEAT", "REPEAT");
+        this.orangePieceAp.apply();
+        
+        this.purpleScorePiece = new MyPiece(
+            this.scene, 
+            0.15, 
+            this.purplePieceAp,
+            [0,0,0],
+            "purple",
+            null,
+            -1
+        );
+        this.greenScorePiece = new MyPiece(
+            this.scene, 
+            0.15, 
+            this.greenPieceAp,
+            [0,0,0],
+            "green",
+            null,
+            -1
+        );
+        this.orangeScorePiece = new MyPiece(
+            this.scene, 
+            0.15, 
+            this.orangePieceAp,
+            [0,0,0],
+            "orange",
+            null,
+            -1
+        );
     }
 
     getTileCoordinates(line, diagonal) {
@@ -265,20 +333,75 @@ class MyGameBoard {
 
         this.scene.popMatrix();
 
+        //------------PLAYER COLORS-----------------
+
         this.scene.pushMatrix();
         this.colors_player_1_ap.apply();
-        this.scene.translate(-2.7, -3.7, 0.1);
+        this.scene.translate(-2.7, -3.7, 0.05);
         this.scene.rotate(-Math.PI/3, 0, 0, 1);
         this.colors_player_1.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.colors_player_2_ap.apply();
-        this.scene.translate(2.2, 0, 0.1);
+        this.scene.translate(2.2, 0, 0.05);
         this.scene.rotate(-Math.PI/3, 0, 0, 1);
         this.colors_player_2.display();
         this.scene.popMatrix();
 
+        //--------------PLAYER 1 PURPLE--------------
+
+        if (this.player1Score[0] == "TRUE") {
+            this.scene.pushMatrix();
+            this.scene.translate(-2.5, -4.5, 0.05);
+            this.purpleScorePiece.display();
+            this.scene.popMatrix();
+        }
+        
+        //--------------PLAYER 2 PURPLE--------------
+
+        if (this.player2Score[0] == "TRUE") {
+            this.scene.pushMatrix();
+            this.scene.translate(3.1, -0.3, 0.05);
+            this.purpleScorePiece.display();
+            this.scene.popMatrix();
+        }
+
+        //--------------PLAYER 1 GREEN--------------
+
+        if (this.player1Score[1] == "TRUE") {
+            this.scene.pushMatrix();
+            this.scene.translate(-2.75, -4, 0.05);
+            this.greenScorePiece.display();
+            this.scene.popMatrix();
+        }
+
+        //--------------PLAYER 2 GREEN--------------
+
+        if (this.player2Score[1] == "TRUE") {
+            this.scene.pushMatrix();
+            this.scene.translate(3.3, -0.7, 0.05);
+            this.greenScorePiece.display();
+            this.scene.popMatrix();
+        }
+        
+        //--------------PLAYER 1 ORANGE--------------
+
+        if (this.player1Score[2] == "TRUE") {
+            this.scene.pushMatrix();
+            this.scene.translate(-2.25, -4.9, 0.05);
+            this.orangeScorePiece.display();
+            this.scene.popMatrix();
+        }
+
+        //--------------PLAYER 2 ORANGE--------------
+
+        if (this.player2Score[2] == "TRUE") {
+            this.scene.pushMatrix();
+            this.scene.translate(2.9, 0.05, 0.05);
+            this.orangeScorePiece.display();
+            this.scene.popMatrix();
+        }
 
     }
 }
