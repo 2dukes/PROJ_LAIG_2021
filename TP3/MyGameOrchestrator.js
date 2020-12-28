@@ -303,7 +303,7 @@ class MyGameOrchestrator {
 						}
 
 						else if (this.pickedNow.optionName == "menu") {
-							
+
 						}
 
 						else if (this.pickedNow.optionName == "movie") {
@@ -401,6 +401,7 @@ class MyGameOrchestrator {
 		this.scene.translate(5.45, 3, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.backToMenuButton.display();
+		this.scene.clearPickRegistration();
 
 		this.scene.popMatrix();
 
@@ -413,6 +414,7 @@ class MyGameOrchestrator {
 		this.scene.translate(5.45, 3.5, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.viewMovieButton.display();
+		this.scene.clearPickRegistration();
 
 		this.scene.popMatrix();
 	}
