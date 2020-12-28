@@ -138,6 +138,8 @@ class MyGameOrchestrator {
 		console.log(`Winner: ${this.winnerNum}`);
 
 		this.resetGame(true);
+		document.querySelector('#messages').style.display = "block";
+        document.querySelector('#messages').innerHTML = `Player ${this.winnerNum} won!`;
 		this.scene.performCameraAnimation('menuCamera', 1.5);
 	}
 

@@ -207,6 +207,8 @@ class MyGameBoard {
         if(jsonResponse.winner != 0) {
             this.playerPoints[jsonResponse.winner]++;
             console.log(`PLAYER ${jsonResponse.winner} won!`);
+            document.querySelector('#messages').style.display = "block";
+            document.querySelector('#messages').innerHTML = `Player ${jsonResponse.winner} won!`;
             // alert(`PLAYER ${jsonResponse.winner} won!`);
         }
         
