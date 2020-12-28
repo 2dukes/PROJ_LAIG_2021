@@ -33,6 +33,13 @@ canvas {
     font-weight: bolder;
     font-size: 1.5em;
     text-align: center;
+    animation: blinkingText 2s infinite;
+}
+
+@keyframes blinkingText{
+    0%	    { color: white;}
+    50%	    { color: black;}
+    100%	{ color: white;}
 }
 </style>
 </head>
