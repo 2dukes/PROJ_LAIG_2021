@@ -44,7 +44,7 @@ class MyGameOrchestrator {
 		this.menuTexture = new CGFtexture(this.scene, "./scenes/images/menu/back_to_menu.png");
 		this.backToMenuAppearance.setTexture(this.menuTexture);
 
-		this.viewMovieButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "movie", 1501);
+		this.viewMovieButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "movie", 1502);
 		this.viewMovieAppearance = new CGFappearance(this.scene);
 		this.movieTexture = new CGFtexture(this.scene, "./scenes/images/menu/movie.png");
 		this.viewMovieAppearance.setTexture(this.movieTexture);
@@ -66,7 +66,7 @@ class MyGameOrchestrator {
 		this.timeStr += "" + seconds;
 		if (this.totalSeconds < 0) this.timeStr = "0:00";
 
-		if (this.totalSeconds > this.timeout) {
+		if (this.gameMode !== "BvB" && this.totalSeconds > this.timeout) {
 			this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1; 
 			this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			this.resetTime(1);
