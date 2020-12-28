@@ -38,6 +38,16 @@ class MyGameOrchestrator {
 		this.timeout = 10;
 
 		this.nplays = 0;
+
+		this.backToMenuButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "menu", 1501);
+		this.backToMenuAppearance = new CGFappearance(this.scene);
+		this.menuTexture = new CGFtexture(this.scene, "./scenes/images/menu/back_to_menu.png");
+		this.backToMenuAppearance.setTexture(this.menuTexture);
+
+		this.viewMovieButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "movie", 1501);
+		this.viewMovieAppearance = new CGFappearance(this.scene);
+		this.movieTexture = new CGFtexture(this.scene, "./scenes/images/menu/movie.png");
+		this.viewMovieAppearance.setTexture(this.movieTexture);
 	}
 
 	resetTime(delayTime) {
@@ -291,6 +301,15 @@ class MyGameOrchestrator {
 							}
 							this.finishedUndo = true;			
 						}
+
+						else if (this.pickedNow.optionName == "menu") {
+							
+						}
+
+						else if (this.pickedNow.optionName == "movie") {
+							
+						}
+
                     }
 			
 					if (this.lastPicked != null) {
@@ -370,6 +389,30 @@ class MyGameOrchestrator {
 		this.scene.translate(4.4, 2.5, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.timeSprite.display(this.timeStr);
+
+		this.scene.popMatrix();
+
+		//----------------BACK TO MENU-------------------------------
+		
+		this.scene.pushMatrix();
+
+		this.backToMenuAppearance.apply();
+
+		this.scene.translate(5.45, 3, 7);
+		this.scene.rotate(Math.PI, 0, 1, 0);
+		this.backToMenuButton.display();
+
+		this.scene.popMatrix();
+
+		//----------------VIEW MOVIE---------------------------------
+		
+		this.scene.pushMatrix();
+
+		this.viewMovieAppearance.apply();
+
+		this.scene.translate(5.45, 3.5, 7);
+		this.scene.rotate(Math.PI, 0, 1, 0);
+		this.viewMovieButton.display();
 
 		this.scene.popMatrix();
 	}
