@@ -19,7 +19,7 @@ class MyGameOrchestrator {
 		this.promisePlayer = true;
 		this.promiseComputer = true;
 		this.finishedUndo = true;
-		this.winnerNum = null;
+		this.winnerNum = 0;
 
 		if (this.gameMode == "BvB") this.scene.setPickEnabled(false);
 		
@@ -36,8 +36,6 @@ class MyGameOrchestrator {
 		this.timeSprite = new MySpriteText(this.scene, "0:00", 0.25);
 
 		this.timeout = 10;
-
-		this.nplays = 0;
 
 		this.backToMenuButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "menu", 1501);
 		this.backToMenuAppearance = new CGFappearance(this.scene);
@@ -66,14 +64,16 @@ class MyGameOrchestrator {
 		this.timeStr += "" + seconds;
 		if (this.totalSeconds < 0) this.timeStr = "0:00";
 
-		if (this.gameMode !== "BvB" && this.totalSeconds > this.timeout) {
-			if (this.gameMode == "PvP" || (this.gameMode == "PvB" && this.gameBoard.currentPlayer != 2)) {
-				this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1;
-				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
-				this.resetTime(1);
-				if (this.gameMode == "PvB" && this.gameBoard.currentPlayer == 2) this.computerMove();
-			
+		if(this.winnerNum == 0) {
+			if (this.gameMode !== "BvB" && this.totalSeconds > this.timeout) {
+				if (this.gameMode == "PvP" || (this.gameMode == "PvB" && this.gameBoard.currentPlayer != 2)) {
+					this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1;
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+					this.resetTime(1);
+					if (this.gameMode == "PvB" && this.gameBoard.currentPlayer == 2) this.computerMove();
 				
+					
+				}
 			}
 		}
 	}
@@ -93,10 +93,7 @@ class MyGameOrchestrator {
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
 
-				if(this.checkGameWinner()) {
-					this.scene.performCameraAnimation('menuCamera', 1.5);
-				} else
-					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 				return;
 			}
 
@@ -107,14 +104,7 @@ class MyGameOrchestrator {
 				this.movingPiece.animation = null;
 				this.movingPiece = null;
 
-				this.nplays++;
-				// if(this.nplays == 2) 
-				// 	this.makeGameMovie();
-				
-				/*else*/ if(this.checkGameWinner()) {
-					this.scene.performCameraAnimation('menuCamera', 1.5);
-				} else
-					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			}
 		
 		}
@@ -139,7 +129,7 @@ class MyGameOrchestrator {
 	async makeGameMovie() {
 		// Reset first for tests
 		this.resetGame(false);
-		console.log(this.gameSequence.moves);
+		// console.log(this.gameSequence.moves);
 		for(let i = 0; i < this.gameSequence.moves.length ; i++) {
 			let move = this.gameSequence.moves[i];
 			this.movingPiece = this.auxBoard.getNextPiece(move.pieceColour);
@@ -152,14 +142,14 @@ class MyGameOrchestrator {
 		this.winnerNum = this.getWinner();
 		console.log(`Winner: ${this.winnerNum}`);
 
-		this.resetGame(true);
 		document.querySelector('#messages').style.display = "block";
         document.querySelector('#messages').innerHTML = `Player ${this.winnerNum} won!`;
 		this.scene.performCameraAnimation('menuCamera', 1.5);
+		this.resetGame(true);
 	}
 
 	async gameMove() {
-		if (this.movingPiece != null && this.promiseComputer && this.promisePlayer) {
+		if (this.movingPiece != null && this.promiseComputer && this.promisePlayer && this.winnerNum == 0) {
 			let stringParamPlayer = this.gameBoard.formatFetchStringPlayer(this.pickedNow.line, this.pickedNow.diagonal, this.movingPiece.color);
 			this.promisePlayer = false;
 			let jsonResponse = await this.gameBoard.callPrologMove(stringParamPlayer);	
@@ -182,22 +172,24 @@ class MyGameOrchestrator {
 	}
 
 	async computerMove() {
-		let stringParamBot = this.gameBoard.formatFetchStringComputer();
-		this.promiseComputer = false;
-		let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
-		this.winnerNum = jsonResponse.winner;
+		if(this.winnerNum == 0) {
+			let stringParamBot = this.gameBoard.formatFetchStringComputer();
+			this.promiseComputer = false;
+			let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
+			this.winnerNum = jsonResponse.winner;
 
-		this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
-		
-		let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
+			this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
+			
+			let tileCoords = this.gameBoard.getTileCoordinates(jsonResponse.playedRow, jsonResponse.playedDiagonal);
 
-		if(tileCoords != null) {
-			this.movingPiece.move(tileCoords[0], tileCoords[1]);
-			this.resetTime();
-			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.movingPiece.color, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer", this.gameBoard.player1Score, this.gameBoard.player2Score));
-			this.promiseComputer = true;
-		} else 
-			console.log('Incorrect line or diagonal in computer move!');
+			if(tileCoords != null) {
+				this.movingPiece.move(tileCoords[0], tileCoords[1]);
+				this.resetTime();
+				this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.movingPiece.color, tileCoords[0], tileCoords[1], this.gameBoard.board, "computer", this.gameBoard.player1Score, this.gameBoard.player2Score));
+				this.promiseComputer = true;
+			} else 
+				console.log('Incorrect line or diagonal in computer move!');
+		}
 	}
 
 	undoMove() {
@@ -286,7 +278,7 @@ class MyGameOrchestrator {
 
 					if (this.pickedNow instanceof MyMenuButton) {
 
-						if (this.pickedNow.optionName == "undo" && this.finishedUndo) {
+						if (this.pickedNow.optionName == "undo" && this.finishedUndo && this.winnerNum == 0) {
 							this.finishedUndo = false;
 
 							if (this.gameMode == "PvP") {
@@ -314,8 +306,7 @@ class MyGameOrchestrator {
 						}
 
 						else if (this.pickedNow.optionName == "movie") {
-							// this.resetGame(true);
-
+							this.makeGameMovie();
 						}
 
                     }
@@ -331,32 +322,23 @@ class MyGameOrchestrator {
 
 	display() {
 
-		//----------------VIEW MOVIE---------------------------------
-		this.scene.pushMatrix();
-
-		this.viewMovieAppearance.apply();
-
-		this.scene.translate(6.0, 2.0, 7);
-		this.scene.rotate(Math.PI, 0, 1, 0);
-		this.viewMovieButton.display();
-		this.scene.clearPickRegistration();
-
-		this.scene.popMatrix();
-
 		if(!this.scene.menu.choseAll) { // Only enters here at the end of the game
-			
+			return;
+		}
+
+		if(this.winnerNum > 0) {
+
 			//----------------VIEW MOVIE---------------------------------
 			this.scene.pushMatrix();
 
 			this.viewMovieAppearance.apply();
 
-			this.scene.translate(5.45, 3.5, 7);
-			this.scene.rotate(Math.PI, 1, 0, 0);
+			this.scene.translate(5.35, 2.5, 7);
+			this.scene.rotate(Math.PI, 0, 1, 0);
 			this.viewMovieButton.display();
 			this.scene.clearPickRegistration();
 
 			this.scene.popMatrix();
-			return;
 		}
 
 		if (this.movingPiece == null) {
@@ -431,7 +413,7 @@ class MyGameOrchestrator {
 
 		this.backToMenuAppearance.apply();
 
-		this.scene.translate(4.6, 2, 7);
+		this.scene.translate(5.35, 2, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.backToMenuButton.display();
 		this.scene.clearPickRegistration();
