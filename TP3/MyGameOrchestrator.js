@@ -71,6 +71,9 @@ class MyGameOrchestrator {
 				this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1;
 				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 				this.resetTime(1);
+				if (this.gameMode == "PvB" && this.gameBoard.currentPlayer == 2) this.computerMove();
+			
+				
 			}
 		}
 	}
