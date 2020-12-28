@@ -76,9 +76,6 @@ class MyGameOrchestrator {
 					
 					this.resetTime(1);
 					if (this.gameMode == "PvB" && this.gameBoard.currentPlayer == 2) this.computerMove();
-				
-					
-						
 					
 				}
 				this.scene.setPickEnabled(true);
@@ -116,7 +113,8 @@ class MyGameOrchestrator {
 				this.movingPiece.isSelected = false;
 				this.movingPiece = null;
 
-				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+				if(this.winnerNum == 0)
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 				return;
 			}
 
@@ -127,7 +125,8 @@ class MyGameOrchestrator {
 				this.movingPiece.animation = null;
 				this.movingPiece = null;
 
-				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+				if(this.winnerNum == 0)
+					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 			}
 		
 		}
