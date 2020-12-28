@@ -44,6 +44,8 @@ class CameraAnimation extends Animation {
                     document.querySelector('#messages').innerHTML = `Player ${this.scene.gameOrchestrator.gameBoard.currentPlayer} turn!`;
                 } else // BOT
                     document.querySelector('#messages').innerHTML = "Waiting for Computer...";
+            } else {
+                document.querySelector('#messages').style.display = "none";
             }
             return;
         }
