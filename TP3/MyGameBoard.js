@@ -331,6 +331,7 @@ class MyGameBoard {
             
             this.tiles[i].display();
         }
+        this.scene.clearPickRegistration();
         this.borderColors.display();
 
         this.scene.popMatrix();

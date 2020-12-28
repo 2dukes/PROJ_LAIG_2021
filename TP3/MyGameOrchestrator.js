@@ -65,17 +65,40 @@ class MyGameOrchestrator {
 		if (this.totalSeconds < 0) this.timeStr = "0:00";
 
 		if(this.winnerNum == 0) {
-			if (this.gameMode !== "BvB" && this.totalSeconds > this.timeout) {
+
+			if (this.gameMode !== "BvB" && this.totalSeconds >= this.timeout) {
+				this.scene.setPickEnabled(false);
+				this.clearPick();
 				if (this.gameMode == "PvP" || (this.gameMode == "PvB" && this.gameBoard.currentPlayer != 2)) {
 					this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1;
+					
 					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+					
 					this.resetTime(1);
 					if (this.gameMode == "PvB" && this.gameBoard.currentPlayer == 2) this.computerMove();
 				
 					
+						
+					
 				}
+				this.scene.setPickEnabled(true);
 			}
 		}
+	}
+
+	clearPick() {
+		this.scene.clearPickRegistration();
+		if (this.pickedNow != null) {
+			this.pickedNow.isSelected = false;
+			this.pickedNow = null;
+		}
+
+		if (this.lastPicked != null) {
+			this.lastPicked.isSelected = false;
+			this.lastPicked = null;
+		}
+
+		this.movingPiece = null;
 	}
 
 	update(currentTime) {
