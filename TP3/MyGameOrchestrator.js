@@ -329,7 +329,9 @@ class MyGameOrchestrator {
 						}
 
 						else if (this.pickedNow.optionName == "movie") {
+							this.scene.performCameraAnimation('upView', 1.5);
 							this.makeGameMovie();
+							this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer % 2 + 1], 1.5);
 						}
 
                     }
@@ -356,7 +358,7 @@ class MyGameOrchestrator {
 
 			this.viewMovieAppearance.apply();
 
-			this.scene.translate(5.35, 2.5, 7);
+			this.scene.translate(5.38, 3.0, 7);
 			this.scene.rotate(Math.PI, 0, 1, 0);
 			this.viewMovieButton.display();
 			this.scene.clearPickRegistration();
@@ -403,7 +405,7 @@ class MyGameOrchestrator {
 
         this.undoAppearance.apply();
 		
-		this.scene.translate(5.5, 0.5, 7);
+		this.scene.translate(5.5, 1.0, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.undoButton.display();
 		this.scene.clearPickRegistration();
@@ -414,7 +416,7 @@ class MyGameOrchestrator {
 		
 		this.scene.pushMatrix();
 
-		this.scene.translate(4.9, 0.9, 7);
+		this.scene.translate(4.9, 1.5, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.marcador.display(this.gameBoard.playerPoints[0].toString() + "-" +  this.gameBoard.playerPoints[1].toString());
 
@@ -424,7 +426,7 @@ class MyGameOrchestrator {
 		
 		this.scene.pushMatrix();
 
-		this.scene.translate(4.4, 1.5, 7);
+		this.scene.translate(4.4, 2.1, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.timeSprite.display(this.timeStr);
 
@@ -436,7 +438,7 @@ class MyGameOrchestrator {
 
 		this.backToMenuAppearance.apply();
 
-		this.scene.translate(5.35, 2, 7);
+		this.scene.translate(5.38, 2.5, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.backToMenuButton.display();
 		this.scene.clearPickRegistration();
