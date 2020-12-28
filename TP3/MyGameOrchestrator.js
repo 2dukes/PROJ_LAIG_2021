@@ -229,6 +229,7 @@ class MyGameOrchestrator {
 			this.scene.menu = new MyMenu(this.scene);
 			await new Promise((r) => setTimeout(r, 150));
 			this.gameSequence = new MyGameSequence(this.scene);
+			this.winnerNum = 0;
 		}
 		this.resetTime();
 
