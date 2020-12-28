@@ -156,28 +156,31 @@ class MyMenu {
 
 
         // ------------ GAME LEVEL -----------------------
-        this.scene.pushMatrix();
-        this.scene.translate(2, 1, 0);
 
-        this.menuAppearance.setTexture(this.textures["gameLevelTitle"]);
-        this.menuAppearance.apply();
-
-        this.subtitle.display();
-        this.scene.popMatrix();
-
-        for (let i = 0; i < this.chooseLevelMode.length; i++) {
-
+        if (this.choseMode != "PvP") {
             this.scene.pushMatrix();
-            this.scene.translate(2, 0.3*i, 0);
-            this.menuAppearance.setTexture(this.textures[this.levelNames[i]]);
-		    this.menuAppearance.apply();
+            this.scene.translate(2, 1, 0);
 
-            this.chooseLevelMode[i].display();
-            
+            this.menuAppearance.setTexture(this.textures["gameLevelTitle"]);
+            this.menuAppearance.apply();
 
+            this.subtitle.display();
             this.scene.popMatrix();
+
+            for (let i = 0; i < this.chooseLevelMode.length; i++) {
+
+                this.scene.pushMatrix();
+                this.scene.translate(2, 0.3*i, 0);
+                this.menuAppearance.setTexture(this.textures[this.levelNames[i]]);
+                this.menuAppearance.apply();
+
+                this.chooseLevelMode[i].display();
+                
+
+                this.scene.popMatrix();
+            }
+            this.scene.clearPickRegistration();
         }
-        this.scene.clearPickRegistration();
 
         // ------------ OK -----------------------
         this.scene.pushMatrix();
