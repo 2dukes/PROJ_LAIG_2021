@@ -403,16 +403,18 @@ class MyGameOrchestrator {
 
 		//------------------UNDO---------------------------------
 
-		this.scene.pushMatrix();
+		if (this.gameMode !== "BvB") {
+			this.scene.pushMatrix();
 
-        this.undoAppearance.apply();
-		
-		this.scene.translate(5.5, 1.0, 7);
-		this.scene.rotate(Math.PI, 0, 1, 0);
-		this.undoButton.display();
-		this.scene.clearPickRegistration();
+			this.undoAppearance.apply();
+			
+			this.scene.translate(5.5, 1.0, 7);
+			this.scene.rotate(Math.PI, 0, 1, 0);
+			this.undoButton.display();
+			this.scene.clearPickRegistration();
 
-		this.scene.popMatrix();
+			this.scene.popMatrix();
+		}
 
 		//----------------MARCADOR------------------------------
 		
