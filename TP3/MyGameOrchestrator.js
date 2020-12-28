@@ -20,8 +20,6 @@ class MyGameOrchestrator {
 		this.promiseComputer = true;
 		this.finishedUndo = true;
 		this.winnerNum = 0;
-
-		if (this.gameMode == "BvB") this.scene.setPickEnabled(false);
 		
 		this.undoButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "undo", 1500);
 		this.undoAppearance = new CGFappearance(this.scene);
@@ -279,13 +277,13 @@ class MyGameOrchestrator {
 				for (var i = 0; i < this.scene.pickResults.length; i++) {
 					this.lastPicked = this.pickedNow;
 					this.pickedNow = this.scene.pickResults[i][0];
-					if (this.pickedNow instanceof MyTile) {
+					if (this.pickedNow instanceof MyTile && this.gameMode !== "BvB") {
 						this.pickedNow.isSelected = true;
 						
 						this.gameMove();
 					}
 
-					if (this.pickedNow instanceof MyPiece) { 					
+					if (this.pickedNow instanceof MyPiece && this.gameMode !== "BvB") { 					
 
 						this.movingPiece = this.pickedNow;
 						this.movingPiece.isSelected = true;
@@ -384,7 +382,9 @@ class MyGameOrchestrator {
 			this.scene.setPickEnabled(true);
 		}
 
-		this.gameMode == "BvB" ? this.computerVsComputerMove() : this.logPicking();
+		this.logPicking();
+
+		if (this.gameMode == "BvB") this.computerVsComputerMove();
 		
 		//-----------------Board and Aux Board--------------------
 
