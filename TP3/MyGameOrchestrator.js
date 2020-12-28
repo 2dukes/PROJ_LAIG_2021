@@ -328,8 +328,33 @@ class MyGameOrchestrator {
 
 	display() {
 
-		if(!this.scene.menu.choseAll)
+		//----------------VIEW MOVIE---------------------------------
+		this.scene.pushMatrix();
+
+		this.viewMovieAppearance.apply();
+
+		this.scene.translate(6.0, 2.0, 7);
+		this.scene.rotate(Math.PI, 0, 1, 0);
+		this.viewMovieButton.display();
+		this.scene.clearPickRegistration();
+
+		this.scene.popMatrix();
+
+		if(!this.scene.menu.choseAll) { // Only enters here at the end of the game
+			
+			//----------------VIEW MOVIE---------------------------------
+			this.scene.pushMatrix();
+
+			this.viewMovieAppearance.apply();
+
+			this.scene.translate(5.45, 3.5, 7);
+			this.scene.rotate(Math.PI, 1, 0, 0);
+			this.viewMovieButton.display();
+			this.scene.clearPickRegistration();
+
+			this.scene.popMatrix();
 			return;
+		}
 
 		if (this.movingPiece == null) {
 			this.gameBoard.pickEnabled = false;
@@ -370,7 +395,7 @@ class MyGameOrchestrator {
 
         this.undoAppearance.apply();
 		
-		this.scene.translate(5.5, 1.1, 7);
+		this.scene.translate(5.5, 0.5, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.undoButton.display();
 		this.scene.clearPickRegistration();
@@ -381,7 +406,7 @@ class MyGameOrchestrator {
 		
 		this.scene.pushMatrix();
 
-		this.scene.translate(4.9, 1.7, 7);
+		this.scene.translate(4.9, 0.9, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.marcador.display(this.gameBoard.playerPoints[0].toString() + "-" +  this.gameBoard.playerPoints[1].toString());
 
@@ -391,7 +416,7 @@ class MyGameOrchestrator {
 		
 		this.scene.pushMatrix();
 
-		this.scene.translate(4.4, 2.5, 7);
+		this.scene.translate(4.4, 1.5, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.timeSprite.display(this.timeStr);
 
@@ -403,22 +428,9 @@ class MyGameOrchestrator {
 
 		this.backToMenuAppearance.apply();
 
-		this.scene.translate(5.45, 3, 7);
+		this.scene.translate(4.6, 2, 7);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.backToMenuButton.display();
-		this.scene.clearPickRegistration();
-
-		this.scene.popMatrix();
-
-		//----------------VIEW MOVIE---------------------------------
-		
-		this.scene.pushMatrix();
-
-		this.viewMovieAppearance.apply();
-
-		this.scene.translate(5.45, 3.5, 7);
-		this.scene.rotate(Math.PI, 0, 1, 0);
-		this.viewMovieButton.display();
 		this.scene.clearPickRegistration();
 
 		this.scene.popMatrix();
