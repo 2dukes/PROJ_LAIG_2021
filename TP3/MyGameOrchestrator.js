@@ -329,9 +329,9 @@ class MyGameOrchestrator {
 						}
 
 						else if (this.pickedNow.optionName == "movie") {
+							this.scene.performCameraAnimation('upView', 1.5);
 							document.querySelector('#messages').style.display = "block";
         					document.querySelector('#messages').innerHTML = `Playing Movie...`;
-							this.scene.performCameraAnimation('upView', 1.5);
 							this.makeGameMovie();
 							// this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer % 2 + 1], 1.5);
 						}
