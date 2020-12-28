@@ -166,8 +166,8 @@ class MyGameOrchestrator {
 
 		document.querySelector('#messages').style.display = "block";
         document.querySelector('#messages').innerHTML = `Player ${this.winnerNum} won!`;
-		this.scene.performCameraAnimation('menuCamera', 1.5);
-		this.resetGame(true);
+		// this.scene.performCameraAnimation('menuCamera', 1.5);
+		// this.resetGame(true);
 	}
 
 	async gameMove() {
