@@ -67,10 +67,13 @@ class MyGameOrchestrator {
 		if (this.totalSeconds < 0) this.timeStr = "0:00";
 
 		if (this.gameMode !== "BvB" && this.totalSeconds > this.timeout) {
-			if (this.gameMode == "PvB" && this.gameBoard.currentPlayer != 2) {
-				this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1; 
+			if (this.gameMode == "PvP" || (this.gameMode == "PvB" && this.gameBoard.currentPlayer != 2)) {
+				this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1;
 				this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 				this.resetTime(1);
+				if (this.gameMode == "PvB" && this.gameBoard.currentPlayer == 2) this.computerMove();
+			
+				
 			}
 		}
 	}
@@ -167,7 +170,7 @@ class MyGameOrchestrator {
 			this.gameSequence.addMove(new MyPieceMove(this.scene, this.movingPiece, this.movingPiece.color, this.pickedNow.x, this.pickedNow.y, this.gameBoard.board, "player", this.gameBoard.player1Score, this.gameBoard.player2Score));
 			this.promisePlayer = true;
 			
-			if (this.gameMode == "PvB") 
+			if (this.gameMode == "PvB")
 				this.computerMove();
 			
 		}
