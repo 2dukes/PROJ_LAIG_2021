@@ -227,10 +227,11 @@ class MyGameOrchestrator {
 		} return false;
 	}
 
-	resetGame(resetGameSequence) {
+	async resetGame(resetGameSequence) {
 		if(resetGameSequence) {
-			this.gameSequence = new MyGameSequence(this.scene);
 			this.scene.menu = new MyMenu(this.scene);
+			await new Promise((r) => setTimeout(r, 150));
+			this.gameSequence = new MyGameSequence(this.scene);
 		}
 		this.resetTime();
 
@@ -303,11 +304,13 @@ class MyGameOrchestrator {
 						}
 
 						else if (this.pickedNow.optionName == "menu") {
-
+							this.scene.performCameraAnimation('menuCamera', 1.5);
+							this.resetGame(true);
 						}
 
 						else if (this.pickedNow.optionName == "movie") {
-							
+							// this.resetGame(true);
+
 						}
 
                     }
