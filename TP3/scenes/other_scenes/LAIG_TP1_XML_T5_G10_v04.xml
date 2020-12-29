@@ -95,6 +95,8 @@
         <texture id="rainbowTex" path="./scenes/other_scenes/images/rainbow.png" />
         <texture id="text_chao" path="./scenes/images/chao.jpg" />
         <texture id="text_mesa" path="./scenes/images/mesa.jpg" />
+        <texture id="text_score_board" path="./scenes/images/score_board.jpg" /> 
+        <texture id="text_metal" path="./scenes/images/metal.jpg" />
     </textures>
 
     <materials>
@@ -104,6 +106,13 @@
             <diffuse r="1" g="1" b="1" a="1.0" />
             <specular r="1" g="1" b="1" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="sofaMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.13" g="0.13" b="0.13" a="1.0" />
+            <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
         </material>
         <material id="whiteColour">
             <shininess value="5" />
@@ -164,6 +173,239 @@
                 <noderef id="closet" />
                 <noderef id="pyramid" />
                 <noderef id="auxBoard" />
+                <nodered id="info_board" />
+            </descendants>
+        </node>
+
+        <node id="info_board">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="info_board_interior" />
+                <noderef id="frame_1" />
+                <noderef id="frame_2" />
+                <noderef id="frame_3" />
+                <noderef id="frame_4" />
+            </descendants>
+        </node>
+
+        <node id="info_board_interior">
+            <material id="sofaMaterial" />
+
+            <texture id="text_score_board">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4.9" y="0" z="7.1" />
+                <scale sx="6" sy="9" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube1" />
+            </descendants>
+        </node>
+
+        <node id="frame_1">
+            <material id="null" />
+
+            <texture id="text_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3.8" y="0" z="7.1" />
+                <scale sx="0.5" sy="9" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube1" />
+            </descendants>
+        </node>
+
+        <node id="frame_2">
+            <material id="null" />
+
+            <texture id="text_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="6.05" y="0" z="7.1" />
+                <scale sx="0.5" sy="9" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube1" />
+            </descendants>
+        </node>
+
+        <node id="frame_3">
+            <material id="null" />
+
+            <texture id="text_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4.9" y="0" z="7.1" />
+                <scale sx="6" sy="0.5" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube1" />
+            </descendants>
+        </node>
+
+        <node id="frame_4">
+            <material id="null" />
+
+            <texture id="text_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4.925" y="3.15" z="7.1" />
+                <scale sx="6.95" sy="0.5" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube1" />
+            </descendants>
+        </node>
+
+        <node id="cube1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="0.35" sy="0.35" sz="0.35" />
+            </transformations>
+
+            <descendants>
+                <noderef id="facecubo_tras" />
+                <noderef id="facecubo_frente" />
+                <noderef id="facecubo_esquerda" />
+                <noderef id="facecubo_direita" />
+                <noderef id="facecubo_cima" />
+                <noderef id="facecubo_baixo" />
+            </descendants>
+        </node>
+
+        <!-- Faces do Cubo -->
+        <node id="facecubo_tras">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="-0.5" />
+                <rotation axis="y" angle="-180" />
+                <translation x="-0.5" y="0.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="facecubo_frente">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0.0" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="facecubo_esquerda">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0.0" z="0.0" />
+                <rotation axis="y" angle="-90" />
+                <translation x="-0.5" y="0.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="facecubo_direita">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0.0" z="0.0" />
+                <rotation axis="y" angle="90" />
+                <translation x="-0.5" y="0.0" z="0.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="facecubo_cima">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="1.0" z="0.5" />
+                <rotation axis="x" angle="-90" />
+
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="facecubo_baixo">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.5" y="0.0" z="-0.5" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
             </descendants>
         </node>
 
