@@ -97,7 +97,6 @@
         <texture id="text_mesa" path="./scenes/images/mesa.jpg" />
     </textures>
 
-
     <materials>
         <material id="testMaterial">
             <shininess value="5" />

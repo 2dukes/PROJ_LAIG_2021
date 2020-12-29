@@ -6,9 +6,7 @@ var VIEWS_INDEX = 1;
 var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
-
 var SPRITESHEETS_INDEX = 5;
-
 var MATERIALS_INDEX = 6;
 var ANIMATIONS_INDEX = 7;
 var NODES_INDEX = 8;
@@ -120,7 +118,31 @@ class MySceneGraph {
 
         var error;
 
-        // Processes each node, verifying errors.
+        let thereIsSpritesheets = nodeNames.indexOf("spritesheets") != -1;
+        let thereIsAnimations = nodeNames.indexOf("animations") != -1;
+        
+        INITIALS_INDEX = 0;
+        VIEWS_INDEX = 1;
+        ILLUMINATION_INDEX = 2;
+        LIGHTS_INDEX = 3;
+        TEXTURES_INDEX = 4;
+        SPRITESHEETS_INDEX = 5;
+        MATERIALS_INDEX = 6;
+        ANIMATIONS_INDEX = 7;
+        NODES_INDEX = 8;
+
+        if (!thereIsSpritesheets && thereIsAnimations) {
+            MATERIALS_INDEX--;
+            ANIMATIONS_INDEX--;
+            NODES_INDEX--;
+        }
+        else if (thereIsSpritesheets && !thereIsAnimations) {
+            NODES_INDEX--;
+        }
+        else if (!thereIsSpritesheets && !thereIsAnimations) {
+            MATERIALS_INDEX--;
+            NODES_INDEX -= 2;
+        }
 
         // <initials>
         var index;
@@ -184,13 +206,8 @@ class MySceneGraph {
         }
 
         // <spritesheets>
-        if ((index = nodeNames.indexOf("spritesheets")) == -1) {
-            MATERIALS_INDEX = 5;
-            ANIMATIONS_INDEX = 6;
-            NODES_INDEX = 7;
-        }
-        else {
-            if (index != TEXTURES_INDEX + 1)
+        if ((index = nodeNames.indexOf("spritesheets")) != -1) { 
+            if (index != SPRITESHEETS_INDEX)
                 this.onXMLMinorError("tag <spritesheets> out of order");
 
             //Parse textures block
@@ -211,9 +228,7 @@ class MySceneGraph {
         }
 
         // <animations>
-        if ((index = nodeNames.indexOf("animations")) == -1) // When there are no animations, then NODES_INDEX passes to 6 (last).
-            NODES_INDEX = MATERIALS_INDEX + 1;
-        else {
+        if ((index = nodeNames.indexOf("animations")) != -1) { // When there are no animations, then NODES_INDEX passes to 6 (last).
             if (index != ANIMATIONS_INDEX)
                 this.onXMLMinorError("tag <animations> out of order");
 
@@ -225,7 +240,7 @@ class MySceneGraph {
         // <nodes>
         if ((index = nodeNames.indexOf("nodes")) == -1)
             return "tag <nodes> missing";
-        else {
+        else { 
             if (index != NODES_INDEX)
                 this.onXMLMinorError("tag <nodes> out of order");
 

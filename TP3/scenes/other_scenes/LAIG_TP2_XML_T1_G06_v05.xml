@@ -97,10 +97,6 @@
         <texture id="text_happy_year" path="./scenes/images/happy_year.jpeg" />
     </textures>
 
-    <spritesheets>
-        
-    </spritesheets>
-
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
          requires a distinct "id". At least one material should be present. -->
