@@ -11,10 +11,10 @@ class MyPiece {
 		this.selectedPieceAp = selectedPieceAp;
 		this.numStack = numStack;
 
-		this.initTile();
+		this.initPiece();
 	}
 
-	initTile() {
+	initPiece() {
 		this.tile = new MyCylinder(
 			this.scene,
 			this.radius,

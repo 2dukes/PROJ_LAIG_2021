@@ -5,16 +5,18 @@ class MyTile {
         this.line = line;
         this.diagonal = diagonal;
         this.radius = radius;
-        this.piece = null;
-        this.isSelected = false;
-        this.tile = new MyCylinder(this.scene, this.radius, this.radius, 0.05, 6, 1);
-
         this.appearance1 = appearance1;
         this.appearance2 = appearance2;
 
-        this.hasPiece = false;
-        
+        this.initTile();
         this.getCoords(diagonalSP, diagonalStartingLine);
+    }
+
+    initTile() {
+        this.tile = new MyCylinder(this.scene, this.radius, this.radius, 0.05, 6, 1);
+        this.piece = null;
+        this.isSelected = false;
+        this.hasPiece = false;
     }
 
     getCoords(diagonalSP, diagonalStartingLine) {
