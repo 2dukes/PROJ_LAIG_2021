@@ -111,6 +111,7 @@
         <texture id="text_tv" path="./scenes/images/tv.jpg" />
         <texture id="text_screen_tv" path="./scenes/images/screen_tv.jpg" />
         <texture id="text_score_board" path="./scenes/images/score_board.jpg" /> 
+        <texture id="text_metal" path="./scenes/images/metal.jpg" />
     </textures>
 
     <materials>
@@ -244,6 +245,26 @@
         </node>
 
         <node id="info_board">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="info_board_interior" />
+                <noderef id="frame1" />
+                <noderef id="frame2" />
+                <noderef id="frame3" />
+                <noderef id="frame4" />
+            </descendants>
+        </node>
+
+        <node id="info_board_interior">
             <material id="sofaMaterial" />
 
             <texture id="text_score_board">
@@ -253,6 +274,74 @@
             <transformations>
                 <translation x="4.9" y="0" z="7.1" />
                 <scale sx="6" sy="9" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="frame1">
+            <material id="null" />
+
+            <texture id="text_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3.8" y="0" z="7.1" />
+                <scale sx="0.5" sy="9" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="frame2">
+            <material id="null" />
+
+            <texture id="text_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="6.05" y="0" z="7.1" />
+                <scale sx="0.5" sy="9" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="frame3">
+            <material id="null" />
+
+            <texture id="text_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4.9" y="0" z="7.1" />
+                <scale sx="6" sy="0.5" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="frame4">
+            <material id="null" />
+
+            <texture id="text_metal">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4.925" y="3.15" z="7.1" />
+                <scale sx="6.95" sy="0.5" sz="0.3" />
             </transformations>
 
             <descendants>
