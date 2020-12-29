@@ -226,7 +226,6 @@ class MyGameOrchestrator {
 	checkGameWinner() {
 		if(this.winnerNum > 0) {
 			// this.resetBoard();
-			console.log('A');
 			this.resetGame(true);
 			return true;
 		} return false;
@@ -390,7 +389,7 @@ class MyGameOrchestrator {
 
 		//------------------UNDO---------------------------------
 
-		if (this.gameMode !== "BvB") {
+		if (this.gameMode !== "BvB" && !this.playingMovie) {
 			this.scene.pushMatrix();
 
 			this.undoAppearance.apply();
@@ -425,15 +424,17 @@ class MyGameOrchestrator {
 
 		//----------------BACK TO MENU-------------------------------
 		
-		this.scene.pushMatrix();
+		if(!this.playingMovie) {
+			this.scene.pushMatrix();
 
-		this.backToMenuAppearance.apply();
+			this.backToMenuAppearance.apply();
 
-		this.scene.translate(5.38, 2.5, 7);
-		this.scene.rotate(Math.PI, 0, 1, 0);
-		this.backToMenuButton.display();
-		this.scene.clearPickRegistration();
+			this.scene.translate(5.38, 2.5, 7);
+			this.scene.rotate(Math.PI, 0, 1, 0);
+			this.backToMenuButton.display();
+			this.scene.clearPickRegistration();
 
-		this.scene.popMatrix();
+			this.scene.popMatrix();
+		}
 	}
 }
