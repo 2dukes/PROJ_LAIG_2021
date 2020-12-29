@@ -62,41 +62,6 @@ class MyGameBoard {
     }
 
     initScorePieces() {
-        this.purplePieceAp = new CGFappearance(this.scene);
-		this.purplePieceAp.setAmbient(0.302, 0, 0.302, 1); // Ambient RGB
-		this.purplePieceAp.setDiffuse(0.302, 0, 0.302, 1); // Diffuse RGB
-		this.purplePieceAp.setSpecular(0.0, 0, 0.0, 1); // Specular RGB
-		this.purplePieceAp.setEmission(0.1, 0, 0.1, 1); // Emissive RGB
-		this.purplePieceAp.setShininess(1);
-
-		this.texture1 = new CGFtexture(this.scene,"./scenes/images/tiles/purple_tile.png");
-		this.purplePieceAp.setTexture(this.texture1);
-		this.purplePieceAp.setTextureWrap("REPEAT", "REPEAT");
-		this.purplePieceAp.apply();
-
-		this.greenPieceAp = new CGFappearance(this.scene);
-		this.greenPieceAp.setAmbient(0, 0.502, 0, 1); // Ambient RGB
-		this.greenPieceAp.setDiffuse(0, 0.502, 0, 1); // Diffuse RGB
-		this.greenPieceAp.setSpecular(0, 0, 0, 1); // Specular RGB
-		this.greenPieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
-		this.greenPieceAp.setShininess(1);
-
-		this.texture2 = new CGFtexture(this.scene,"./scenes/images/tiles/green_tile.png");
-		this.greenPieceAp.setTexture(this.texture2);
-		this.greenPieceAp.setTextureWrap("REPEAT", "REPEAT");
-		this.greenPieceAp.apply();
-
-		this.orangePieceAp = new CGFappearance(this.scene);
-		this.orangePieceAp.setAmbient(1, 0.4, 0, 1); // Ambient RGB
-		this.orangePieceAp.setDiffuse(1, 0.4, 0, 1); // Diffuse RGB
-		this.orangePieceAp.setSpecular(0, 0, 0, 1); // Specular RGB
-		this.orangePieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
-		this.orangePieceAp.setShininess(1);
-
-		this.texture3 = new CGFtexture(this.scene,"./scenes/images/tiles/orange_tile.png");
-		this.orangePieceAp.setTexture(this.texture3);
-		this.orangePieceAp.setTextureWrap("REPEAT", "REPEAT");
-        this.orangePieceAp.apply();
         
         this.purpleScorePiece = new MyPiece(
             this.scene, 
@@ -225,6 +190,43 @@ class MyGameBoard {
     }
 
     initializeTextures() {
+
+        this.purplePieceAp = new CGFappearance(this.scene);
+		this.purplePieceAp.setAmbient(0.302, 0, 0.302, 1); // Ambient RGB
+		this.purplePieceAp.setDiffuse(0.302, 0, 0.302, 1); // Diffuse RGB
+		this.purplePieceAp.setSpecular(0.0, 0, 0.0, 1); // Specular RGB
+		this.purplePieceAp.setEmission(0.1, 0, 0.1, 1); // Emissive RGB
+        this.purplePieceAp.setShininess(1);
+
+		this.texture1 = new CGFtexture(this.scene,"./scenes/images/tiles/purple_tile.png");
+		this.purplePieceAp.setTexture(this.texture1);
+		this.purplePieceAp.setTextureWrap("REPEAT", "REPEAT");
+		this.purplePieceAp.apply();
+
+		this.greenPieceAp = new CGFappearance(this.scene);
+		this.greenPieceAp.setAmbient(0, 0.502, 0, 1); // Ambient RGB
+		this.greenPieceAp.setDiffuse(0, 0.502, 0, 1); // Diffuse RGB
+		this.greenPieceAp.setSpecular(0, 0, 0, 1); // Specular RGB
+		this.greenPieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
+		this.greenPieceAp.setShininess(1);
+
+		this.texture2 = new CGFtexture(this.scene,"./scenes/images/tiles/green_tile.png");
+		this.greenPieceAp.setTexture(this.texture2);
+		this.greenPieceAp.setTextureWrap("REPEAT", "REPEAT");
+		this.greenPieceAp.apply();
+
+		this.orangePieceAp = new CGFappearance(this.scene);
+		this.orangePieceAp.setAmbient(1, 0.4, 0, 1); // Ambient RGB
+		this.orangePieceAp.setDiffuse(1, 0.4, 0, 1); // Diffuse RGB
+		this.orangePieceAp.setSpecular(0, 0, 0, 1); // Specular RGB
+		this.orangePieceAp.setEmission(0, 0, 0, 1); // Emissive RGB
+		this.orangePieceAp.setShininess(1);
+
+		this.texture3 = new CGFtexture(this.scene,"./scenes/images/tiles/orange_tile.png");
+		this.orangePieceAp.setTexture(this.texture3);
+		this.orangePieceAp.setTextureWrap("REPEAT", "REPEAT");
+        this.orangePieceAp.apply();
+
         this.defaultTileAppearance=new CGFappearance(this.scene);
         this.defaultTileAppearance.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
         this.defaultTileAppearance.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
