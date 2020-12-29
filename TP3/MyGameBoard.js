@@ -217,6 +217,8 @@ class MyGameBoard {
         this.parsePlayerColours(jsonResponse.currentPlayerColours, jsonResponse.currentPlayer);
         this.parsePlayerColours(jsonResponse.nextPlayerColours, jsonResponse.currentPlayer % 2 + 1);
         this.currentPlayer = jsonResponse.nextPlayer;
+        console.log(this.player1Score);
+        console.log(this.player2Score);
     }
 
     initializeTextures() {
@@ -372,7 +374,7 @@ class MyGameBoard {
 
         //--------------PLAYER 1 GREEN--------------
 
-        if (this.player1Score[1] == "TRUE") {
+        if (this.player1Score[2] == "TRUE") {
             this.scene.pushMatrix();
             this.scene.translate(-2.75, -4, 0.05);
             this.greenScorePiece.display();
@@ -381,7 +383,7 @@ class MyGameBoard {
 
         //--------------PLAYER 2 GREEN--------------
 
-        if (this.player2Score[1] == "TRUE") {
+        if (this.player2Score[2] == "TRUE") {
             this.scene.pushMatrix();
             this.scene.translate(3.3, -0.7, 0.05);
             this.greenScorePiece.display();
@@ -390,7 +392,7 @@ class MyGameBoard {
         
         //--------------PLAYER 1 ORANGE--------------
 
-        if (this.player1Score[2] == "TRUE") {
+        if (this.player1Score[1] == "TRUE") {
             this.scene.pushMatrix();
             this.scene.translate(-2.25, -4.9, 0.05);
             this.orangeScorePiece.display();
@@ -399,7 +401,7 @@ class MyGameBoard {
 
         //--------------PLAYER 2 ORANGE--------------
 
-        if (this.player2Score[2] == "TRUE") {
+        if (this.player2Score[1] == "TRUE") {
             this.scene.pushMatrix();
             this.scene.translate(2.9, 0.05, 0.05);
             this.orangeScorePiece.display();
