@@ -94,6 +94,7 @@
         <texture id="text_sofa2" path="./scenes/images/sofa2.jpg" />
         <texture id="text_sofa_leg" path="./scenes/images/sofa_leg.jpg" />
         <texture id="text_barrel" path="./scenes/images/barrel.jpg" />
+        <texture id="text_happy_year" path="./scenes/images/happy_year.jpeg" />
     </textures>
 
     <spritesheets>
@@ -309,7 +310,7 @@
 
             <material id="null" />
 
-            <texture id="text_quadro2">
+            <texture id="text_happy_year">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 

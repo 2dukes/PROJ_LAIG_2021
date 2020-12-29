@@ -153,7 +153,6 @@ class MyGameOrchestrator {
 		this.resetGame(false);
 		// console.log(this.gameSequence.moves);
 		for(let i = 0; i < this.gameSequence.moves.length ; i++) {
-			console.log('...' +  this.playingMovie);
 			let move = this.gameSequence.moves[i];
 			this.movingPiece = this.auxBoard.getNextPiece(move.pieceColour);
 			this.movingPiece.move(move.finalX, move.finalY);
@@ -335,7 +334,7 @@ class MyGameOrchestrator {
 							console.log(this.playingMovie);
 							this.makeGameMovie();
 						}
-						
+
                     }
 			
 					if (this.lastPicked != null) {
@@ -353,7 +352,7 @@ class MyGameOrchestrator {
 			return;
 		}
 
-		if(this.winnerNum > 0) {
+		if(this.winnerNum > 0 && !this.playingMovie) {
 
 			//----------------VIEW MOVIE---------------------------------
 			this.scene.pushMatrix();

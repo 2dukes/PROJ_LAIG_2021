@@ -35,7 +35,6 @@ class CameraAnimation extends Animation {
             this.animationEnded = true;
             this.setCamera(this.angleSecondCamera, this.nearSecondCamera, this.farSecondCamera, this.positionSecondCamera, this.targetSecondCamera);
             
-            console.log(this.scene.gameOrchestrator.playingMovie);
             if(this.scene.gameOrchestrator.playingMovie) {
                 document.querySelector('#messages').style.display = "block";
                 document.querySelector('#messages').innerHTML = "Playing Movie...";
