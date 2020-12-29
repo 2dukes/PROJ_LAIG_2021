@@ -152,7 +152,6 @@ class MyMenu {
         }
         this.scene.clearPickRegistration();
 
-
         // ------------ GAME LEVEL -----------------------
 
         if (this.choseMode != "PvP") {
@@ -191,9 +190,6 @@ class MyMenu {
         this.scene.clearPickRegistration();
         this.scene.popMatrix();
 
-
         this.scene.popMatrix();
-
-        
     }
 }

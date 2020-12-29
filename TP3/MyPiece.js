@@ -11,6 +11,10 @@ class MyPiece {
 		this.selectedPieceAp = selectedPieceAp;
 		this.numStack = numStack;
 
+		this.initTile();
+	}
+
+	initTile() {
 		this.tile = new MyCylinder(
 			this.scene,
 			this.radius,
@@ -21,7 +25,6 @@ class MyPiece {
 		);	
 
 		this.animation = null;
-
 	}
 
 	move(finalX, finalZ, finalY) {
@@ -58,8 +61,8 @@ class MyPiece {
 		
 		this.isMoving = true;
 
-		this.isInAuxBoard = false;
-		if (finalY !== undefined) this.isInAuxBoard = true;
+		// se finalY estiver definido, então o movimento é um undo, e por isso a peça vai para o auxBoard
+		(finalY !== undefined) ? this.isInAuxBoard = true : this.isInAuxBoard = false;
 	}
 
 	updateFinalCoordinates() { // Update animation final coordinates
@@ -68,11 +71,9 @@ class MyPiece {
 		this.position[2] = this.position[2] + this.animation.keyFrames[3].translation[2];
 	}
 
-
 	update(currentTime) {
-		if (this.isMoving && this.animation != null) {
+		if (this.isMoving && this.animation != null)
 			this.animation.update(currentTime);
-		}
 	}
 
 	display() {
