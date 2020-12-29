@@ -93,7 +93,8 @@ class XMLscene extends CGFscene {
 				this.lights[i].setDiffuse(...graphLight[3]);
 				this.lights[i].setSpecular(...graphLight[4]);
 
-				// this.lights[i].setVisible(true);
+				if(key == "Christmas Tree Light")
+					this.lights[i].setVisible(true);
 
 				if (graphLight[0]) this.lights[i].enable();
 				else this.lights[i].disable();
@@ -239,13 +240,14 @@ class XMLscene extends CGFscene {
 		if (this.sceneInited && this.menu.choseAll) {
 			// Draw axis
 
-			this.axis.display();
+			// this.axis.display();
 			this.defaultAppearance.apply();
 
 			// Displays the scene and game
 			this.gameOrchestrator.display();
 			this.graph[this.selectedTheme].displayScene();
 		} else {
+
 			// Show Menu
 			this.menu.display();
 		}
