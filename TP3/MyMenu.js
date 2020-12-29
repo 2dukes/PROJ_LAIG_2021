@@ -2,6 +2,10 @@ class MyMenu {
     constructor(scene) {
         this.scene = scene;
 
+        this.initMenu();
+    }
+
+    initMenu() {
         this.initTextures();
         this.initOptions();
 
@@ -54,6 +58,40 @@ class MyMenu {
         this.choseLevel = "";
     }
 
+    handleMenuPicking() {
+        this.pickedNow.isSelected = true;
+
+        if (this.pickedNow.optionName == "ok") {
+            if (this.checkAllSelected()) {
+                this.choseAll = true;
+                this.scene.gameOrchestrator.gameMode = this.choseMode;
+                this.scene.gameOrchestrator.gameBoard.gameLevel = this.choseLevel;
+                this.scene.performCameraAnimation(this.scene.playerCameras[this.scene.gameOrchestrator.gameBoard.currentPlayer], 1.5);
+            }
+        }
+
+        if (this.pickedNow.optionName == "PvP") this.choseMode = "PvP";
+        else if (this.pickedNow.optionName == "PvB") this.choseMode = "PvB";
+        else if (this.pickedNow.optionName == "BvB") this.choseMode = "BvB";
+
+        else if (this.pickedNow.optionName == "greedy") this.choseLevel = "greedy";
+        else if (this.pickedNow.optionName == "hard") this.choseLevel = "greedy_hard";
+        else if (this.pickedNow.optionName == "random") this.choseLevel = "random";
+
+        if (this.modeNames.includes(this.pickedNow.optionName)) {
+            for (let k = 0; k < this.chooseGameMode.length; k++) {
+                if (this.chooseGameMode[k].isSelected && this.chooseGameMode[k].id != this.pickedNow.id)
+                    this.chooseGameMode[k].isSelected = false;
+            }
+        }
+        else if (this.levelNames.includes(this.pickedNow.optionName)) {
+            for (let k = 0; k < this.chooseLevelMode.length; k++) {
+                if (this.chooseLevelMode[k].isSelected && this.chooseLevelMode[k].id != this.pickedNow.id)
+                    this.chooseLevelMode[k].isSelected = false;
+            }
+        }
+    }
+
     logPicking() {
 
 		if (this.scene.pickMode == false) {
@@ -61,49 +99,9 @@ class MyMenu {
 				for (var i = 0; i < this.scene.pickResults.length; i++) {
                     
                     this.pickedNow = this.scene.pickResults[i][0];
-					if (this.pickedNow instanceof MyMenuButton) {
-                        this.pickedNow.isSelected = true;
-
-                        if (this.pickedNow.optionName == "ok") {
-                            if (this.checkAllSelected()) {
-                                this.choseAll = true;
-                                this.scene.gameOrchestrator.gameMode = this.choseMode;
-                                this.scene.gameOrchestrator.gameBoard.gameLevel = this.choseLevel;
-                                this.scene.performCameraAnimation(this.scene.playerCameras[this.scene.gameOrchestrator.gameBoard.currentPlayer], 1.5);
-                            }
-                        }
-
-                        
-
-                        if (this.pickedNow.optionName == "PvP") this.choseMode = "PvP";
-                        else if (this.pickedNow.optionName == "PvB") this.choseMode = "PvB";
-                        else if (this.pickedNow.optionName == "BvB") this.choseMode = "BvB";
-
-                        else if (this.pickedNow.optionName == "greedy") this.choseLevel = "greedy";
-                        else if (this.pickedNow.optionName == "hard") this.choseLevel = "greedy_hard";
-                        else if (this.pickedNow.optionName == "random") this.choseLevel = "random";
-         
-
-                            
-                            if (this.modeNames.includes(this.pickedNow.optionName)) {
-                                for (let k = 0; k < this.chooseGameMode.length; k++) {
-                                    if (this.chooseGameMode[k].isSelected && this.chooseGameMode[k].id != this.pickedNow.id)
-                                        this.chooseGameMode[k].isSelected = false;
-                                }
-                            }
-                            else if (this.levelNames.includes(this.pickedNow.optionName)) {
-                                for (let k = 0; k < this.chooseLevelMode.length; k++) {
-                                    if (this.chooseLevelMode[k].isSelected && this.chooseLevelMode[k].id != this.pickedNow.id)
-                                        this.chooseLevelMode[k].isSelected = false;
-                                }
-                            }
-                        
-                        
-
-                    }
-
-                    
-				
+					if (this.pickedNow instanceof MyMenuButton)
+                        this.handleMenuPicking();
+                       
 				}
 			}
 			this.scene.pickResults.splice(0, this.scene.pickResults.length);
