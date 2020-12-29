@@ -35,7 +35,12 @@ class CameraAnimation extends Animation {
             this.animationEnded = true;
             this.setCamera(this.angleSecondCamera, this.nearSecondCamera, this.farSecondCamera, this.positionSecondCamera, this.targetSecondCamera);
             
-            if(this.scene.menu.choseAll && this.scene.gameOrchestrator.gameMode == "PvP") {
+            console.log(this.scene.gameOrchestrator.playingMovie);
+            if(this.scene.gameOrchestrator.playingMovie) {
+                document.querySelector('#messages').style.display = "block";
+                document.querySelector('#messages').innerHTML = "Playing Movie...";
+            }
+            else if(this.scene.menu.choseAll && this.scene.gameOrchestrator.gameMode == "PvP") {
                 document.querySelector('#messages').style.display = "block";
                 document.querySelector('#messages').innerHTML = `Player ${this.scene.gameOrchestrator.gameBoard.currentPlayer} turn!`;
             } else if(this.scene.menu.choseAll && this.scene.gameOrchestrator.gameMode == "PvB") {

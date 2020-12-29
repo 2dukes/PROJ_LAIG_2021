@@ -34,6 +34,7 @@ class MyGameOrchestrator {
 		this.timeSprite = new MySpriteText(this.scene, "0:00", 0.25);
 
 		this.timeout = 10;
+		this.playingMovie = false;
 
 		this.backToMenuButton = new MyMenuButton(this.scene, 0, 0, 1, 0.3, "menu", 1501);
 		this.backToMenuAppearance = new CGFappearance(this.scene);
@@ -44,6 +45,7 @@ class MyGameOrchestrator {
 		this.viewMovieAppearance = new CGFappearance(this.scene);
 		this.movieTexture = new CGFtexture(this.scene, "./scenes/images/menu/movie.png");
 		this.viewMovieAppearance.setTexture(this.movieTexture);
+		
 	}
 
 	resetTime(delayTime) {
@@ -151,6 +153,7 @@ class MyGameOrchestrator {
 		this.resetGame(false);
 		// console.log(this.gameSequence.moves);
 		for(let i = 0; i < this.gameSequence.moves.length ; i++) {
+			console.log('...' +  this.playingMovie);
 			let move = this.gameSequence.moves[i];
 			this.movingPiece = this.auxBoard.getNextPiece(move.pieceColour);
 			this.movingPiece.move(move.finalX, move.finalY);
@@ -161,7 +164,7 @@ class MyGameOrchestrator {
 
 		this.winnerNum = this.getWinner();
 		console.log(`Winner: ${this.winnerNum}`);
-
+		this.playingMovie = false;
 		document.querySelector('#messages').style.display = "block";
         document.querySelector('#messages').innerHTML = `Player ${this.winnerNum} won!`;
 		// this.scene.performCameraAnimation('menuCamera', 1.5);
@@ -327,13 +330,12 @@ class MyGameOrchestrator {
 						}
 
 						else if (this.pickedNow.optionName == "movie") {
+							this.playingMovie = true;
 							this.scene.performCameraAnimation('upView', 1.5);
-							document.querySelector('#messages').style.display = "block";
-        					document.querySelector('#messages').innerHTML = `Playing Movie...`;
+							console.log(this.playingMovie);
 							this.makeGameMovie();
-							// this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer % 2 + 1], 1.5);
 						}
-
+						
                     }
 			
 					if (this.lastPicked != null) {
