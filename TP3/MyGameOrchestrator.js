@@ -356,21 +356,6 @@ class MyGameOrchestrator {
 			return;
 		}
 
-		if(this.winnerNum > 0 && !this.playingMovie) {
-
-			//----------------VIEW MOVIE---------------------------------
-			this.scene.pushMatrix();
-
-			this.viewMovieAppearance.apply();
-
-			this.scene.translate(5.38, 3.0, 7);
-			this.scene.rotate(Math.PI, 0, 1, 0);
-			this.viewMovieButton.display();
-			this.scene.clearPickRegistration();
-
-			this.scene.popMatrix();
-		}
-
 		if (this.movingPiece == null) {
 			this.gameBoard.pickEnabled = false;
 			this.auxBoard.pickEnabled = true;
@@ -390,6 +375,21 @@ class MyGameOrchestrator {
 		this.logPicking();
 
 		if (this.gameMode == "BvB") this.computerVsComputerMove();
+
+		if(this.winnerNum > 0 && !this.playingMovie) {
+
+			//----------------VIEW MOVIE---------------------------------
+			this.scene.pushMatrix();
+
+			this.viewMovieAppearance.apply();
+
+			this.scene.translate(5.38, 2.8, 7);
+			this.scene.rotate(Math.PI, 0, 1, 0);
+			this.viewMovieButton.display();
+			this.scene.clearPickRegistration();
+
+			this.scene.popMatrix();
+		}
 		
 		//-----------------Board and Aux Board--------------------
 
@@ -448,7 +448,7 @@ class MyGameOrchestrator {
 
 			this.backToMenuAppearance.apply();
 
-			this.scene.translate(5.38, 2.5, 7);
+			this.scene.translate(5.38, 2.4, 7);
 			this.scene.rotate(Math.PI, 0, 1, 0);
 			this.backToMenuButton.display();
 			this.scene.clearPickRegistration();

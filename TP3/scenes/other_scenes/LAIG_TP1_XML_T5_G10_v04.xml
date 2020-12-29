@@ -206,7 +206,7 @@
 
             <transformations>
                 <translation x="4.9" y="0" z="7.1" />
-                <scale sx="6" sy="9" sz="0.3" />
+                <scale sx="6" sy="9.0" sz="0.3" />
             </transformations>
 
             <descendants>
