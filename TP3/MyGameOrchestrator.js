@@ -45,6 +45,8 @@ class MyGameOrchestrator {
 		this.viewMovieAppearance = new CGFappearance(this.scene);
 		this.movieTexture = new CGFtexture(this.scene, "./scenes/images/menu/movie.png");
 		this.viewMovieAppearance.setTexture(this.movieTexture);
+
+		this.enteredTimeout = false;
 		
 	}
 
@@ -65,10 +67,9 @@ class MyGameOrchestrator {
 		if (this.totalSeconds < 0) this.timeStr = "0:00";
 
 		if(this.winnerNum == 0) {
-
-			if (this.gameMode !== "BvB" && this.totalSeconds >= this.timeout) {
+			this.enteredTimeout = ((this.gameMode !== "BvB") && (this.totalSeconds >= this.timeout));
+			if (this.enteredTimeout) {
 				this.scene.setPickEnabled(false);
-				this.clearPick();
 				if (this.gameMode == "PvP" || (this.gameMode == "PvB" && this.gameBoard.currentPlayer != 2)) {
 					this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1;
 					
@@ -83,21 +84,6 @@ class MyGameOrchestrator {
 		}
 	}
 
-	clearPick() {
-		this.scene.clearPickRegistration();
-		if (this.pickedNow != null) {
-			this.pickedNow.isSelected = false;
-			this.pickedNow = null;
-		}
-
-		if (this.lastPicked != null) {
-			this.lastPicked.isSelected = false;
-			this.lastPicked = null;
-		}
-
-		this.movingPiece = null;
-	}
-
 	update(currentTime) {
 
 		this.computeTime(currentTime);
@@ -108,28 +94,25 @@ class MyGameOrchestrator {
 			this.movingPiece.update(currentTime);
 
 			if (this.movingPiece.animation == null) {
-				this.movingPiece.updateFinalCoordinates();
-				this.movingPiece.isMoving = false;
-				this.movingPiece.isSelected = false;
-				this.movingPiece = null;
-
-				if(this.winnerNum == 0)
-					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+				this.updateMovingPiece();
 				return;
 			}
 
-			if (this.movingPiece.animation.animationEnded) {
-				this.movingPiece.updateFinalCoordinates();
-				this.movingPiece.isMoving = false;
-				this.movingPiece.isSelected = false;
-				this.movingPiece.animation = null;
-				this.movingPiece = null;
-
-				if(this.winnerNum == 0)
-					this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
-			}
-		
+			if (this.movingPiece.animation.animationEnded) 
+				this.updateMovingPiece(true);
 		}
+	}
+
+	updateMovingPiece(hasAnimation) {
+		this.movingPiece.updateFinalCoordinates();
+		this.movingPiece.isMoving = false;
+		this.movingPiece.isSelected = false;
+		if (hasAnimation === true)
+			this.movingPiece.animation = null;
+		this.movingPiece = null;
+
+		if(this.winnerNum == 0 && !this.enteredTimeout) 
+			this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
 	}
 
 	getWinner() {
