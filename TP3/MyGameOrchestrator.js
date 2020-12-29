@@ -253,6 +253,42 @@ class MyGameOrchestrator {
 		this.finishedUndo = true;	
 	}
 
+	async handleButtons() {
+		if (this.pickedNow.optionName == "undo" && this.finishedUndo && this.winnerNum == 0) {
+			this.finishedUndo = false;
+
+			if (this.gameMode == "PvP") {
+				this.undoMove();
+				this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1; 
+			}
+			else if (this.gameMode == "PvB") {
+
+				let k = 0;
+				while(k < 2) {
+					if(this.movingPiece == null) {
+						this.undoMove();
+						this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
+						k++;
+					}
+					await new Promise((r) => setTimeout(r, 2000));
+				}
+			}
+			this.finishedUndo = true;			
+		}
+
+		else if (this.pickedNow.optionName == "menu") {
+			this.scene.performCameraAnimation('menuCamera', 1.5);
+			this.resetGame(true);
+		}
+
+		else if (this.pickedNow.optionName == "movie") {
+			this.playingMovie = true;
+			this.scene.performCameraAnimation('upView', 1.5);
+			console.log(this.playingMovie);
+			this.makeGameMovie();
+		}
+	}
+
 	async logPicking() {
 
 		if (this.scene.pickMode == false) {
@@ -272,7 +308,7 @@ class MyGameOrchestrator {
 						this.movingPiece = this.pickedNow;
 						this.movingPiece.isSelected = true;
 
-						if (this.lastPicked != null && (this.lastPicked instanceof MyPiece || this.lastPicked instanceof MyTile)) this.lastPicked.isSelected = false;
+						if (this.lastPicked != null) this.lastPicked.isSelected = false;
 					
 						if (!this.pickedNow.isSelected) {
 							this.pickedNow = null;
@@ -282,41 +318,7 @@ class MyGameOrchestrator {
 					}
 
 					if (this.pickedNow instanceof MyMenuButton) {
-
-						if (this.pickedNow.optionName == "undo" && this.finishedUndo && this.winnerNum == 0) {
-							this.finishedUndo = false;
-
-							if (this.gameMode == "PvP") {
-								this.undoMove();
-								this.gameBoard.currentPlayer = this.gameBoard.currentPlayer % 2 + 1; 
-							}
-							else if (this.gameMode == "PvB") {
-
-								let k = 0;
-								while(k < 2) {
-									if(this.movingPiece == null) {
-										this.undoMove();
-										this.scene.performCameraAnimation(this.scene.playerCameras[this.gameBoard.currentPlayer], 1.5);
-										k++;
-									}
-									await new Promise((r) => setTimeout(r, 2000));
-								}
-							}
-							this.finishedUndo = true;			
-						}
-
-						else if (this.pickedNow.optionName == "menu") {
-							this.scene.performCameraAnimation('menuCamera', 1.5);
-							this.resetGame(true);
-						}
-
-						else if (this.pickedNow.optionName == "movie") {
-							this.playingMovie = true;
-							this.scene.performCameraAnimation('upView', 1.5);
-							console.log(this.playingMovie);
-							this.makeGameMovie();
-						}
-
+						this.handleButtons();
                     }
 			
 					if (this.lastPicked != null) {
