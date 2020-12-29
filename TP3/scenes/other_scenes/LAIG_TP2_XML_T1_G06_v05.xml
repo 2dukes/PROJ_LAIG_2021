@@ -108,8 +108,9 @@
         <texture id="text_sofa_leg" path="./scenes/images/sofa_leg.jpg" />
         <texture id="text_barrel" path="./scenes/images/barrel.jpg" />
         <texture id="text_happy_year" path="./scenes/images/happy_year.jpeg" />
-         <texture id="text_tv" path="./scenes/images/tv.jpg" />
-         <texture id="text_screen_tv" path="./scenes/images/screen_tv.jpg" />
+        <texture id="text_tv" path="./scenes/images/tv.jpg" />
+        <texture id="text_screen_tv" path="./scenes/images/screen_tv.jpg" />
+        <texture id="text_score_board" path="./scenes/images/score_board.jpg" /> 
     </textures>
 
     <materials>
@@ -232,12 +233,30 @@
                 <noderef id="barrel" />
                 <noderef id="auxBoards" />
                 <noderef id="tv" />
+                <nodered id="info_board" />
                 
                 <!-- "ss" is the identifier of a node or of leaf; -->
                 <!-- may be repeated as necessary. It can refer an -->
                 <!-- identifier of another node, before or later defined in the file. -->
                 <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
                 <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+            </descendants>
+        </node>
+
+        <node id="info_board">
+            <material id="sofaMaterial" />
+
+            <texture id="text_score_board">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="4.9" y="0" z="7.1" />
+                <scale sx="6" sy="9" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
             </descendants>
         </node>
 
