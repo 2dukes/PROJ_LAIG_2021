@@ -1035,6 +1035,8 @@
             <descendants>
                 <noderef id="parede1" />
                 <noderef id="parede2" />
+                <noderef id="parede3" />
+                <noderef id="parede4" />
             </descendants>
         </node>
 
@@ -1065,6 +1067,42 @@
                 <translation x="10.0" y="0.0" z="0.0" />
                 <scale sx="1.0" sy="3.0" sz="10.0" />
                 <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="parede3">
+            <material id="null" />
+
+            <texture id="text_parede">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="10.0" y="0.0" z="10.0" />
+                <scale sx="10.0" sy="3.0" sz="1.0" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
+            </descendants>
+        </node>
+
+        <node id="parede4">
+            <material id="null" />
+
+            <texture id="text_parede">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.0" y="0.0" z="10.0" />
+                <scale sx="1.0" sy="3.0" sz="10.0" />
+                <rotation axis="y" angle="90" />
             </transformations>
 
             <descendants>
