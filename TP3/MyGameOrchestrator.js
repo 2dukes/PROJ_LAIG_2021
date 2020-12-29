@@ -331,6 +331,8 @@ class MyGameOrchestrator {
 		}
 	}
 
+	
+
 	display() {
 
 		if(!this.scene.menu.choseAll) { // Only enters here at the end of the game

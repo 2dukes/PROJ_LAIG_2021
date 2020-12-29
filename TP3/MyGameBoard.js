@@ -2,6 +2,11 @@ class MyGameBoard {
     constructor(scene, tileRadius) {
         this.scene = scene;
         this.tileRadius = tileRadius;
+
+        this.initBoard();
+    }
+
+    initBoard() {
         let diagonalLineMap = this.initializeDiagonalLineMap();
         let diagonalStartingCoordinatesMap = this.initializeDiagonalCoordinates();
         this.initializeTextures();
@@ -209,7 +214,6 @@ class MyGameBoard {
             console.log(`PLAYER ${jsonResponse.winner} won!`);
             document.querySelector('#messages').style.display = "block";
             document.querySelector('#messages').innerHTML = `Player ${jsonResponse.winner} won!`;
-            // alert(`PLAYER ${jsonResponse.winner} won!`);
         }
         
         this.board = jsonResponse.board;
@@ -236,7 +240,7 @@ class MyGameBoard {
         this.selectedTileAppearance.setAmbient(0.5,0.5,0.5,1); // Ambient RGB
         this.selectedTileAppearance.setDiffuse(0.5,0.5,0.5,1); // Diffuse RGB
         this.selectedTileAppearance.setSpecular(0.5,0.5,0.5,1); // Specular RGB
-        this.selectedTileAppearance.setEmission(0.5,0.5,0.5,1); // Emissive RGB/ Emissive RGB
+        this.selectedTileAppearance.setEmission(0.5,0.5,0.5,1); // Emissive RGB
         this.selectedTileAppearance.setShininess(10); 
 
         this.texture2 = new CGFtexture(this.scene, "./scenes/images/tiles/selected_tile.png");
