@@ -132,9 +132,9 @@ class MyGameOrchestrator {
 	}
 
 	async makeGameMovie() {
-		// Reset first for tests
+
 		this.resetGame(false);
-		// console.log(this.gameSequence.moves);
+
 		for(let i = 0; i < this.gameSequence.moves.length ; i++) {
 			let move = this.gameSequence.moves[i];
 			this.movingPiece = this.auxBoard.getNextPiece(move.pieceColour);
@@ -149,8 +149,6 @@ class MyGameOrchestrator {
 		this.playingMovie = false;
 		document.querySelector('#messages').style.display = "block";
         document.querySelector('#messages').innerHTML = `Player ${this.winnerNum} won!`;
-		// this.scene.performCameraAnimation('menuCamera', 1.5);
-		// this.resetGame(true);
 	}
 
 	async gameMove() {
@@ -225,7 +223,6 @@ class MyGameOrchestrator {
 
 	checkGameWinner() {
 		if(this.winnerNum > 0) {
-			// this.resetBoard();
 			this.resetGame(true);
 			return true;
 		} return false;
@@ -244,7 +241,6 @@ class MyGameOrchestrator {
 
 		this.gameBoard = new MyGameBoard(this.scene, 0.25);
 		this.auxBoard = new MyAuxBoard(this.scene);
-		
 
 		this.gameBoard.playerPoints = playerPoints;
 
@@ -268,6 +264,7 @@ class MyGameOrchestrator {
 						this.pickedNow.isSelected = true;
 						
 						this.gameMove();
+						this.pickedNow.hasPiece = true;
 					}
 
 					if (this.pickedNow instanceof MyPiece && this.gameMode !== "BvB") { 					
