@@ -140,6 +140,7 @@ class MyGameBoard {
         for (let i = 0; i < this.tiles.length; i++) {
             if (this.tiles[i].x == x && this.tiles[i].y == y) {
                 this.tiles[i].isSelected = false;
+                this.tiles[i].hasPiece = false;
                 return;
             }
         }
@@ -330,7 +331,7 @@ class MyGameBoard {
 
         for (let i = 0; i < this.tiles.length; i++) {
 
-            if (this.pickEnabled)
+            if (this.pickEnabled && !this.tiles[i].hasPiece)
                 this.scene.registerForPick(i + 1,this.tiles[i]);
             
             this.tiles[i].display();

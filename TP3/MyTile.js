@@ -11,6 +11,8 @@ class MyTile {
 
         this.appearance1 = appearance1;
         this.appearance2 = appearance2;
+
+        this.hasPiece = false;
         
         this.getCoords(diagonalSP, diagonalStartingLine);
     }
