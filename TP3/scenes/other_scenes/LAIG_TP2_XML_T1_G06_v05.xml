@@ -108,6 +108,8 @@
         <texture id="text_sofa_leg" path="./scenes/images/sofa_leg.jpg" />
         <texture id="text_barrel" path="./scenes/images/barrel.jpg" />
         <texture id="text_happy_year" path="./scenes/images/happy_year.jpeg" />
+         <texture id="text_tv" path="./scenes/images/tv.jpg" />
+         <texture id="text_screen_tv" path="./scenes/images/screen_tv.jpg" />
     </textures>
 
     <materials>
@@ -169,6 +171,14 @@
             <specular r="0.38" g="0.2" b="0.07" a="1.0" />
             <emissive r="0.38" g="0.2" b="0.07" a="1.0" />
         </material>
+        <material id="mesaMaterial2">
+            <shininess value="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.13" g="0.13" b="0.13" a="1.0" />
+            <emissive r="0.6" g="0.6" b="0.6" a="1.0" />
+        </material>
+
         <material id="sofaMaterial">
             <shininess value="1.0" />
             <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
@@ -176,6 +186,21 @@
             <specular r="0.13" g="0.13" b="0.13" a="1.0" />
             <emissive r="0.5" g="0.5" b="0.5" a="1.0" />
         </material>
+        <material id="tvMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.05" g="0.05" b="0.05" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.13" g="0.13" b="0.13" a="1.0" />
+            <emissive r="0.1" g="0.1" b="0.1" a="1.0" />
+        </material>
+        <material id="screenMaterial">
+            <shininess value="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.13" g="0.13" b="0.13" a="1.0" />
+            <emissive r="1.0" g="1.0" b="1.0" a="1.0" />
+        </material>
+
     </materials>
 
     <nodes>
@@ -206,6 +231,7 @@
                 <noderef id="text" />
                 <noderef id="barrel" />
                 <noderef id="auxBoards" />
+                <noderef id="tv" />
                 
                 <!-- "ss" is the identifier of a node or of leaf; -->
                 <!-- may be repeated as necessary. It can refer an -->
@@ -278,6 +304,139 @@
 
             <descendants>
                 <leaf type="spritetext" text="Merry Christmas!" />
+            </descendants>
+        </node>
+
+        <!-- TV -->
+        <node id="tv">
+            <material id="tvMaterial" />
+
+            <texture id="text_tv">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.7" y="0.0" z="9.0" />
+                <rotation axis="y" angle="90" />
+                <translation x="-1.7" y="0.0" z="-7.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="base_tv" />
+                <noderef id="screen_tv" />
+            </descendants>
+        </node>
+
+        <!-- Base TV -->
+        <node id="base_tv">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="base_baixo" />
+                <noderef id="base_suporte" />
+            </descendants>
+        </node>
+
+        <!-- Base Baixo TV -->
+        <node id="base_baixo">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.55" y="0.83" z="6.61" />
+                <scale sx="3.0" sy="1.0" sz="1.0" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.8" topRadius="0.05" bottomRadius="0.05" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Suporte Base TV -->
+        <node id="base_suporte">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.55" y="0.83" z="7.02" />
+                <rotation axis="x" angle="-90" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.3" topRadius="0.05" bottomRadius="0.05" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Ecrã da TV -->
+        <node id="screen_tv">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                
+            </transformations>
+
+            <descendants>
+                <noderef id="moldura_screen" />
+                <noderef id="imagem_screen" />
+            </descendants>
+        </node>
+
+        <!-- Moldura do Ecrã da TV -->
+        <node id="moldura_screen">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.55" y="1.5" z="6.24" />
+                <rotation axis="z" angle="90" />
+                <scale sx="15.0" sy="1.0" sz="1.0" />
+                <rotation axis="z" angle="45" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1.55" topRadius="0.05" bottomRadius="0.05" stacks="4" slices="4"/>
+            </descendants>
+        </node>
+
+        <!-- Imagem do Ecrã da TV -->
+        <node id="imagem_screen">
+            <material id="screenMaterial" />
+
+            <texture id="text_screen_tv">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.6" y="1.0" z="7.76" />
+                <rotation axis="y" angle="90" />
+                <scale sx="1.5" sy="1.0" sz="1.0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="1.0" y2="1.0"/>
             </descendants>
         </node>
 
@@ -1182,6 +1341,7 @@
             <descendants>
                 <noderef id="mesa1" />
                 <noderef id="mesa2" />
+                <noderef id="mesa3" />
             </descendants>
         </node>
 
@@ -1216,6 +1376,26 @@
 
             <transformations>   
                 <translation x="5" y="0.0" z="2.5" />
+                <rotation axis="y" angle="90" />
+                <translation x="-1.7" y="0.0" z="-7.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pernas" />
+                <noderef id="tampo_mesa" />
+            </descendants>
+        </node>
+
+        <!-- Mesa3 -->
+        <node id="mesa3">
+            <material id="mesaMaterial2" />\
+
+            <texture id="text_mesa">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>   
+                <translation x="1.7" y="0.0" z="9.0" />
                 <rotation axis="y" angle="90" />
                 <translation x="-1.7" y="0.0" z="-7.0" />
             </transformations>
