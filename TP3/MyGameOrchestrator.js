@@ -198,6 +198,9 @@ class MyGameOrchestrator {
 			let stringParamBot = this.gameBoard.formatFetchStringComputer();
 			this.promiseComputer = false;
 			let jsonResponse = await this.gameBoard.callPrologMove(stringParamBot);
+			if(!this.scene.menu.choseAll) // When user goes to menu in the middle of a movement
+				return;
+			
 			this.winnerNum = jsonResponse.winner;
 
 			this.movingPiece = this.auxBoard.getNextPiece(jsonResponse.playedColour);
