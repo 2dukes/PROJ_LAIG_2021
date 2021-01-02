@@ -105,32 +105,10 @@ print_header_line(_).
 % Require your Prolog Files here
 
 parse_input(handshake, handshake).
-parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 
 % Receives a number and provides a color (text)
 parse_input(color(C), Res) :- color(C,Res).
-
-% Example of how a game might be started, and how Prolog may provide important game information
-parse_input(startgame(Type,Level1,Level2), Res) :-
-	validate_type_of_game(Type,Resp),
-	Res = {
-		'"success"': true,
-		'"typeOfGame"': Resp,
-		'"currentPlayer"': [1, Level1],
-		'"nextPlayer"': [2, Level2],
-		'"board"': [[0, 1, 0, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0],
-		[0, 1, 0, 1, 0, 1, 0, 1],
-		[0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0, 0],
-		[2, 0, 2, 0, 2, 0, 2, 0],
-		[0, 2, 0, 2, 0, 2, 0, 2],
-		[2, 0, 2, 0, 2, 0, 2, 0]],
-		'"countPlayer1"': 0,
-		'"countPlayer2"': 0,
-        '"nTurns"': 0
-	}.
 
 % ------------------------ Alliances ------------------------
 

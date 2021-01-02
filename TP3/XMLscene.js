@@ -92,9 +92,11 @@ class XMLscene extends CGFscene {
 				this.lights[i].setAmbient(...graphLight[2]);
 				this.lights[i].setDiffuse(...graphLight[3]);
 				this.lights[i].setSpecular(...graphLight[4]);
-
-				if(key == "Christmas Tree Light")
+				console.log(this.selectedTheme);
+				if(key == "Christmas Light" && this.selectedTheme == "Christmas Room")
 					this.lights[i].setVisible(true);
+				else
+					this.lights[i].setVisible(false);
 
 				if (graphLight[0]) this.lights[i].enable();
 				else this.lights[i].disable();
