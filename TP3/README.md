@@ -1,4 +1,4 @@
-# LAIG 2020/2021 - TP1
+# LAIG 2020/2021 - TP3
 
 ## Group: T01G06
 
@@ -10,11 +10,10 @@
 ----
 ## Project information
 
-- Strong points: scene XML complexity, implementation of animations, spritesheets and nurbs.
-- Scene
-  - The scene depicts a room with a Christmas atmosphere. It consists of decorations on the walls, as well as a Christmas tree with the appropriate ornaments (balls and gifts). It also has a table with a TV, and two sofas. Each object has an assigned material or texture. It also has animations, spritesheets and nurbs.
-  - [LAIG_TP2_XML_T1_G06_v05.xml](./scenes/LAIG_TP2_XML_T1_G06_v05.xml)
-----
+This project aims the creation of a 3D graphical board game called Alliances, that is interconnected with a logical interface that is responsible for all the game's internal aspects. For this a Prolog HTTP server is lauched. The graphical application communicates with the HTTP server to receive the best plays a bot can have, select a move and check if a player has won the game. 
+
+More can be found in [Link](./docs/usersManual.pdf).
+
 ## Issues/Problems
 
 - Everything was implemented.
