@@ -9,7 +9,7 @@ class MySpriteText {
         // Create the rectangle primitive
         this.rectangle = new MyRectangle(this.scene, 0, 0, this.rectangleWidth, this.rectangleWidth);
         // Create the texture of the font sprite
-        this.texture = new CGFtexture(this.scene, 'textures/oolite-font.png');
+        this.texture = new CGFtexture(this.scene, 'scenes/images/oolite-font.png');
         
         // The font sprite has 16 columns and 16 rows
         this.spritesheet = new MySpriteSheet(this.scene, this.texture, 16, 16);
